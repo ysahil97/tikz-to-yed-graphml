@@ -1,0 +1,16 @@
+\begin{tikzpicture}[rotate=0,scale=4]
+%Define all colors here.
+
+\definecolor{n0fill}{RGB}{255,204,0}
+\definecolor{n0text}{RGB}{0,0,0}
+\definecolor{n0draw}{RGB}{0,0,0}
+\node(n0) at (1.0,-1.0) [circle, draw=n0draw, fill=n0fill, text=n0text] {};
+
+\definecolor{n1fill}{RGB}{255,204,0}
+\definecolor{n1text}{RGB}{0,0,0}
+\definecolor{n1draw}{RGB}{0,0,0}
+\node(n1) at (0.0,-0.0) [circle, draw=n1draw, fill=n1fill, text=n1text] {};
+
+\draw[->] (n0) edge (n0);
+\draw[->] (n0) edge[bend right = 45] (n1);
+\end{tikzpicture}
