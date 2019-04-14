@@ -4,145 +4,117 @@ import os
 import copy
 from pprint import pprint
 
+
+# This function is range function for floating points
+# Needed because "range(0.5, 10.5, 0.5)" : Not supported by default range function
+def floatRange(stat, end, step):
+    # Note: end is inclusive
+    while(start <= end):
+        yield start
+        start+=step
+
+# Unrolls the loop completly
+# Replace variables with their values
+# Example:
+# for i in {1,2,3,4} { A[i] = i; } 
+# will be replaced by
+#    A[1] = i;  
+#    A[2] = i;  
+#    A[3] = i;  
+#    A[4] = i;  
 def replaceVarsinForeach(foreachHead, block):
+    block.strip().strip("{").strip("}")
     unrolledBlocks=""
     x=re.findall("\\\\foreach(.*)in[\s]*{(.*?)}", foreachHead)
     if(x):
         x = x[0]
-        varss = x[0].strip()
-        rangeOfVars = x[1].strip()
-        if(rangeOfVars.__contains__("...")):
-            x = rangeOfVars.split(",")
-            start = float(x[0])
-            if(isinstance(x[1],float)):
-                step=float(x[1])-float(x[0])
+        if(x[1].__contains__("...")):
+            x = x[0]
+            variable = x[0].strip()
+            varRange = x[1].strip()
+            rangeOfVariable = varRange.split(",")
+            start = float(rangeOfVariable[0])
+            if(isinstance(rangeOfVariable[1],float)):
+                # 1,2.....10
+                step=float(rangeOfVariable[1])-float(rangeOfVariable[0])
             else:
+                # 1.....10
                 step=1
-            end = float(x[-1])
-            # print varss, start, end, step
-            for val in range(int(start), int(end+step), step):
+            end = float(rangeOfVariable[-1])
+            for val in floatRange(start, end, step): 
                 remainblock=copy.copy(block)
-                # print ("\\"+varss.strip(), val, remainblock)
-                remainblock = re.sub("\\"+varss.strip(), str(val), remainblock)
-                # print "++++++++++++++++++"
+                remainblock = re.sub("\\"+variable.strip(), str(val), remainblock)
                 unrolledBlocks += remainblock + "\n"
-                # print "++++++++++++++++++"
-
         else:
-            
             varList=x[0].split("/")
             var_index_to_name ={}
-            for index, var in enumerate(varList):
-                var_index_to_name[index] = var.strip().strip("\\")
-            # print var_index_to_name
-            for x in rangeOfVars.split(","):
+            rangeOfVariables = x[1].strip().split(",")
+            for i, var in enumerate(varList):
+                var_index_to_name[i] = var.strip().strip("\\")
+            # \x/\y in 1/2,3/4,5/6,7/8
+            # its like x and y pairwise (1,2) then (3,4) then so on
+            for rangeValues in rangeOfVariables:
                 remainblock=copy.copy(block)
-                for index, val in enumerate(x.split("/")):
-                    remainblock = re.sub("\\\\"+var_index_to_name[index], val, remainblock)
-                # print "++++++++++++++++++"
-                # print remainblock
+                for i, val in enumerate(rangeValues.strip().split("/")):
+                    remainblock = re.sub("\\\\"+var_index_to_name[i], val, remainblock)
                 unrolledBlocks += remainblock + "\n"
-                # print "++++++++++++++++++"
-    # print unrolledBlocks
-    # sys.exit(1)
     return unrolledBlocks
 
 
-# mapForWhereEnd={}
-def parseAndHandleForEach(inputTikzBlock):
-    # print "***************", inputTikzBlock, "***************"
-
+# Find Foreach block in code and then copy blocks and in each block replace variables by their values
+def parseAndHandleForEach(tikzBlock):
     regexForForeach = re.compile("\\\\foreach.*?in[\s]*{.*?}[\s]*", re.MULTILINE)
-    # print(re.findall(regexForForeach, inputTikzBlock))
-    restBlock=""
-    lastIndexOffset = 0
-    for x in re.finditer(regexForForeach, inputTikzBlock):
-        block=""
-        multipleForeach=False
-        paraenthesis = 0
-        startswithParaenthesis = False
-        if(inputTikzBlock[x.end(0)] == '{'):
-            lastIndexOffset = 1
-            block+="{"
-            paraenthesis=1
-            startswithParaenthesis=True
-
-        # block+=inputTikzBlock[x.start(0):x.end(0)]
-        startOffset = 0
-        if(startswithParaenthesis):
-            startOffset += 1
-        for k in inputTikzBlock[x.end(0)+startOffset:]:
-            lastIndexOffset+=1
-            block+=k
-            if(k=="{"):
-                paraenthesis+=1
-            elif(k=="}"):
-                paraenthesis-=1
-                if(paraenthesis==0 and startswithParaenthesis):
-                    break
-            
-                # # if(startswithParaenthesis):
-                # #     break
-                # if(len(re.findall("foreach", block))>0):
-                #     multipleForeach=True
-                #     continue
-
-            # elif(k=="\\n" and paraenthesis==0):
-            #     if(len(re.findall("foreach", block))>0):
-            #         multipleForeach=True
-            #         continue
-            #     break
-            elif(k==";" and paraenthesis==0):
+    firstForeach = re.finditer(regexForForeach, tikzBlock).next()
+    if(not firstForeach):
+        return tikzBlock
+    block=""
+    paraenthesis = 0
+    startswithParaenthesis = False
+    startOffset = 0
+    if(tikzBlock[firstForeach.end(0)] == '{'):
+        block+="{"
+        paraenthesis=1
+        startswithParaenthesis=True
+        startOffset = 1
+       
+    for char in tikzBlock[firstForeach.end(0)+startOffset:]:
+        block+=char
+        if(char=="{"):
+            paraenthesis+=1
+        elif(char=="}"):
+            paraenthesis-=1
+            if(paraenthesis==0 and startswithParaenthesis):
                 break
-            
-        # print "=========================="
-        # print inputTikzBlock[x.start(0): x.end(0)]
-        # print "=========================="
-        # print "********"
-        # print block
-        # replaceVarsinForeach()
-        # sys.exit(1)
-        # mapForWhereEnd[x.start(0)]=x.end(0)+ len(block)
-        # print  replaceVarsinForeach(inputTikzBlock[x.start(0): x.end(0)], block) + inputTikzBlock[x.end(0)+lastIndexOffset:]
-        # sys.exit(1)
-        # print block
-        return inputTikzBlock[:x.start(0)] + replaceVarsinForeach(inputTikzBlock[x.start(0): x.end(0)], block) + inputTikzBlock[x.end(0)+lastIndexOffset:]
-        # if(multipleForeach):
+        elif(char==";" and paraenthesis==0):
+            break
+    return tikzBlock[:firstForeach.start(0)] + replaceVarsinForeach(tikzBlock[firstForeach.start(0): firstForeach.end(0)], block) + tikzBlock[firstForeach.end(0)+len(block):]
 
-        # print "--------------------------------"
-                
+if __name__ == "__main__":    
+    # fileName = "TestCases/rg-v2.tex"
+    directory="TestCases"
+    filename="edge-editing-v2.tex"
+    fileNameWithPath=directory+"/"+filename
+    with open(fileNameWithPath) as inputFile:
+        fileContent = inputFile.read()
+    regextToGetTikzPictureCode = re.compile("\\\\end[\s]*{tikzpicture}", re.MULTILINE)
+    i = -1
+    for block in regextToGetTikzPictureCode.split(fileContent):
+        if(block.__contains__("tikzpicture")):
+            for codeInsideTikzPicture in (re.split("\\\\begin{tikzpicture}", block)):
+                i += 1
+                if(i%2==1):
+                    print "==========================================="
+                    print("\nCalling parseAndHandleForEach for:\n")
+                    print(codeInsideTikzPicture)
+                    print "===========================================\n"
+                    _oneforeachRemoved = parseAndHandleForEach(codeInsideTikzPicture)
+                    while(_oneforeachRemoved.count("\\foreach")>0):
+                        _oneforeachRemoved = parseAndHandleForEach(_oneforeachRemoved)
+                    unrolledForeachInTikzPart=_oneforeachRemoved
+                    j = 0
+                    while(os.path.exists(filename + "t" + str(j) + "_unrolled.tex")):
+                        j+=1
+                    with open(filename + "t" + str(j) + "_unrolled.tex", "w") as outputFile:
+                        outputFile.write(unrolledForeachInTikzPart)
+                    
 
-
-
-
-# fileName = "TestCases/rg-v2.tex"
-fileName="TestCases/edge-editing-v2.tex"
-fileContent = None
-with open(fileName) as inputFile:
-    fileContent = inputFile.read()
-
-regextToGetTikzPictureCode = re.compile("\\\\end[\s]*{tikzpicture}", re.MULTILINE)
-
-tikzPictureCode = []
-count = -1 
-for block in regextToGetTikzPictureCode.split(fileContent):
-    if(block.__contains__("tikzpicture")):
-        for y in re.split("\\\\begin{tikzpicture}", block):
-            count += 1
-            if(count%2==1):
-                tikzPictureCode.append(block)
-
-
-for block in tikzPictureCode:
-    for y in (re.split("\\\\begin{tikzpicture}", block)):
-            print "==========================================="
-            print("\n\nCalling parseAndHandleForEach for")
-            print(y)
-            print "==========================================="
-            _tikzPartofCode = parseAndHandleForEach(y)
-            # print "\n\n-----START-----\n", _tikzPartofCode, "\n-----END-----\n\n"
-            # sys.exit(1)
-            while(_tikzPartofCode.count("foreach")>0):
-                _tikzPartofCode = parseAndHandleForEach(_tikzPartofCode)
-                # print "\n\n-----START-----\n", _tikzPartofCode, "\n-----END-----\n\n"
-            print _tikzPartofCode
