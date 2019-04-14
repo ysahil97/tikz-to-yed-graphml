@@ -43,12 +43,11 @@ def handleNode(line):
 
 
 def handleDraw(line):
-    print "TODO: ", line
+    # print "TODO: ", line
     pass
     # TODO : Handle Polar Coordinates
     # a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
     # if(a):
-
     #     A = a[0][0].split(",")
     #     B = a[0][1].strip()
     #     if(B== "ellipse"):
@@ -58,7 +57,7 @@ def handleDraw(line):
     #         C = a[0][2].split(",")
     #     print A, B, C
     # else:
-    #     print "==================+", line
+    #     print "TODO : ", line
     #     a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
         
     
@@ -122,20 +121,6 @@ def parseTiKZ(inputFile):
     print "INPUT FILE STARTS --------------------------------"
     print inputFile
     print "INPUT FILE ENDS --------------------------------"
-    """
-    The file is of following syntax
-        [scale=.8,auto=center,every node/.style={circle,inner sep=4pt}]
-        \foreach \a in {0,1,2,...,10}{
-            \draw (\a*360/20: 4cm) node[fill=blue!35]{};
-        }
-        \draw (10*360/20: 4cm) node[fill=blue!35]{1};
-        \draw (9*360/20: 4cm) node[fill=blue!35]{2};
-        \draw (1*360/20: 4cm) node[fill=blue!35]{\small{n-1}};
-        \draw (0*360/20: 4cm) node[fill=blue!35]{$n$};
-        \draw (7*360/20: 4cm) node[fill=black!15]{i};
-        \draw (4*360/20: 4cm) node[fill=black!15]{j};
-        \draw (7*360/20: 4cm) --(4*360/20: 4cm);
-    """
     fileRegex = re.compile("(\s*\\[[^\\\\]*\\])((.|\n)*)", re.MULTILINE)
     z = fileRegex.match(inputFile)
     globalSpecs=z.groups()[0].strip()
@@ -168,7 +153,7 @@ def parseTiKZ(inputFile):
                     k, v = temp_2[0], temp_2[1]
                     temp[k] = v
                 else:
-                    temp[temp_2[0]] = temp_2[0]
+                    temp["shape"] = temp_2[0]
 
                 globalProperties_2["node"] = temp
         elif(key.__contains__("edge")):
@@ -180,7 +165,7 @@ def parseTiKZ(inputFile):
     insideForEach=False
     maybeInsideForEach=False
     block = []
-    for line in mainCode.split('\n'):
+    for line in mainCode.split(';'):
         line=line.strip()
         brackets = 0
         if(line.__contains__("\\foreach")):
@@ -236,28 +221,23 @@ def parseTiKZ(inputFile):
     # elif(line.__contains__("foreach"))
     # elif(line.__contains__("foreach"))
     # elif(line.__contains__("foreach"))
-
     # sys.exit(1)
 
-    
+if __name__ == "__main__":
+    # fileName = "TestCases/rg-v2.tex"
+    fileName="TestCases/edge-editing-v2.tex"
+    with open(fileName) as inputFile:
+        fileContent = inputFile.read()
+    regextToGetTikzPictureCode = re.compile("\\\\end[\s]*{tikzpicture}", re.MULTILINE)
 
-
-
-
-fileName = "TestCases/rg-v2.tex"
-# fileName="TestCases/edge-editing-v2.tex"
-with open(fileName) as inputFile:
-    fileContent = inputFile.read()
-regextToGetTikzPictureCode = re.compile("\\\\end[\s]*{tikzpicture}", re.MULTILINE)
-
-z = []
-for x in regextToGetTikzPictureCode.split(fileContent):
-    if(x.__contains__("tikzpicture")):
-        z.append(x)
-count = -1
-for x in z:
-    for y in (re.split("\\\\begin{tikzpicture}", x)):
-        count += 1
-        if(count%2==1):
-            z = parseTiKZ(y)
-            # sys.exit(1)
+    tikzBlocks = []
+    for x in regextToGetTikzPictureCode.split(fileContent):
+        if(x.__contains__("tikzpicture")):
+            tikzBlocks.append(x)
+    count = -1
+    for x in tikzBlocks:
+        for y in (re.split("\\\\begin{tikzpicture}", x)):
+            count += 1
+            if(count%2==1):
+                parseTiKZ(y)
+                # sys.exit(1)

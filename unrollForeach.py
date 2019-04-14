@@ -4,22 +4,7 @@ import os
 import copy
 from pprint import pprint
 
-#
-#To Handle : 
-# \foreach \x in {0,...,11}
-#    \foreach \y in {0,...,7}  
-#    {
-#      \foreach \z in {0,...,7}  
-#        \node[fill=blue!75] at (\x,\y){} ;
-#    }
-#\foreach \k in {0,...,7}  
-#    \node[fill=blue!75] at (\k,\k){} ;
-#The next foreach is also taken inside \x one
-
-
-
 def replaceVarsinForeach(foreachHead, block):
-    # print foreachHead, block
     unrolledBlocks=""
     x=re.findall("\\\\foreach(.*)in[\s]*{(.*?)}", foreachHead)
     if(x):
@@ -132,28 +117,32 @@ def parseAndHandleForEach(inputTikzBlock):
 
 # fileName = "TestCases/rg-v2.tex"
 fileName="TestCases/edge-editing-v2.tex"
+fileContent = None
 with open(fileName) as inputFile:
     fileContent = inputFile.read()
+
 regextToGetTikzPictureCode = re.compile("\\\\end[\s]*{tikzpicture}", re.MULTILINE)
 
-z = []
-for x in regextToGetTikzPictureCode.split(fileContent):
-    if(x.__contains__("tikzpicture")):
-        z.append(x)
-count = -1
-for x in z:
-    for y in (re.split("\\\\begin{tikzpicture}", x)):
-        count += 1
-        if(count%2==1):
+tikzPictureCode = []
+count = -1 
+for block in regextToGetTikzPictureCode.split(fileContent):
+    if(block.__contains__("tikzpicture")):
+        for y in re.split("\\\\begin{tikzpicture}", block):
+            count += 1
+            if(count%2==1):
+                tikzPictureCode.append(block)
+
+
+for block in tikzPictureCode:
+    for y in (re.split("\\\\begin{tikzpicture}", block)):
             print "==========================================="
             print("\n\nCalling parseAndHandleForEach for")
             print(y)
             print "==========================================="
-            z = parseAndHandleForEach(y)
-            # print "\n\n-----START-----\n", z, "\n-----END-----\n\n"
+            _tikzPartofCode = parseAndHandleForEach(y)
+            # print "\n\n-----START-----\n", _tikzPartofCode, "\n-----END-----\n\n"
             # sys.exit(1)
-            while(z.count("foreach")>0):
-                x = parseAndHandleForEach(z)
-                z = x
-                # print "\n\n-----START-----\n", z, "\n-----END-----\n\n"
-            print z
+            while(_tikzPartofCode.count("foreach")>0):
+                _tikzPartofCode = parseAndHandleForEach(_tikzPartofCode)
+                # print "\n\n-----START-----\n", _tikzPartofCode, "\n-----END-----\n\n"
+            print _tikzPartofCode
