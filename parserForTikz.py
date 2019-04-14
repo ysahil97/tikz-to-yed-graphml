@@ -3,17 +3,18 @@ import re
 import os
 import copy
 from pprint import pprint
+from generateGraphml import Graph
 
-def handleNode(line, globalProperties_2):
+def handleNode(G, line, globalProperties_2):
     NodeID = re.findall("\((\w+)\)", line)
     Location = re.findall("at[\s]*\((.*?)\)", line)
-    NodeProperties = re.findall("\[.*?\]", line)
-    Label = re.findall("{.*}", line)
+    NodeProperties = re.findall("\[(.*?)\]", line)
+    Label = re.findall("{(.*)}", line)
     if NodeID:
         NodeID = NodeID[0]
     else:
         NodeID = None
-    if(Label):
+    if Label and len(Label[0]) > 0:
         Label = Label[0]
     else:
         Label = None
@@ -31,19 +32,18 @@ def handleNode(line, globalProperties_2):
             properties[l[0]] = l[1]
         NodeProperties = properties
     else:
-        NodeProperties = None
+        NodeProperties = {}
     # print "-------------------------------------NODESTART"
     # print line
-    print NodeID, 
-    print Label,
-    print Location, 
-    
     # TODO: NodeProperties may override some globalProperties
-    print NodeProperties, 
+
     if(globalProperties_2.has_key("node")):
-        print (globalProperties_2["node"])
-    else:
-        print ""
+        for k,v in globalProperties_2["node"].items():
+            if k not in NodeProperties:
+                NodeProperties[k] = v
+
+    # print("NodeID : ", NodeID, "Label: ", Label, "Location: ", Location, "NodeProperties: ", NodeProperties)
+    G.addNode(NodeID, Location[0], Location[1], label=Label, **NodeProperties)
     # print "-------------------------------------NODEEND"
 
 
@@ -88,6 +88,7 @@ def parseTiKZ(inputFile):
                 joinedProp.append(l)
             else:
                 globalProperties.append(l) 
+
     globalProperties_2 = {}
     for x in globalProperties:
         key, val =  x.split('=', 1)
@@ -98,6 +99,7 @@ def parseTiKZ(inputFile):
                 temp_2 = r.split("=")
                 if(len(temp_2) >= 2):
                     k, v = temp_2[0], temp_2[1]
+                    k = k.replace(" ", "_")
                     temp[k] = v
                 else:
                     temp["shape"] = temp_2[0]
@@ -107,24 +109,27 @@ def parseTiKZ(inputFile):
             globalProperties_2["edge"] = val
         else:
             globalProperties_2[key] = val
-    print globalProperties_2
+
     mainCode=z.groups()[1].strip()
     insideForEach=False
     maybeInsideForEach=False
     block = []
+    G = Graph()
     for line in mainCode.split(';'):
         line=line.strip()
         if(line.__contains__("\\draw")):
             handleDraw(line)
         if(line.__contains__("\\node")):
-            handleNode(line, globalProperties_2)
+            handleNode(G, line, globalProperties_2)
 
+    return G.get_graph()
 
 
 if __name__ == "__main__":
     # fileName = "TestCases/rg-v2.tex"
-    fileName_prefix="/home/pankaj/acads/Sem8/softEng/project/tikz-to-yed-graphml/edge-editing-v2.tex"
+    fileName_prefix="./edge-editing-v2.tex"
     fileName_suffix="_unrolled.tex"
+    graphml_suffix = ".graphml"
     j=0
     while(os.path.exists(fileName_prefix + "t" + str(j) + fileName_suffix)):
         fileName = fileName_prefix + "t" + str(j) + fileName_suffix
@@ -134,6 +139,12 @@ if __name__ == "__main__":
         print ("Parsing File :", fileName)
         print (fileContent)
         print ("======================================")
-        parseTiKZ(fileContent.strip())
+        try:
+            graphml = parseTiKZ(fileContent.strip()).encode("utf-8")
+            with open( fileName_prefix + "t" + str(j) + graphml_suffix, 'w') as outFile:
+                outFile.write(graphml)
+        except Warning as e:
+            print("WARN -> File {} :: RUNTIME ERROR :: {}".format(fileName, e))
+
         j+=1
     
