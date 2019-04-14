@@ -8,19 +8,19 @@ def handleNode(line):
     NodeID = re.findall("\((\w+)\)", line)
     Location = re.findall("at[\s]*\((.*?)\)", line)
     NodeProperties = re.findall("\[.*?\]", line)
-    Label = re.findall("{.*?}", line)
+    Label = re.findall("{.*}", line)
     if NodeID:
         NodeID = NodeID[0]
     else:
         NodeID = None
     if(Label):
-        Label = Label[0].strip('{').strip('}')
+        Label = Label[0]
     else:
         Label = None
     if(Location):
         coordinates = []
         for coord in Location[0].split(','):
-            coordinates.append(float(coord))
+            coordinates.append(coord)
         Location = coordinates
     else:
         Location = None
@@ -34,32 +34,47 @@ def handleNode(line):
         NodeProperties = None
     # print "-------------------------------------NODESTART"
     # print line
-    # print NodeID, 
-    # print Label,
-    # print Location, 
-    # print NodeProperties
+    print NodeID, 
+    print Label,
+    print Location, 
+    print NodeProperties
     # print "-------------------------------------NODEEND"
 
 
 
 def handleDraw(line):
-    a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
-    A = a[0][0].split(",")
-    B = a[0][1].strip()
-    if(B== "ellipse"):
-        C = a[0][2].split("and")
-        C = [x.strip().strip("cm") for x in C]
-    else:
-        C = a[0][2].split(",")
-    print A, B, C
+    print "TODO: ", line
+    pass
+    # TODO : Handle Polar Coordinates
+    # a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
+    # if(a):
+
+    #     A = a[0][0].split(",")
+    #     B = a[0][1].strip()
+    #     if(B== "ellipse"):
+    #         C = a[0][2].split("and")
+    #         C = [x.strip().strip("cm") for x in C]
+    #     else:
+    #         C = a[0][2].split(",")
+    #     print A, B, C
+    # else:
+    #     print "==================+", line
+    #     a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
+        
     
 
 
 def handleForeach(block):
     # print block
+    # sys.exit(1)
 
     line = block[0]
-    remainBlock='\n'.join(block[1:])
+    if(len(block) > 1 and block[1].strip()=="{"):
+        remainBlock='\n'.join(block[2:])
+    else:
+        remainBlock='\n'.join(block[1:])
+                
+    # print remainBlock, block
     toReturn=[]
     if(line.__contains__("\\foreach")):
         searchIterators = re.findall("\\\\foreach(.*)in.*", line)
@@ -86,12 +101,15 @@ def handleForeach(block):
             for n, b in enumerate(a.split("/")):
                 variables[var_n_to_name[n]] = b
                 newBlock = re.sub("\\\\"+var_n_to_name[n], b, newBlock)
-        
-            toReturn.append(copy.copy(newBlock))
-    # print "-------------------------------------FOREACH_START"
-    # pprint (block)
-    # pprint (toReturn)
-    # print "-------------------------------------FOREACH_END"
+            toReturn.append(copy.copy(newBlock).strip())
+    # print toReturn
+    # sys.exit(1)
+    for line in toReturn:
+        # print "----------->" , line
+        if(line.__contains__("\\node")):
+           handleNode(line)
+        if(line.__contains__("\\draw")):
+            handleDraw(line)
 
 
 
@@ -101,6 +119,9 @@ def handleForeach(block):
 
 
 def parseTiKZ(inputFile):
+    print "INPUT FILE STARTS --------------------------------"
+    print inputFile
+    print "INPUT FILE ENDS --------------------------------"
     """
     The file is of following syntax
         [scale=.8,auto=center,every node/.style={circle,inner sep=4pt}]
@@ -118,6 +139,43 @@ def parseTiKZ(inputFile):
     fileRegex = re.compile("(\s*\\[[^\\\\]*\\])((.|\n)*)", re.MULTILINE)
     z = fileRegex.match(inputFile)
     globalSpecs=z.groups()[0].strip()
+    if(globalSpecs):
+        globalSpecs = globalSpecs.strip("[").strip("]")
+    brakets = 0
+    joinedProp = []
+    globalProperties = []
+    for l in globalSpecs.split(','):
+        if(brakets  > 0):
+            brakets += l.count("{")-l.count("}")
+            joinedProp.append(l)
+            if(brakets==0):
+                globalProperties.append(",".join(joinedProp))
+        else:
+            brakets += l.count("{")-l.count("}")
+            if(brakets>0):
+                joinedProp.append(l)
+            else:
+                globalProperties.append(l) 
+    globalProperties_2 = {}
+    for x in globalProperties:
+        key, val =  x.split('=', 1)
+        if(key.__contains__("node")):
+            val = val.strip("{").strip("}")
+            temp = {}
+            for r in val.split(","):
+                temp_2 = r.split("=")
+                if(len(temp_2) >= 2):
+                    k, v = temp_2[0], temp_2[1]
+                    temp[k] = v
+                else:
+                    temp[temp_2[0]] = temp_2[0]
+
+                globalProperties_2["node"] = temp
+        elif(key.__contains__("edge")):
+            globalProperties_2["edge"] = val
+        else:
+            globalProperties_2[key] = val
+    print globalProperties_2
     mainCode=z.groups()[1].strip()
     insideForEach=False
     maybeInsideForEach=False
@@ -139,19 +197,21 @@ def parseTiKZ(inputFile):
 
         elif(insideForEach):
             block.append(line)
-            if(line[0] == "{"):
-                brackets = brackets + line.count("{") - line.count("}")                
-                if(brackets==0):
-                    insideForEach=False
-                    handleForeach(block)
-                    # print "CASE_A_:", block
-                    block = []
-            else:
+            # print "-------->", line
+            brackets = brackets + line.count("{") - line.count("}")                
+            # if(line[0] == "{"):
+            if(brackets==0):
                 insideForEach=False
                 handleForeach(block)
-                # print "CASE_B_:", block
+                # print "CASE_A_:", block
                 block = []
-            continue
+            # else:
+                
+            #     insideForEach=False
+            #     handleForeach(block)
+            #     # print "CASE_B_:", block
+            #     block = []
+            # continue
                 
         if(line.__contains__("\\node")):
            handleNode(line)
@@ -184,8 +244,8 @@ def parseTiKZ(inputFile):
 
 
 
-# fileName = "rg-v2.tex"
-fileName="TestCases/edge-editing-v2.tex"
+fileName = "TestCases/rg-v2.tex"
+# fileName="TestCases/edge-editing-v2.tex"
 with open(fileName) as inputFile:
     fileContent = inputFile.read()
 regextToGetTikzPictureCode = re.compile("\\\\end[\s]*{tikzpicture}", re.MULTILINE)
@@ -200,3 +260,4 @@ for x in z:
         count += 1
         if(count%2==1):
             z = parseTiKZ(y)
+            # sys.exit(1)
