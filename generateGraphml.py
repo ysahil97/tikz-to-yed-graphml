@@ -27,7 +27,7 @@ class Graph:
 		if m and len(m.group(1)) > 0 and m.group(1) != ".":
 			scalingFactor *= float(m.group(1))
 
-		scalingFactor *= float(scale) * 50 * 2
+		scalingFactor *= float(scale) * 100 * 2
 		return scalingFactor
 
 	def addNode(self, nodeID, X, Y, label=None, inner_sep="1pt", fill="none", scale=".8", shape="ellipse"):

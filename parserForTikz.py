@@ -33,24 +33,27 @@ def handleNode(G, line, globalProperties_2):
         NodeProperties = properties
     else:
         NodeProperties = {}
-    # print "-------------------------------------NODESTART"
-    # print line
+    # print("-------------------------------------NODESTART")
+    # print(line)
     # TODO: NodeProperties may override some globalProperties
+    if "scale" in globalProperties_2:
+        if "scale" not in NodeProperties:
+            NodeProperties["scale"] = globalProperties_2["scale"]
 
-    if(globalProperties_2.has_key("node")):
+    if "node" in globalProperties_2:
         for k,v in globalProperties_2["node"].items():
             if k not in NodeProperties:
                 NodeProperties[k] = v
 
     # print("NodeID : ", NodeID, "Label: ", Label, "Location: ", Location, "NodeProperties: ", NodeProperties)
     G.addNode(NodeID, Location[0], Location[1], label=Label, **NodeProperties)
-    # print "-------------------------------------NODEEND"
+    # print("-------------------------------------NODEEND")
 
 
 
 # TODO : Handle Polar Coordinates
 def handleDraw(line):
-    print "TODO: ", line
+    print("TODO: ", line)
     # pass
     # a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
     # if(a):
@@ -61,9 +64,9 @@ def handleDraw(line):
     #         C = [x.strip().strip("cm") for x in C]
     #     else:
     #         C = a[0][2].split(",")
-    #     print A, B, C
+    #     print(A, B, C)
     # else:
-    #     print "todo : ", line
+    #     print("todo : ", line)
     #     a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
         
     
@@ -135,13 +138,13 @@ if __name__ == "__main__":
         fileName = fileName_prefix + "t" + str(j) + fileName_suffix
         with open(fileName) as inputFile:
             fileContent = inputFile.read()
-        print ("======================================")
-        print ("Parsing File :", fileName)
-        print (fileContent)
-        print ("======================================")
+        print("======================================")
+        print("Parsing File :", fileName)
+        print(fileContent)
+        print("======================================")
         try:
             graphml = parseTiKZ(fileContent.strip()).encode("utf-8")
-            with open( fileName_prefix + "t" + str(j) + graphml_suffix, 'w') as outFile:
+            with open( fileName_prefix + "t" + str(j) + graphml_suffix, 'wb') as outFile:
                 outFile.write(graphml)
         except Warning as e:
             print("WARN -> File {} :: RUNTIME ERROR :: {}".format(fileName, e))
