@@ -152,6 +152,7 @@ def parseTiKZ(inputFile):
     print(globalProperties)
 
     tikzCode=z.groups()[1].strip()
+    G = Graph()
     for line in tikzCode.split(';'):
         line=line.strip()
         if(line.__contains__("\\draw")):
