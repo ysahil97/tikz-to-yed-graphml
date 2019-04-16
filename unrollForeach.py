@@ -25,6 +25,17 @@ def floatRange(stat, end, step):
 def replaceVarsinForeach(foreachHead, block):
     block.strip().strip("{").strip("}")
     unrolledBlocks=""
+
+    # greps variable and their values in foreach statement
+    #
+    # Example 
+    #
+    # \foreach \from/\to in {B/t4,B/t5,C/t6,C/t7} { block }
+    # Variables = {\from, \to}
+    # Values {
+    #    \from : B, B, C, C
+    #    \to : t4, t5, t6, t7
+    # }
     x=re.findall("\\\\foreach(.*)in[\s]*{(.*?)}", foreachHead)
     if(x):
         x = x[0]
@@ -56,6 +67,7 @@ def replaceVarsinForeach(foreachHead, block):
             for rangeValues in rangeOfVariables:
                 remainblock=copy.copy(block)
                 for i, val in enumerate(rangeValues.strip().split("/")):
+                    # Subsitute variable with its value in entire block
                     remainblock = re.sub("\\\\"+var_index_to_name[i], val, remainblock)
                 unrolledBlocks += remainblock + "\n"
     return unrolledBlocks
@@ -63,6 +75,10 @@ def replaceVarsinForeach(foreachHead, block):
 
 # Find Foreach block in code and then copy blocks and in each block replace variables by their values
 def parseAndHandleForEach(tikzBlock):
+    # Find all the foreach and its corresponding block in tikz code and call the replaceVars function
+    # \foreach \from/\to in {B/t4,B/t5,C/t6,C/t7} 
+    #     block
+    # Not block may contain foreach statement
     regexForForeach = re.compile("\\\\foreach.*?in[\s]*{.*?}[\s]*", re.MULTILINE)
     firstForeach = re.finditer(regexForForeach, tikzBlock).next()
     if(not firstForeach):

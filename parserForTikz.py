@@ -5,10 +5,17 @@ import copy
 from pprint import pprint
 from generateGraphml import Graph
 
-def handleNode(G, line, globalProperties_2):
+
+
+def handleNode(G, line, globalProperties):
+    #  \node (nodeidentifier) at (Location: polar or cartession) {Label};
+     # This regex will capture the alphanumeric text inside parenthesis since Location involves ',' and ':' which are not alphanumeric, it won't be captures 
     NodeID = re.findall("\((\w+)\)", line)
+    # Location is always in parenthesis after at .. so search for "at ()" and capture the text inside parenthesis
     Location = re.findall("at[\s]*\((.*?)\)", line)
+    # everything inside [] is nodeproperties
     NodeProperties = re.findall("\[(.*?)\]", line)
+    # Text inside {} contains node label
     Label = re.findall("{(.*)}", line)
     if NodeID:
         NodeID = NodeID[0]
@@ -18,14 +25,16 @@ def handleNode(G, line, globalProperties_2):
         Label = Label[0]
     else:
         Label = None
-    if(Location):
+    
+    if Location:
         coordinates = []
         for coord in Location[0].split(','):
             coordinates.append(coord)
         Location = coordinates
     else:
         Location = None
-    if(NodeProperties):
+    
+    if NodeProperties:
         properties = {}
         for prop in NodeProperties[0].split(','):
             l = prop.split('=')
@@ -36,22 +45,37 @@ def handleNode(G, line, globalProperties_2):
     # print("-------------------------------------NODESTART")
     # print(line)
     # TODO: NodeProperties may override some globalProperties
-    if "scale" in globalProperties_2:
+    if globalProperties and "scale" in globalProperties:
         if "scale" not in NodeProperties:
-            NodeProperties["scale"] = globalProperties_2["scale"]
+            NodeProperties["scale"] = globalProperties["scale"]
 
-    if "node" in globalProperties_2:
-        for k,v in globalProperties_2["node"].items():
+    if globalProperties and "node" in globalProperties:
+        for k,v in globalProperties["node"].items():
             if k not in NodeProperties:
                 NodeProperties[k] = v
 
     # print("NodeID : ", NodeID, "Label: ", Label, "Location: ", Location, "NodeProperties: ", NodeProperties)
     G.addNode(NodeID, Location[0], Location[1], label=Label, **NodeProperties)
-    # print("-------------------------------------NODEEND")
+    # if(globalProperties and globalProperties.has_key("node")):
+    #     globalNodeProp = globalProperties["node"]
+    # else:
+    #     for key, val in NodeProperties.iteritems():
+    #         print key, val
+
+    # if(NodeProperties):
+    #     for key, val in globalNodeProp.iteritems():
+    #         if(NodeProperties.has_key(key)):
+    #             print key, NodeProperties[key]
+    #         else:
+    #             print key, val
+    # else:
+    #     for key, val in globalNodeProp.iteritems():
+    #         print key, val
 
 
 
 # TODO : Handle Polar Coordinates
+# TODO : Handle all draw cases
 def handleDraw(line):
     print("TODO: ", line)
     # pass
@@ -69,32 +93,43 @@ def handleDraw(line):
     #     print("todo : ", line)
     #     a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
         
-    
+
+# Get globalSpecs and Code from inputFile
+# Go through mainCode and handle each instruction (Only node for now)
 def parseTiKZ(inputFile):
+    # Tikz Code format is :
+    # [GlobalProperties] MainCode
+    # This regex captures GlobalProperties and MainCode as group 0 and 1 respectively
     fileRegex = re.compile("(\s*\\[[^\\\\]*\\])((.|\n)*)", re.MULTILINE)
     z = fileRegex.match(inputFile)
-    globalSpecs=z.groups()[0].strip()
-    if(globalSpecs):
-        globalSpecs = globalSpecs.strip("[").strip("]")
+    if(len(z.groups())!=3):
+        print ("Cannot Parse file")
+        return
+    matchedGlobalSpecs=z.groups()[0]
+    if(matchedGlobalSpecs):
+        matchedGlobalSpecs = matchedGlobalSpecs.strip().strip("[").strip("]")
     brakets = 0
-    joinedProp = []
-    globalProperties = []
-    for l in globalSpecs.split(','):
+    subProp = []
+    allProps = []
+    # Normal split won't work in cases like below
+    # scale=.8,auto=center,every node/.style={circle,inner sep=4pt}
+    # Because of "every node/.style={circle,inner sep=4pt}"
+    for l in matchedGlobalSpecs.split(','):
         if(brakets  > 0):
             brakets += l.count("{")-l.count("}")
-            joinedProp.append(l)
+            subProp.append(l)
             if(brakets==0):
-                globalProperties.append(",".join(joinedProp))
+                allProps.append(",".join(subProp))
         else:
             brakets += l.count("{")-l.count("}")
             if(brakets>0):
-                joinedProp.append(l)
+                subProp.append(l)
             else:
-                globalProperties.append(l) 
+                allProps.append(l) 
 
-    globalProperties_2 = {}
-    for x in globalProperties:
-        key, val =  x.split('=', 1)
+    globalProperties = {}
+    for prop in globalProperties:
+        key, val =  prop.split('=', 1)
         if(key.__contains__("node")):
             val = val.strip("{").strip("}")
             temp = {}
@@ -107,23 +142,22 @@ def parseTiKZ(inputFile):
                 else:
                     temp["shape"] = temp_2[0]
 
-                globalProperties_2["node"] = temp
+                globalProperties["node"] = temp
         elif(key.__contains__("edge")):
-            globalProperties_2["edge"] = val
+            # TODO: Not seen this so not handled (added just in case)
+            globalProperties["edge"] = val
         else:
-            globalProperties_2[key] = val
+            globalProperties[key] = val
 
-    mainCode=z.groups()[1].strip()
-    insideForEach=False
-    maybeInsideForEach=False
-    block = []
-    G = Graph()
-    for line in mainCode.split(';'):
+    print(globalProperties)
+
+    tikzCode=z.groups()[1].strip()
+    for line in tikzCode.split(';'):
         line=line.strip()
         if(line.__contains__("\\draw")):
             handleDraw(line)
         if(line.__contains__("\\node")):
-            handleNode(G, line, globalProperties_2)
+            handleNode(G, line, globalProperties)
 
     return G.get_graph()
 
@@ -150,4 +184,3 @@ if __name__ == "__main__":
             print("WARN -> File {} :: RUNTIME ERROR :: {}".format(fileName, e))
 
         j+=1
-    
