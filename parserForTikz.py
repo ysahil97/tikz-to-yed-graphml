@@ -3,26 +3,25 @@ import re
 import os
 import copy
 from pprint import pprint
+from generateGraphml import Graph
 
 
 
-def handleNode(line, globalProperties):
+def handleNode(G, line, globalProperties):
     #  \node (nodeidentifier) at (Location: polar or cartession) {Label};
      # This regex will capture the alphanumeric text inside parenthesis since Location involves ',' and ':' which are not alphanumeric, it won't be captures 
     NodeID = re.findall("\((\w+)\)", line)
     # Location is always in parenthesis after at .. so search for "at ()" and capture the text inside parenthesis
     Location = re.findall("at[\s]*\((.*?)\)", line)
     # everything inside [] is nodeproperties
-    NodeProperties = re.findall("\[.*?\]", line)
+    NodeProperties = re.findall("\[(.*?)\]", line)
     # Text inside {} contains node label
-    Label = re.findall("{.*}", line)
-
+    Label = re.findall("{(.*)}", line)
     if NodeID:
         NodeID = NodeID[0]
     else:
         NodeID = None
-
-    if Label:
+    if Label and len(Label[0]) > 0:
         Label = Label[0]
     else:
         Label = None
@@ -42,15 +41,21 @@ def handleNode(line, globalProperties):
             properties[l[0]] = l[1]
         NodeProperties = properties
     else:
-        NodeProperties = None
+        NodeProperties = {}
+    # print("-------------------------------------NODESTART")
+    # print(line)
+    # TODO: NodeProperties may override some globalProperties
+    if globalProperties and "scale" in globalProperties:
+        if "scale" not in NodeProperties:
+            NodeProperties["scale"] = globalProperties["scale"]
 
-    # print "-------------------------------------NODESTART"
-    # print line
-    print NodeID,
-    print Label,
-    print Location,
-    globalNodeProp = {}
+    if globalProperties and "node" in globalProperties:
+        for k,v in globalProperties["node"].items():
+            if k not in NodeProperties:
+                NodeProperties[k] = v
 
+    # print("NodeID : ", NodeID, "Label: ", Label, "Location: ", Location, "NodeProperties: ", NodeProperties)
+    G.addNode(NodeID, Location[0], Location[1], label=Label, **NodeProperties)
     # if(globalProperties and globalProperties.has_key("node")):
     #     globalNodeProp = globalProperties["node"]
     # else:
@@ -67,14 +72,11 @@ def handleNode(line, globalProperties):
     #     for key, val in globalNodeProp.iteritems():
     #         print key, val
 
-    print(NodeProperties, globalProperties)
-    
-    # print "-------------------------------------NODEEND"
-
 
 
 # TODO : Handle Polar Coordinates
 def handleDraw(line):
+<<<<<<< HEAD
     # This regex helps to know if it is draw of type
     # \draw [properties]? node1 -- node2 -- node3 -- ..... 
     regexToMatchOnlyDrawLine = re.compile("\\\\draw.*?(\\-\\-\s*\(.*?\))+", re.MULTILINE)
@@ -148,6 +150,12 @@ def handleDraw(line):
 
 
 
+=======
+    print("TODO: ", line)
+    # pass
+    # a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
+    # if(a):
+>>>>>>> 8481f3ad5b13358bdfb90c602191f04f7b3ad7fc
     #     A = a[0][0].split(",")
     #     B = a[0][1].strip()
     #     if(B== "ellipse"):
@@ -155,9 +163,9 @@ def handleDraw(line):
     #         C = [x.strip().strip("cm") for x in C]
     #     else:
     #         C = a[0][2].split(",")
-    #     print A, B, C
+    #     print(A, B, C)
     # else:
-    #     print "todo : ", line
+    #     print("todo : ", line)
     #     a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
         
 
@@ -204,6 +212,7 @@ def parseTiKZ(inputFile):
                 temp_2 = r.split("=")
                 if(len(temp_2) >= 2):
                     k, v = temp_2[0], temp_2[1]
+                    k = k.replace(" ", "_")
                     temp[k] = v
                 else:
                     temp["shape"] = temp_2[0]
@@ -215,28 +224,39 @@ def parseTiKZ(inputFile):
         else:
             globalProperties[key] = val
 
-    print globalProperties
+    print(globalProperties)
 
     tikzCode=z.groups()[1].strip()
+    G = Graph()
     for line in tikzCode.split(';'):
         line=line.strip()
         if(line.__contains__("\\draw")):
             handleDraw(line)
         if(line.__contains__("\\node")):
-            handleNode(line, globalProperties)
+            handleNode(G, line, globalProperties)
+
+    return G.get_graph()
+
 
 if __name__ == "__main__":
     # fileName = "TestCases/rg-v2.tex"
-    fileName_prefix="/home/pankaj/acads/Sem8/softEng/project/tikz-to-yed-graphml/edge-editing-v2.tex"
+    fileName_prefix="./edge-editing-v2.tex"
     fileName_suffix="_unrolled.tex"
+    graphml_suffix = ".graphml"
     j=0
     while(os.path.exists(fileName_prefix + "t" + str(j) + fileName_suffix)):
         fileName = fileName_prefix + "t" + str(j) + fileName_suffix
         with open(fileName) as inputFile:
             fileContent = inputFile.read()
-        print ("======================================")
-        print ("Parsing File :", fileName)
-        # print (fileContent)
-        print ("======================================")
-        parseTiKZ(fileContent.strip())
+        print("======================================")
+        print("Parsing File :", fileName)
+        print(fileContent)
+        print("======================================")
+        try:
+            graphml = parseTiKZ(fileContent.strip()).encode("utf-8")
+            with open( fileName_prefix + "t" + str(j) + graphml_suffix, 'wb') as outFile:
+                outFile.write(graphml)
+        except Warning as e:
+            print("WARN -> File {} :: RUNTIME ERROR :: {}".format(fileName, e))
+
         j+=1
