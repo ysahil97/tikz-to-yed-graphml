@@ -75,12 +75,80 @@ def handleNode(G, line, globalProperties):
 
 
 # TODO : Handle Polar Coordinates
-# TODO : Handle all draw cases
 def handleDraw(line):
-    print("TODO: ", line)
-    # pass
-    # a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
-    # if(a):
+    # This regex helps to know if it is draw of type
+    # \draw [properties]? node1 -- node2 -- node3 -- ..... 
+    regexToMatchOnlyDrawLine = re.compile("\\\\draw.*?(\\-\\-\s*\(.*?\))+", re.MULTILINE)
+    if(regexToMatchOnlyDrawLine.match(line.strip())):
+        # get them as group
+        matchGroup = re.findall("\\\\draw\s*(\[(.*?)\])?(.*)", line)
+        if (matchGroup):
+            allNodes = matchGroup[0][2]
+            props = matchGroup[0][1]
+        nodes = [x.strip().strip(")").strip("(") for x in allNodes.split("--")]
+        for i in range(len(nodes)-1):
+            print "line from ", nodes[i], " to ", nodes[i+1]
+        print "PROPS", props, allNodes
+        return
+
+    #  To match \draw properties? node1 edge node2
+    # Example
+    # \draw[->] (n2) edge (n0);
+    # NOT DONE: \draw[->] (n2) edge[bend right = 45] (n0);
+    regexToMatchOnlyEdge = re.compile("\\\\draw\s*(\[.*?\])?\s*(\(.*?\)\s*edge\s*\(.*?\))", re.MULTILINE)
+    matched=regexToMatchOnlyEdge.match(line)
+    if(matched):
+        allNodes = matched.group(2)
+        props = matched.group(1)
+        nodes = [x.strip().strip(")").strip("(") for x in allNodes.split("edge")]
+        for i in range(len(nodes)-1):
+            print "Edge from ", nodes[i], " to ", nodes[i+1]
+        print "Edge PROPS", props, allNodes
+        return
+
+    #  To match \draw properties? node1 rectangle node2
+    # Example
+    # \draw (n1) rectangle (n2);
+    regexToMatchOnlyRectangle = re.compile("\\\\draw\s*(\(.*?\)\s*rectangle\s*\(.*?\))", re.MULTILINE)
+    # may need if rect prop in [] are there
+    # regexToMatchOnlyRectangle = re.compile("\\\\draw\s*(\[.*?\])?\s*(\(.*?\)\s*rectangle\s*\(.*?\))", re.MULTILINE)
+    matched=regexToMatchOnlyRectangle.match(line)
+    if(matched):
+        coordinates = matched.group(1)
+        nodes = [x.strip().strip(")").strip("(") for x in coordinates.split("rectangle")]
+        for i in range(len(nodes)-1):
+            print "rectangle at (", nodes[i], ") .... (", nodes[i+1], ")"
+        return
+
+    #  To match \draw properties? node1 rectangle node2
+    # Example
+    # \draw (n1) ellipse (n2);
+    # regexToMatchOnlyellipse_may_NEED_IF_PROP_clause_there = re.compile("\\\\draw\s*(\[.*?\])?\s*(\(.*?\)\s*ellipse\s*\(.*?\))", re.MULTILINE)
+    regexToMatchOnlyellipse = re.compile("\\\\draw\s*(\(.*?\)\s*ellipse\s*\(.*?\))", re.MULTILINE)
+    matched=regexToMatchOnlyellipse.match(line)
+    if(matched):
+        coordinates = matched.group(1)
+        nodes = [x.strip().strip(")").strip("(") for x in coordinates.split("ellipse")]
+        for i in range(len(nodes)-1):
+            print "ellipse at (", nodes[i], ") .... (", nodes[i+1], ")"
+        return
+
+    # To match \draw Location node[NodeProp] {Label}
+    # Example
+    # \draw (0*360/5: 3.5cm) node[fill=green!90]{};
+    regexToMatchDrawNode = re.compile("\\\\draw\s*(\((.*?)\).*?node.*?\[(.*?)\]\s*{(.*?)})", re.MULTILINE)
+    matched=regexToMatchDrawNode.match(line)
+    if(matched):
+        Location = matched.group(2)
+        Props = matched.group(3)
+        Label = matched.group(4)
+        print "Draw Node ", Label, " at ", Location, "with Props (", Props, ")",
+        return
+    print "TODO: ", line, "Exiting"
+    sys.exit(1)
+
+
+
     #     A = a[0][0].split(",")
     #     B = a[0][1].strip()
     #     if(B== "ellipse"):
