@@ -76,7 +76,6 @@ def handleNode(G, line, globalProperties):
 
 # TODO : Handle Polar Coordinates
 def handleDraw(line):
-<<<<<<< HEAD
     # This regex helps to know if it is draw of type
     # \draw [properties]? node1 -- node2 -- node3 -- ..... 
     regexToMatchOnlyDrawLine = re.compile("\\\\draw.*?(\\-\\-\s*\(.*?\))+", re.MULTILINE)
@@ -150,12 +149,6 @@ def handleDraw(line):
 
 
 
-=======
-    print("TODO: ", line)
-    # pass
-    # a = re.findall("\\\\draw[\s]*\((.*?)\)(.*?)\((.*?)\)", line)
-    # if(a):
->>>>>>> 8481f3ad5b13358bdfb90c602191f04f7b3ad7fc
     #     A = a[0][0].split(",")
     #     B = a[0][1].strip()
     #     if(B== "ellipse"):
