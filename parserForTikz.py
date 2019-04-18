@@ -53,7 +53,7 @@ def handleNode(G, line, globalProperties):
         for k,v in globalProperties["node"].items():
             if k not in NodeProperties:
                 NodeProperties[k] = v
-
+    
     # print("NodeID : ", NodeID, "Label: ", Label, "Location: ", Location, "NodeProperties: ", NodeProperties)
     G.addNode(NodeID, Location[0], Location[1], label=Label, **NodeProperties)
     # if(globalProperties and globalProperties.has_key("node")):
@@ -75,7 +75,7 @@ def handleNode(G, line, globalProperties):
 
 
 # TODO : Handle Polar Coordinates
-def handleDraw(line):
+def handleDraw(G, line):
     # This regex helps to know if it is draw of type
     # \draw [properties]? node1 -- node2 -- node3 -- ..... 
     regexToMatchOnlyDrawLine = re.compile("\\\\draw.*?(\\-\\-\s*\(.*?\))+", re.MULTILINE)
@@ -87,8 +87,9 @@ def handleDraw(line):
             props = matchGroup[0][1]
         nodes = [x.strip().strip(")").strip("(") for x in allNodes.split("--")]
         for i in range(len(nodes)-1):
-            print "line from ", nodes[i], " to ", nodes[i+1]
-        print "PROPS", props, allNodes
+            print("line from ", nodes[i], " to ", nodes[i+1])
+            G.addEdge(nodes[i], nodes[i+1])
+        print("PROPS", props, allNodes)
         return
 
     #  To match \draw properties? node1 edge node2
@@ -102,13 +103,14 @@ def handleDraw(line):
         props = matched.group(1)
         nodes = [x.strip().strip(")").strip("(") for x in allNodes.split("edge")]
         for i in range(len(nodes)-1):
-            print "Edge from ", nodes[i], " to ", nodes[i+1]
-        print "Edge PROPS", props, allNodes
+            print("Edge from ", nodes[i], " to ", nodes[i+1])
+            G.addEdge(nodes[i], nodes[i+1])
+        print("Edge PROPS", props, allNodes)
         return
 
-    #  To match \draw properties? node1 rectangle node2
-    # Example
-    # \draw (n1) rectangle (n2);
+    # #  To match \draw properties? node1 rectangle node2
+    # # Example
+    # # \draw (n1) rectangle (n2);
     regexToMatchOnlyRectangle = re.compile("\\\\draw\s*(\(.*?\)\s*rectangle\s*\(.*?\))", re.MULTILINE)
     # may need if rect prop in [] are there
     # regexToMatchOnlyRectangle = re.compile("\\\\draw\s*(\[.*?\])?\s*(\(.*?\)\s*rectangle\s*\(.*?\))", re.MULTILINE)
@@ -116,8 +118,17 @@ def handleDraw(line):
     if(matched):
         coordinates = matched.group(1)
         nodes = [x.strip().strip(")").strip("(") for x in coordinates.split("rectangle")]
+        print(nodes)
         for i in range(len(nodes)-1):
-            print "rectangle at (", nodes[i], ") .... (", nodes[i+1], ")"
+            coordinates_XY = [x.strip() for x in nodes[i].split(',')]
+            coordinates_X1Y1 = [x.strip() for x in nodes[i+1].split(',')]
+
+            x, y = float(coordinates_XY[0]), float(coordinates_XY[1])
+            x1, y1 = float(coordinates_X1Y1[0]), float(coordinates_X1Y1[1])
+            length = x - x1
+            width = y - y1
+            print("rectangle at (", x, ") .... (", y + width, ")", "length : ", length, "  , width : ", width)
+            G.addShape(None, x, y + width, abs(length*10), abs(width*10), shape="rectangle")
         return
 
     #  To match \draw properties? node1 rectangle node2
@@ -130,7 +141,7 @@ def handleDraw(line):
         coordinates = matched.group(1)
         nodes = [x.strip().strip(")").strip("(") for x in coordinates.split("ellipse")]
         for i in range(len(nodes)-1):
-            print "ellipse at (", nodes[i], ") .... (", nodes[i+1], ")"
+            print("ellipse at (", nodes[i], ") .... (", nodes[i+1], ")")
         return
 
     # To match \draw Location node[NodeProp] {Label}
@@ -142,9 +153,9 @@ def handleDraw(line):
         Location = matched.group(2)
         Props = matched.group(3)
         Label = matched.group(4)
-        print "Draw Node ", Label, " at ", Location, "with Props (", Props, ")",
+        print("Draw Node ", Label, " at ", Location, "with Props (", Props, ")")
         return
-    print "TODO: ", line, "Exiting"
+    print("TODO: ", line, "Exiting")
     sys.exit(1)
 
 
@@ -196,7 +207,7 @@ def parseTiKZ(inputFile):
                 allProps.append(l) 
 
     globalProperties = {}
-    for prop in globalProperties:
+    for prop in allProps:
         key, val =  prop.split('=', 1)
         if(key.__contains__("node")):
             val = val.strip("{").strip("}")
@@ -217,14 +228,12 @@ def parseTiKZ(inputFile):
         else:
             globalProperties[key] = val
 
-    print(globalProperties)
-
     tikzCode=z.groups()[1].strip()
     G = Graph()
     for line in tikzCode.split(';'):
         line=line.strip()
         if(line.__contains__("\\draw")):
-            handleDraw(line)
+            handleDraw(G, line)
         if(line.__contains__("\\node")):
             handleNode(G, line, globalProperties)
 
@@ -243,13 +252,12 @@ if __name__ == "__main__":
             fileContent = inputFile.read()
         print("======================================")
         print("Parsing File :", fileName)
-        print(fileContent)
+        # print(fileContent)
         print("======================================")
         try:
             graphml = parseTiKZ(fileContent.strip()).encode("utf-8")
             with open( fileName_prefix + "t" + str(j) + graphml_suffix, 'wb') as outFile:
                 outFile.write(graphml)
         except Warning as e:
-            print("WARN -> File {} :: RUNTIME ERROR :: {}".format(fileName, e))
-
+            print("WARN -> File {} :: WARNING :: {}".format(fileName, e))
         j+=1

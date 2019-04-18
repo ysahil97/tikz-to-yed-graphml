@@ -123,8 +123,8 @@ class Node:
                  y=False, node_type="ShapeNode", UML=False):
 
         self.label = label
-        if label is None:
-            self.label = node_name
+        # if label is None:
+        #     self.label = node_name
 
         self.node_name = node_name
 
@@ -211,7 +211,7 @@ class Node:
 
 
 class Edge:
-    def __init__(self, node1, node2, label="", arrowhead="standard", arrowfoot="none",
+    def __init__(self, node1, node2, label="", arrowhead="none", arrowfoot="none",
                  color="#000000", line_type="line", width="1.0"):
         self.node1 = node1
         self.node2 = node2
@@ -324,7 +324,7 @@ class Graph:
 
         self.nodes[node_name] = Node(node_name, **kwargs)
 
-    def add_edge(self, node1, node2, label="", arrowhead="standard", arrowfoot="none",
+    def add_edge(self, node1, node2, label="", arrowhead="none", arrowfoot="none",
                  color="#000000", line_type="line",
                  width="1.0"):
         # pass node names, not actual node objects
