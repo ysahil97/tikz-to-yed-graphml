@@ -12,6 +12,8 @@ node
 
 nodeID
     : '(' ID ')'
+    | '(' ')'       // Node ID can be empty
+    |
     ;
 
 coordinates
@@ -21,9 +23,10 @@ coordinates
 
 label   
     : '{' ID '}'
+    | '{' '}'    // Label can be empty
     ;
 
-ID : [a-zA-Z] [a-zA-Z0-9]* ; // match usual identifier spec
+ID : [a-zA-Z] [a-zA-Z0-9]* ;
 DIGIT: [0-9]+;
 DELIMITER: ';';
 WS : [ \r\t\n]+ -> skip ;
