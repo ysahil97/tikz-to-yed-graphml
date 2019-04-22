@@ -2,8 +2,8 @@ import sys
 import antlr4
 import logging
 from grammar.TikzLexer import TikzLexer
-from grammar.TikzListener import TikzListener
 from grammar.TikzParser import TikzParser
+from grammar.TikzListener import TikzListener
 from CustomTikzListener import CustomTikzListener
 
 logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-1s [%(filename)s:%(lineno)d] %(message)s',

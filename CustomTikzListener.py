@@ -24,9 +24,9 @@ class CustomTikzListener(TikzListener) :
 
     def exitNode(self, ctx:TikzParser.NodeContext):
         self.G.addNode(
-            ctx.nodeID().id,
-            ctx.coordinates().x,
-            ctx.coordinates().y,
+            nodeID=ctx.nodeID().id,
+            X=ctx.coordinates().x,
+            Y=ctx.coordinates().y,
             label=ctx.label().label
         )
 

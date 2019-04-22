@@ -69,7 +69,7 @@ class Graph:
 			"edge_width": "1.0"
 		})
 
-	def addNode(self, nodeID:str, X:str, Y:str, label:str = None, inner_sep:str = "2.5pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse"):
+	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None, inner_sep:str = "2.5pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse"):
 		clr = self.getColor(fill)
 
 		if nodeID is None:
