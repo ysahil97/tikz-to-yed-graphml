@@ -19,7 +19,6 @@ def main():
     stream = antlr4.CommonTokenStream(lexer)
     parser = TikzParser(stream)
     tree = parser.begin()
-
     htmlChat = CustomTikzListener(inputFileName, './TestCases/graph.graphml')
     walker = antlr4.ParseTreeWalker()
     walker.walk(htmlChat, tree)
