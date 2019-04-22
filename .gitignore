@@ -123,3 +123,13 @@ venv.bak/
 .idea/
 *.iml
 /**/gen
+
+# Output files
+*.graphml
+
+#pdflatex files
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
