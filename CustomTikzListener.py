@@ -9,9 +9,12 @@ from generateGraphml import Graph
 class CustomTikzListener(TikzListener) :
     def __init__(self, inputFileName:str, outputFileName:str):
         self.currentNode = {}
+        self.currentEdgeNode = {}
         self.G = Graph()
         self.inputFileName = inputFileName
         self.outputFileName = outputFileName
+        self.edgesNodesList = []
+        self.uniquecounter = 0
 
     def exitBegin(self, ctx:TikzParser.BeginContext):
         try:
@@ -42,7 +45,43 @@ class CustomTikzListener(TikzListener) :
             self.currentNode["label"] = ctx.VARIABLE().getText()
         else:
             self.currentNode["label"] = None
-    
+
+    def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
+        if ctx.VARIABLE() is not None:
+            coord_x = -1*self.uniquecounter
+            coord_y = -1*self.uniquecounter
+            self.currentEdgeNode[(coord_x,coord_y)] = ctx.VARIABLE().getText()
+            self.uniquecounter-=1
+        else:
+            coord_x = ctx.DIGIT(0).getText()
+            coord_y = ctx.DIGIT(1).getText()
+            node_insert = {}
+            node_insert["X"] = coord_x
+            node_insert["Y"] = coord_y
+            self.G.addNode(**node_insert)
+            self.currentEdgeNode[(coord_x,coord_y)] = None
+
+    def exitDraw(self,ctx:TikzParser.DrawContext):
+        first_node_seen = True
+        node1 = None
+        node2 = None
+        x1 = "0"
+        y1 = "0"
+        x2 = "0"
+        y2 = "0"
+        for k in self.currentEdgeNode.keys():
+            if first_node_seen:
+                node1 = self.currentEdgeNode[k]
+                x1 = k[0]
+                y1 = k[1]
+                first_node_seen = False
+                continue
+            node2 = self.currentEdgeNode[k]
+            x2 = k[0]
+            y2 = k[1]
+            self.G.addEdge(node1,node2,x1,y1,x2,y2)
+            node1,x1,y1 = node2,x2,y2
+
     def exitIndividualProperty(self, ctx:TikzParser.IndividualPropertyContext):
         key = ""
         value = ""

@@ -14,8 +14,23 @@ globalProperty
     ;
 
 instructions    : node instructions
+                | draw instructions
+                | draw
                 | node
                 ;
+
+draw
+    :DRAW nodeList SEMICOLON
+    ;
+
+nodeList
+    : edgeNode '--' nodeList
+    | edgeNode
+    ;
+
+edgeNode
+    : (OPEN_PARANTHESES VARIABLE CLOSE_PARANTHESES)? (OPEN_PARANTHESES DIGIT (COMMA|COLON) DIGIT CLOSE_PARANTHESES)?
+    ;
 
 node
     : NODE nodeId nodeProperties AT coordinates label SEMICOLON
@@ -57,6 +72,7 @@ BEGINTIKZPICTURE: '\\begin{tikzpicture}';
 ENDTIKZPICTURE: '\\end{tikzpicture}';
 
 NODE: '\\node';
+DRAW: '\\draw';
 AT: 'at';
 
 OPEN_PARANTHESES: '(';
@@ -64,6 +80,7 @@ CLOSE_PARANTHESES: ')';
 OPEN_CURLY_BRACKETS: '{';
 CLOSE_CURLY_BRACKETS: '}';
 
+//LINE: '--';
 COMMA: ',';
 COLON: ':';
 SEMICOLON: ';';

@@ -44,6 +44,33 @@ class TikzListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TikzParser#draw.
+    def enterDraw(self, ctx:TikzParser.DrawContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#draw.
+    def exitDraw(self, ctx:TikzParser.DrawContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#nodeList.
+    def enterNodeList(self, ctx:TikzParser.NodeListContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#nodeList.
+    def exitNodeList(self, ctx:TikzParser.NodeListContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#edgeNode.
+    def enterEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#edgeNode.
+    def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
+        pass
+
+
     # Enter a parse tree produced by TikzParser#node.
     def enterNode(self, ctx:TikzParser.NodeContext):
         pass

@@ -17,6 +17,7 @@ class Graph:
 		self.numNodes = 0
 		self.numEdges = 0
 		self.maxScaleFactor = 1.0
+		self.nodeToNodeID = {}
 		self.nodes = []
 		self.edges = []
 
@@ -89,6 +90,7 @@ class Graph:
 		if m and len(m.group(1)) > 0 and m.group(1) != ".":
 			inner_sep = 2 * float(m.group(1))
 
+		self.nodeToNodeID[(X,Y)] = nodeID
 		node = {
 			"nodeID": nodeID,
 			"shape": shape,
@@ -105,7 +107,13 @@ class Graph:
 		logger.debug("Adding NODE to Graph : \n{}".format(pformat(node)))
 		self.nodes.append(node)
 
-	def addEdge(self, nodeX:str, nodeY:str):
+	def addEdge(self, nodeX:str=None, nodeY:str=None, X1:str = "0", Y1:str = "0",X2:str = "0", Y2:str = "0"):
+		# TODO: Add exception handling when NodeID is referenced without declaring it
+		if nodeX is None:
+			nodeX = self.nodeToNodeID[(X1,Y1)]
+		if nodeY is None:
+			nodeY = self.nodeToNodeID[(X2,Y2)]
+
 		self.edges.append({
 			"x": nodeX,
 			"y": nodeY
