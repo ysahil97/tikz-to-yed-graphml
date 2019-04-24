@@ -35,12 +35,39 @@ class TikzListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by TikzParser#nodeID.
-    def enterNodeID(self, ctx:TikzParser.NodeIDContext):
+    # Enter a parse tree produced by TikzParser#nodeId.
+    def enterNodeId(self, ctx:TikzParser.NodeIdContext):
         pass
 
-    # Exit a parse tree produced by TikzParser#nodeID.
-    def exitNodeID(self, ctx:TikzParser.NodeIDContext):
+    # Exit a parse tree produced by TikzParser#nodeId.
+    def exitNodeId(self, ctx:TikzParser.NodeIdContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#nodeProperties.
+    def enterNodeProperties(self, ctx:TikzParser.NodePropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#nodeProperties.
+    def exitNodeProperties(self, ctx:TikzParser.NodePropertiesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#properties.
+    def enterProperties(self, ctx:TikzParser.PropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#properties.
+    def exitProperties(self, ctx:TikzParser.PropertiesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#individualProperty.
+    def enterIndividualProperty(self, ctx:TikzParser.IndividualPropertyContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#individualProperty.
+    def exitIndividualProperty(self, ctx:TikzParser.IndividualPropertyContext):
         pass
 
 

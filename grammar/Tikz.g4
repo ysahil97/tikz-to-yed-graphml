@@ -1,32 +1,66 @@
 grammar Tikz;
+// import TikzLex;
 
-begin   : '\\begin{tikzpicture}' instructions* '\\end{tikzpicture}';
+begin   : BEGINTIKZPICTURE instructions* ENDTIKZPICTURE EOF;
 
 instructions    : node instructions
                 | node
                 ;
 
 node
-    : '\\node' nodeID 'at' coordinates label DELIMITER
+    : NODE nodeId nodeProperties AT coordinates label SEMICOLON
     ;
 
-nodeID
-    : '(' ID ')'
-    | '(' ')'       // Node ID can be empty
+nodeId
+    : OPEN_PARANTHESES (VARIABLE)? CLOSE_PARANTHESES
+    |
+;
+
+nodeProperties
+    : '[' properties ']'
     |
     ;
 
+properties
+    : individualProperty ',' properties
+    | individualProperty
+    ;
+
+individualProperty
+    : VARIABLE '=' VARIABLE
+    | VARIABLE
+    ;
+
 coordinates
-    : '(' DIGIT ',' DIGIT ')'
-    | '(' DIGIT ':' DIGIT ')'
+    : OPEN_PARANTHESES DIGIT (COMMA|COLON) DIGIT CLOSE_PARANTHESES
     ;
 
-label   
-    : '{' ID '}'
-    | '{' '}'    // Label can be empty
+label
+    : OPEN_CURLY_BRACKETS (VARIABLE)? CLOSE_CURLY_BRACKETS
     ;
 
-ID : [a-zA-Z] [a-zA-Z0-9]* ;
+// label
+//     : '{' ( '{' | '}' | . )*? '}'
+//     ;
+
+BEGINTIKZPICTURE: '\\begin{tikzpicture}';
+ENDTIKZPICTURE: '\\end{tikzpicture}';
+
+NODE: '\\node';
+AT: 'at';
+
+OPEN_PARANTHESES: '(';
+CLOSE_PARANTHESES: ')';
+OPEN_CURLY_BRACKETS: '{';
+CLOSE_CURLY_BRACKETS: '}';
+
+COMMA: ',';
+COLON: ':';
+SEMICOLON: ';';
+
+// DIGIT should be above VARIABLE for higher precedence
 DIGIT: [0-9]+;
-DELIMITER: ';';
+VARIABLE: [a-zA-Z0-9_!$]+;
+
+COMMENT : '%' ~[\n]* -> skip ;
 WS : [ \r\t\n]+ -> skip ;
