@@ -1,6 +1,7 @@
 import sys
 import antlr4
 import logging
+import os
 from grammar.TikzLexer import TikzLexer
 from grammar.TikzParser import TikzParser
 from grammar.TikzListener import TikzListener
@@ -14,7 +15,7 @@ logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-1s [%(filename)s:
 logger = logging.getLogger(__name__)
 
 def main():
-    directory="TestCases"
+    directory="./TestCases"
     filename="graph.tex"
 
     for value in getCodeInsideTIKZAfterUnrolling(directory, filename):  
@@ -27,7 +28,11 @@ def main():
         parser = TikzParser(stream)
         tree = parser.begin()
 
-        htmlChat = CustomTikzListener(filename, './TestCases/graph.graphml')
+        j = 0
+        while(os.path.exists(filename + "t" + str(j) + "_unrolled.tex")):
+            j+=1
+        saveTo = directory +"/" + filename + "_" + str(j) + "_graph.graphml"
+        htmlChat = CustomTikzListener(filename, saveTo)
         walker = antlr4.ParseTreeWalker()
         walker.walk(htmlChat, tree)
 
