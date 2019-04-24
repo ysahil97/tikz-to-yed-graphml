@@ -1,13 +1,14 @@
 import sys
 import logging
-from antlr4 import *
+import antlr4
+from filterGraphml import *
 from grammar.TikzListener import TikzListener
 from grammar.TikzParser import TikzParser
 from generateGraphml import Graph
 
 class CustomTikzListener(TikzListener) :
     def __init__(self, inputFileName:str, outputFileName:str):
-        self.nodes = []
+        self.currentNode = {}
         self.G = Graph()
         self.inputFileName = inputFileName
         self.outputFileName = outputFileName
@@ -23,27 +24,41 @@ class CustomTikzListener(TikzListener) :
             logging.warn("Error in converting {} - {}".format(self.inputFileName, e))
 
     def exitNode(self, ctx:TikzParser.NodeContext):
-        self.G.addNode(
-            nodeID=ctx.nodeID().id,
-            X=ctx.coordinates().x,
-            Y=ctx.coordinates().y,
-            label=ctx.label().label
-        )
+        if len(self.currentNode) > 0:
+            self.G.addNode(**self.currentNode)
 
-    def exitNodeID(self, ctx:TikzParser.NodeIDContext):
-        if ctx.ID() is not None:
-            ctx.id = ctx.ID().getText()
+    def exitNodeId(self, ctx:TikzParser.NodeIdContext):
+        if ctx.VARIABLE() is not None:
+            self.currentNode["nodeID"] = ctx.VARIABLE().getText()
         else:
-            ctx.id = None
+            self.currentNode["nodeID"] = None
 
     def exitCoordinates(self, ctx:TikzParser.CoordinatesContext):
-        x = ctx.DIGIT(0).getText()
-        y = ctx.DIGIT(1).getText()
-        ctx.x = x
-        ctx.y = y
+        self.currentNode["X"] = ctx.DIGIT(0).getText()
+        self.currentNode["Y"] = ctx.DIGIT(1).getText()
 
     def exitLabel(self, ctx:TikzParser.LabelContext):
-        if ctx.ID() is not None:
-            ctx.label = ctx.ID().getText()
+        if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
+            self.currentNode["label"] = ctx.VARIABLE().getText()
         else:
-            ctx.label = ""
+            self.currentNode["label"] = None
+    
+    def exitIndividualProperty(self, ctx:TikzParser.IndividualPropertyContext):
+        key = ""
+        value = ""
+        currentValue = ""
+        for child in ctx.children:
+            if child.getText() != "=":
+                currentValue += child.getText() + " "
+            else:
+                key = currentValue
+                currentValue = ""
+        value = currentValue
+        # property of Key Value of format "x = y"
+        if len(key) > 0:
+            k, v = identifyKeyValueProperty(key, value)
+        # individual property of format "x"
+        else:
+            k, v = identifyIndividualProperty(value)
+
+        self.currentNode[k] = v

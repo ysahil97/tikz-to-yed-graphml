@@ -9,32 +9,36 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\24")
-        buf.write("U\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
+        buf.write("a\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b")
         buf.write("\t\b\4\t\t\t\4\n\t\n\3\2\3\2\7\2\27\n\2\f\2\16\2\32\13")
         buf.write("\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3#\n\3\3\4\3\4\3\4\3")
         buf.write("\4\3\4\3\4\3\4\3\4\3\5\3\5\5\5/\n\5\3\5\3\5\5\5\63\n\5")
         buf.write("\3\6\3\6\3\6\3\6\3\6\5\6:\n\6\3\7\3\7\3\7\3\7\3\7\5\7")
-        buf.write("A\n\7\3\b\3\b\3\b\3\b\5\bG\n\b\3\t\3\t\3\t\3\t\3\t\3\t")
-        buf.write("\3\n\3\n\5\nQ\n\n\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f\16\20")
-        buf.write("\22\2\3\3\2\16\17\2S\2\24\3\2\2\2\4\"\3\2\2\2\6$\3\2\2")
-        buf.write("\2\b\62\3\2\2\2\n9\3\2\2\2\f@\3\2\2\2\16F\3\2\2\2\20H")
-        buf.write("\3\2\2\2\22N\3\2\2\2\24\30\7\6\2\2\25\27\5\4\3\2\26\25")
-        buf.write("\3\2\2\2\27\32\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31")
-        buf.write("\33\3\2\2\2\32\30\3\2\2\2\33\34\7\7\2\2\34\35\7\2\2\3")
-        buf.write("\35\3\3\2\2\2\36\37\5\6\4\2\37 \5\4\3\2 #\3\2\2\2!#\5")
-        buf.write("\6\4\2\"\36\3\2\2\2\"!\3\2\2\2#\5\3\2\2\2$%\7\b\2\2%&")
-        buf.write("\5\b\5\2&\'\5\n\6\2\'(\7\t\2\2()\5\20\t\2)*\5\22\n\2*")
-        buf.write("+\7\20\2\2+\7\3\2\2\2,.\7\n\2\2-/\7\22\2\2.-\3\2\2\2.")
-        buf.write("/\3\2\2\2/\60\3\2\2\2\60\63\7\13\2\2\61\63\3\2\2\2\62")
+        buf.write("A\n\7\3\b\6\bD\n\b\r\b\16\bE\3\b\3\b\6\bJ\n\b\r\b\16\b")
+        buf.write("K\3\b\6\bO\n\b\r\b\16\bP\5\bS\n\b\3\t\3\t\3\t\3\t\3\t")
+        buf.write("\3\t\3\n\3\n\5\n]\n\n\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f\16")
+        buf.write("\20\22\2\3\3\2\16\17\2b\2\24\3\2\2\2\4\"\3\2\2\2\6$\3")
+        buf.write("\2\2\2\b\62\3\2\2\2\n9\3\2\2\2\f@\3\2\2\2\16R\3\2\2\2")
+        buf.write("\20T\3\2\2\2\22Z\3\2\2\2\24\30\7\6\2\2\25\27\5\4\3\2\26")
+        buf.write("\25\3\2\2\2\27\32\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2")
+        buf.write("\31\33\3\2\2\2\32\30\3\2\2\2\33\34\7\7\2\2\34\35\7\2\2")
+        buf.write("\3\35\3\3\2\2\2\36\37\5\6\4\2\37 \5\4\3\2 #\3\2\2\2!#")
+        buf.write("\5\6\4\2\"\36\3\2\2\2\"!\3\2\2\2#\5\3\2\2\2$%\7\b\2\2")
+        buf.write("%&\5\b\5\2&\'\5\n\6\2\'(\7\t\2\2()\5\20\t\2)*\5\22\n\2")
+        buf.write("*+\7\20\2\2+\7\3\2\2\2,.\7\n\2\2-/\7\22\2\2.-\3\2\2\2")
+        buf.write("./\3\2\2\2/\60\3\2\2\2\60\63\7\13\2\2\61\63\3\2\2\2\62")
         buf.write(",\3\2\2\2\62\61\3\2\2\2\63\t\3\2\2\2\64\65\7\3\2\2\65")
         buf.write("\66\5\f\7\2\66\67\7\4\2\2\67:\3\2\2\28:\3\2\2\29\64\3")
         buf.write("\2\2\298\3\2\2\2:\13\3\2\2\2;<\5\16\b\2<=\7\16\2\2=>\5")
         buf.write("\f\7\2>A\3\2\2\2?A\5\16\b\2@;\3\2\2\2@?\3\2\2\2A\r\3\2")
-        buf.write("\2\2BC\7\22\2\2CD\7\5\2\2DG\7\22\2\2EG\7\22\2\2FB\3\2")
-        buf.write("\2\2FE\3\2\2\2G\17\3\2\2\2HI\7\n\2\2IJ\7\21\2\2JK\t\2")
-        buf.write("\2\2KL\7\21\2\2LM\7\13\2\2M\21\3\2\2\2NP\7\f\2\2OQ\7\22")
-        buf.write("\2\2PO\3\2\2\2PQ\3\2\2\2QR\3\2\2\2RS\7\r\2\2S\23\3\2\2")
-        buf.write("\2\n\30\".\629@FP")
+        buf.write("\2\2BD\7\22\2\2CB\3\2\2\2DE\3\2\2\2EC\3\2\2\2EF\3\2\2")
+        buf.write("\2FG\3\2\2\2GI\7\5\2\2HJ\7\22\2\2IH\3\2\2\2JK\3\2\2\2")
+        buf.write("KI\3\2\2\2KL\3\2\2\2LS\3\2\2\2MO\7\22\2\2NM\3\2\2\2OP")
+        buf.write("\3\2\2\2PN\3\2\2\2PQ\3\2\2\2QS\3\2\2\2RC\3\2\2\2RN\3\2")
+        buf.write("\2\2S\17\3\2\2\2TU\7\n\2\2UV\7\21\2\2VW\t\2\2\2WX\7\21")
+        buf.write("\2\2XY\7\13\2\2Y\21\3\2\2\2Z\\\7\f\2\2[]\7\22\2\2\\[\3")
+        buf.write("\2\2\2\\]\3\2\2\2]^\3\2\2\2^_\7\r\2\2_\23\3\2\2\2\r\30")
+        buf.write("\".\629@EKPR\\")
         return buf.getvalue()
 
 
@@ -523,24 +527,55 @@ class TikzParser ( Parser ):
 
         localctx = TikzParser.IndividualPropertyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_individualProperty)
+        self._la = 0 # Token type
         try:
-            self.state = 68
+            self.state = 80
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 64
-                self.match(TikzParser.VARIABLE)
-                self.state = 65
+                self.state = 65 
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while True:
+                    self.state = 64
+                    self.match(TikzParser.VARIABLE)
+                    self.state = 67 
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+                    if not (_la==TikzParser.VARIABLE):
+                        break
+
+                self.state = 69
                 self.match(TikzParser.T__2)
-                self.state = 66
-                self.match(TikzParser.VARIABLE)
+                self.state = 71 
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while True:
+                    self.state = 70
+                    self.match(TikzParser.VARIABLE)
+                    self.state = 73 
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+                    if not (_la==TikzParser.VARIABLE):
+                        break
+
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 67
-                self.match(TikzParser.VARIABLE)
+                self.state = 76 
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while True:
+                    self.state = 75
+                    self.match(TikzParser.VARIABLE)
+                    self.state = 78 
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+                    if not (_la==TikzParser.VARIABLE):
+                        break
+
                 pass
 
 
@@ -598,20 +633,20 @@ class TikzParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 70
+            self.state = 82
             self.match(TikzParser.OPEN_PARANTHESES)
-            self.state = 71
+            self.state = 83
             self.match(TikzParser.DIGIT)
-            self.state = 72
+            self.state = 84
             _la = self._input.LA(1)
             if not(_la==TikzParser.COMMA or _la==TikzParser.COLON):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 73
+            self.state = 85
             self.match(TikzParser.DIGIT)
-            self.state = 74
+            self.state = 86
             self.match(TikzParser.CLOSE_PARANTHESES)
         except RecognitionException as re:
             localctx.exception = re
@@ -658,17 +693,17 @@ class TikzParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 76
+            self.state = 88
             self.match(TikzParser.OPEN_CURLY_BRACKETS)
-            self.state = 78
+            self.state = 90
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==TikzParser.VARIABLE:
-                self.state = 77
+                self.state = 89
                 self.match(TikzParser.VARIABLE)
 
 
-            self.state = 80
+            self.state = 92
             self.match(TikzParser.CLOSE_CURLY_BRACKETS)
         except RecognitionException as re:
             localctx.exception = re
