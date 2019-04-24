@@ -29,7 +29,7 @@ class Graph:
 
 	def getScalingFactor(self, size, minDistance):
 		return self.maxScaleFactor * size * (3 - 2 * minDistance) * 5
-	
+
 	def getColor(self, fill):
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)
 		if fill == "none" or not m:
@@ -40,7 +40,7 @@ class Graph:
 				clr = colors.to_hex(colors.to_rgba(m.group(1), alpha=alpha/256.0), keep_alpha=True)
 			else:
 				clr = colors.to_hex(colors.to_rgba(m.group(1)), keep_alpha=False)
-		
+
 		return clr
 
 
@@ -105,7 +105,7 @@ class Graph:
 		logger.debug("Adding NODE to Graph : \n{}".format(pformat(node)))
 		self.nodes.append(node)
 
-	def addEdge(self, nodeX, nodeY):
+	def addEdge(self, nodeX:str, nodeY:str):
 		self.edges.append({
 			"x": nodeX,
 			"y": nodeY
@@ -138,7 +138,7 @@ class Graph:
 				# yed hax axis inverted to TiKZ
 				# We need to reflect coordinates across X axis to get correct graph
 				x=str(positions[i][0]),
-				y=str(positions[i][1]*(-1)), 	
+				y=str(positions[i][1]*(-1)),
 				shape_fill=node["shape_fill"],
 				edge_color=node["edge_color"],
 				height=str(node["height"] * 10),
@@ -146,7 +146,7 @@ class Graph:
 				font_size=str(int(node["height"]*9)),
 				edge_width=node["edge_width"]
 			)
-		
+
 		for edge in self.edges:
 			self.G.add_edge(
 				edge["x"],
