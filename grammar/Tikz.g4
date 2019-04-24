@@ -1,7 +1,17 @@
 grammar Tikz;
 // import TikzLex;
 
-begin   : BEGINTIKZPICTURE instructions* ENDTIKZPICTURE EOF;
+begin   : BEGINTIKZPICTURE (globalProperties)? instructions* ENDTIKZPICTURE EOF;
+
+
+globalProperties
+    : '[' globalProperty ']'
+    |
+    ;
+
+globalProperty
+    : .
+    ;
 
 instructions    : node instructions
                 | node
