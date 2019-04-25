@@ -76,7 +76,9 @@ class Graph:
 			"edge_width": "1.0"
 		})
 
-	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None, inner_sep:str = "0.25pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
+	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None,
+		height:str = "-", width:str = "-", inner_sep:str = "0.25pt", fill:str = "none",
+		scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
 
 		if rotate != "0":
 			pass
@@ -125,8 +127,8 @@ class Graph:
 			"Y": float(Y),
 			"shape_fill": clr,
 			"edge_color": clr,
-			"height": inner_sep,
-			"width": inner_sep,
+			"height": height if height != '-' else inner_sep,
+			"width": width if width != '-' else inner_sep,
 			"edge_width": "1.0",
 		}
 
@@ -167,7 +169,7 @@ class Graph:
 
 		#TODO find proper function to find scaling factor using inner_sep, min_distance, scale
 		self.rescaleCoordinates(positions, self.getScalingFactor(node["height"], minDis))
-		
+
 
 		for i, node in enumerate(self.nodes):
 			self.G.add_node(

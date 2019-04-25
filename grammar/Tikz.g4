@@ -3,7 +3,7 @@ grammar Tikz;
 
 // TODO see if empty rule can be replace with ?
 
-begin   
+begin
     : BEGINTIKZPICTURE allGlobalProperties instructions* ENDTIKZPICTURE EOF
     ;
 
@@ -15,7 +15,13 @@ instructions
     ;
 
 draw
-    : DRAW edgeProperties nodeList SEMICOLON
+    :DRAW edgeProperties nodeList SEMICOLON
+    |DRAW edgeProperties coordinates VARIABLE coordinates SEMICOLON
+    |DRAW edgeProperties coordinates VARIABLE radius SEMICOLON
+    ;
+
+radius
+    : OPEN_PARANTHESES VARIABLE CLOSE_PARANTHESES
     ;
 
 nodeList

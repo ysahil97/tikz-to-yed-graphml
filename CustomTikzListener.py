@@ -6,7 +6,7 @@ from grammar.TikzListener import TikzListener
 from grammar.TikzParser import TikzParser
 from generateGraphml import Graph
 from handleProperties import *
-import copy 
+import copy
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +18,8 @@ class CustomTikzListener(TikzListener) :
         self.currentEdgeProperty = {}
         self.latestCoordinateX = 0
         self.latestCoordinateY = 0
+        self.lastSeenRadius = None
+        self.shapeNodes = []
 
         self.G = Graph()
         self.inputFileName = inputFileName
@@ -58,6 +60,7 @@ class CustomTikzListener(TikzListener) :
             self.currentNode =  copy.copy(self.globalProperties["node"])
         else:
             self.currentNode = {}
+        self.shapeNodes = []
 
     def exitNode(self, ctx:TikzParser.NodeContext):
         if len(self.currentNode) > 0:
@@ -77,6 +80,7 @@ class CustomTikzListener(TikzListener) :
     def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
         self.latestCoordinateX = eval(ctx.DIGIT(0).getText())
         self.latestCoordinateY = eval(ctx.DIGIT(1).getText())
+        self.shapeNodes.append((self.latestCoordinateX, self.latestCoordinateY))
 
     def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         try:
@@ -87,6 +91,8 @@ class CustomTikzListener(TikzListener) :
             print (r, angle, cosA, sinA)
             self.latestCoordinateX = r * cosA
             self.latestCoordinateY = r * sinA
+            self.shapeNodes.append((self.latestCoordinateX, self.latestCoordinateY))
+
         except:
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
@@ -97,6 +103,9 @@ class CustomTikzListener(TikzListener) :
             self.currentNode["label"] = ctx.DIGIT().getText()
         else:
             self.currentNode["label"] = None
+
+    def exitRadius(self,ctx:TikzParser.RadiusContext):
+        self.lastSeenRadius = ctx.VARIABLE().getText()
 
     def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
         if ctx.VARIABLE() is not None:
@@ -121,17 +130,39 @@ class CustomTikzListener(TikzListener) :
         self.currentEdgeProperty = {}
 
     def exitDraw(self,ctx:TikzParser.DrawContext):
-        pointed = False
-        if "direction" in self.currentEdgeProperty:
-            pointed = True
-            #For left directed edges, adding the edge nodes in reverse
-            if self.currentEdgeProperty['direction'] == '<-':
-                self.currentEdgeList.reverse()
+        if ctx.VARIABLE():
 
-        sz = len(self.currentEdgeList)
-        for i in range(1, sz, 1):
-            node1, node2 = self.currentEdgeList[i-1], self.currentEdgeList[i]
-            self.G.addEdge(node1, node2, pointed)
+            # handle logic for rectangle drawing for now
+            total_x = 0
+            total_y = 0
+            height = 0
+            width = 0
+            if self.shape == 'rectangle':
+                for i in self.shapeNodes:
+                    total_x+=int(i[0])
+                    total_y+=int(i[1])
+                total_x = str(total_x/2)
+                total_y = str(total_y/2)
+                height = float(abs(int(self.shapeNodes[1][1])-int(self.shapeNodes[0][1])))
+                width = float(abs(int(self.shapeNodes[1][0])-int(self.shapeNodes[0][0])))
+            elif self.shape == 'circle':
+                total_x = int(self.shapeNodes[0][0])
+                total_y = int(self.shapeNodes[0][1])
+                height = float(int(self.lastSeenRadius)*2)
+                width = float(int(self.lastSeenRadius)*2)
+            self.G.addNode(X=total_x,Y=total_y,height=height,width=width,shape=self.shape)
+        else:
+            pointed = False
+            if "direction" in self.currentEdgeProperty:
+                pointed = True
+                #For left directed edges, adding the edge nodes in reverse
+                if self.currentEdgeProperty['direction'] == '<-':
+                    self.currentEdgeList.reverse()
+
+            sz = len(self.currentEdgeList)
+            for i in range(1, sz, 1):
+                node1, node2 = self.currentEdgeList[i-1], self.currentEdgeList[i]
+                self.G.addEdge(node1, node2, pointed)
 
     def exitNodeProperties(self, ctx:TikzParser.NodePropertiesContext):
         if len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:
