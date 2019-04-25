@@ -22,7 +22,8 @@ class CustomTikzListener(TikzListener) :
         try:
             logger.info("Trying to convert Tikz into GraphML")
             logger.info("GlobalProperties : {}".format(self.globalProperties))
-            # graphml = self.G.get_graph().encode("utf-8")
+            self.G.globalProperties = copy.copy(self.globalProperties)
+            graphml = self.G.get_graph().encode("utf-8")
             # with open(self.outputFileName, 'wb') as outFile:
             #     outFile.write(graphml)
             # logging.info("Converted Tikz Graph to GraphML.\n\n\t\tGraphML File Location: {}\n\n".format(self.outputFileName))

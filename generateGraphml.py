@@ -1,5 +1,6 @@
 import re
 import sys
+import math
 import pyyed
 import logging
 import numpy as np
@@ -19,6 +20,15 @@ class Graph:
 		self.maxScaleFactor = 1.0
 		self.nodes = []
 		self.edges = []
+		self.globalProperties = {}
+
+	def rotateCoordinates(self, coordinates, angle):
+		cosA = round(math.cos(math.radians(float(angle))), 10)
+		sinA = round(math.sin(math.radians(float(angle))), 10)
+		for index, val in enumerate(coordinates):
+			x, y = val[0], val[1]
+			coordinates[index][0] =  x * cosA + y * sinA
+			coordinates[index][1] =  -1 * x * sinA + y * cosA
 
 	def rescaleCoordinates(self, coordinates, scale):
 		return nx.rescale_layout(coordinates, scale)
@@ -149,8 +159,13 @@ class Graph:
 		for node in self.nodes:
 			positions = np.append(positions, [[node["X"], node["Y"]]], axis=0)
 
+		if "rotate" in self.globalProperties:
+			self.rotateCoordinates(positions, self.globalProperties["rotate"])
+
 		#TODO find proper function to find scaling factor using inner_sep, min_distance, scale
 		self.rescaleCoordinates(positions, self.getScalingFactor(node["height"], minDis))
+		
+
 		for i, node in enumerate(self.nodes):
 			self.G.add_node(
 				node["nodeID"],
