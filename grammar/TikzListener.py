@@ -44,6 +44,15 @@ class TikzListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TikzParser#radius.
+    def enterRadius(self, ctx:TikzParser.RadiusContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#radius.
+    def exitRadius(self, ctx:TikzParser.RadiusContext):
+        pass
+
+
     # Enter a parse tree produced by TikzParser#nodeList.
     def enterNodeList(self, ctx:TikzParser.NodeListContext):
         pass
