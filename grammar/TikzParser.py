@@ -8,8 +8,8 @@ import sys
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27")
-        buf.write("\u0084\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\30")
+        buf.write("\u008d\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\3\2\3\2\3\2")
         buf.write("\7\2\34\n\2\f\2\16\2\37\13\2\3\2\3\2\3\2\3\3\3\3\3\3\3")
         buf.write("\3\5\3(\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\5")
@@ -19,37 +19,43 @@ def serializedATN():
         buf.write("\bY\n\b\3\b\3\b\5\b]\n\b\3\t\3\t\3\t\3\t\3\t\5\td\n\t")
         buf.write("\3\n\6\ng\n\n\r\n\16\nh\3\n\3\n\6\nm\n\n\r\n\16\nn\3\n")
         buf.write("\6\nr\n\n\r\n\16\ns\5\nv\n\n\3\13\3\13\3\13\3\13\3\13")
-        buf.write("\3\13\3\f\3\f\5\f\u0080\n\f\3\f\3\f\3\f\2\3\f\r\2\4\6")
-        buf.write("\b\n\f\16\20\22\24\26\2\4\3\2\24\25\3\2\21\22\2\u0088")
-        buf.write("\2\30\3\2\2\2\4\'\3\2\2\2\6)\3\2\2\2\b\67\3\2\2\2\n?\3")
-        buf.write("\2\2\2\fL\3\2\2\2\16\\\3\2\2\2\20c\3\2\2\2\22u\3\2\2\2")
-        buf.write("\24w\3\2\2\2\26}\3\2\2\2\30\31\7\7\2\2\31\35\5\n\6\2\32")
+        buf.write("\3\13\3\13\3\13\3\13\3\13\5\13\u0082\n\13\3\13\5\13\u0085")
+        buf.write("\n\13\3\f\3\f\5\f\u0089\n\f\3\f\3\f\3\f\2\3\f\r\2\4\6")
+        buf.write("\b\n\f\16\20\22\24\26\2\3\3\2\25\26\2\u0093\2\30\3\2\2")
+        buf.write("\2\4\'\3\2\2\2\6)\3\2\2\2\b\67\3\2\2\2\n?\3\2\2\2\fL\3")
+        buf.write("\2\2\2\16\\\3\2\2\2\20c\3\2\2\2\22u\3\2\2\2\24\u0084\3")
+        buf.write("\2\2\2\26\u0086\3\2\2\2\30\31\7\b\2\2\31\35\5\n\6\2\32")
         buf.write("\34\5\4\3\2\33\32\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2")
-        buf.write("\35\36\3\2\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\7\b\2\2!\"")
+        buf.write("\35\36\3\2\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\7\t\2\2!\"")
         buf.write("\7\2\2\3\"\3\3\2\2\2#$\5\6\4\2$%\5\4\3\2%(\3\2\2\2&(\5")
-        buf.write("\6\4\2\'#\3\2\2\2\'&\3\2\2\2(\5\3\2\2\2)*\7\t\2\2*+\5")
-        buf.write("\b\5\2+,\5\16\b\2,-\7\n\2\2-.\5\24\13\2./\5\26\f\2/\60")
-        buf.write("\7\23\2\2\60\7\3\2\2\2\61\63\7\f\2\2\62\64\t\2\2\2\63")
-        buf.write("\62\3\2\2\2\63\64\3\2\2\2\64\65\3\2\2\2\658\7\r\2\2\66")
+        buf.write("\6\4\2\'#\3\2\2\2\'&\3\2\2\2(\5\3\2\2\2)*\7\n\2\2*+\5")
+        buf.write("\b\5\2+,\5\16\b\2,-\7\13\2\2-.\5\24\13\2./\5\26\f\2/\60")
+        buf.write("\7\24\2\2\60\7\3\2\2\2\61\63\7\r\2\2\62\64\t\2\2\2\63")
+        buf.write("\62\3\2\2\2\63\64\3\2\2\2\64\65\3\2\2\2\658\7\16\2\2\66")
         buf.write("8\3\2\2\2\67\61\3\2\2\2\67\66\3\2\2\28\t\3\2\2\29;\7\3")
         buf.write("\2\2:<\5\f\7\2;:\3\2\2\2;<\3\2\2\2<=\3\2\2\2=@\7\4\2\2")
         buf.write(">@\3\2\2\2?9\3\2\2\2?>\3\2\2\2@\13\3\2\2\2AB\b\7\1\2B")
-        buf.write("C\7\13\2\2CD\7\25\2\2DE\7\5\2\2EF\7\6\2\2FG\7\20\2\2G")
-        buf.write("H\7\16\2\2HI\5\20\t\2IJ\7\17\2\2JM\3\2\2\2KM\5\20\t\2")
-        buf.write("LA\3\2\2\2LK\3\2\2\2MS\3\2\2\2NO\f\5\2\2OP\7\21\2\2PR")
-        buf.write("\5\f\7\6QN\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2T\r\3")
-        buf.write("\2\2\2US\3\2\2\2VX\7\3\2\2WY\5\20\t\2XW\3\2\2\2XY\3\2")
-        buf.write("\2\2YZ\3\2\2\2Z]\7\4\2\2[]\3\2\2\2\\V\3\2\2\2\\[\3\2\2")
-        buf.write("\2]\17\3\2\2\2^_\5\22\n\2_`\7\21\2\2`a\5\20\t\2ad\3\2")
-        buf.write("\2\2bd\5\22\n\2c^\3\2\2\2cb\3\2\2\2d\21\3\2\2\2eg\7\25")
-        buf.write("\2\2fe\3\2\2\2gh\3\2\2\2hf\3\2\2\2hi\3\2\2\2ij\3\2\2\2")
-        buf.write("jl\7\20\2\2km\t\2\2\2lk\3\2\2\2mn\3\2\2\2nl\3\2\2\2no")
-        buf.write("\3\2\2\2ov\3\2\2\2pr\7\25\2\2qp\3\2\2\2rs\3\2\2\2sq\3")
-        buf.write("\2\2\2st\3\2\2\2tv\3\2\2\2uf\3\2\2\2uq\3\2\2\2v\23\3\2")
-        buf.write("\2\2wx\7\f\2\2xy\7\24\2\2yz\t\3\2\2z{\7\24\2\2{|\7\r\2")
-        buf.write("\2|\25\3\2\2\2}\177\7\16\2\2~\u0080\t\2\2\2\177~\3\2\2")
-        buf.write("\2\177\u0080\3\2\2\2\u0080\u0081\3\2\2\2\u0081\u0082\7")
-        buf.write("\17\2\2\u0082\27\3\2\2\2\22\35\'\63\67;?LSX\\chnsu\177")
+        buf.write("C\7\f\2\2CD\7\26\2\2DE\7\5\2\2EF\7\6\2\2FG\7\21\2\2GH")
+        buf.write("\7\17\2\2HI\5\20\t\2IJ\7\20\2\2JM\3\2\2\2KM\5\20\t\2L")
+        buf.write("A\3\2\2\2LK\3\2\2\2MS\3\2\2\2NO\f\5\2\2OP\7\22\2\2PR\5")
+        buf.write("\f\7\6QN\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2T\r\3\2")
+        buf.write("\2\2US\3\2\2\2VX\7\3\2\2WY\5\20\t\2XW\3\2\2\2XY\3\2\2")
+        buf.write("\2YZ\3\2\2\2Z]\7\4\2\2[]\3\2\2\2\\V\3\2\2\2\\[\3\2\2\2")
+        buf.write("]\17\3\2\2\2^_\5\22\n\2_`\7\22\2\2`a\5\20\t\2ad\3\2\2")
+        buf.write("\2bd\5\22\n\2c^\3\2\2\2cb\3\2\2\2d\21\3\2\2\2eg\7\26\2")
+        buf.write("\2fe\3\2\2\2gh\3\2\2\2hf\3\2\2\2hi\3\2\2\2ij\3\2\2\2j")
+        buf.write("l\7\21\2\2km\t\2\2\2lk\3\2\2\2mn\3\2\2\2nl\3\2\2\2no\3")
+        buf.write("\2\2\2ov\3\2\2\2pr\7\26\2\2qp\3\2\2\2rs\3\2\2\2sq\3\2")
+        buf.write("\2\2st\3\2\2\2tv\3\2\2\2uf\3\2\2\2uq\3\2\2\2v\23\3\2\2")
+        buf.write("\2wx\7\r\2\2xy\7\25\2\2yz\7\22\2\2z{\7\25\2\2{\u0085\7")
+        buf.write("\16\2\2|}\7\r\2\2}~\7\25\2\2~\177\7\23\2\2\177\u0081\7")
+        buf.write("\25\2\2\u0080\u0082\7\7\2\2\u0081\u0080\3\2\2\2\u0081")
+        buf.write("\u0082\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0085\7\16\2")
+        buf.write("\2\u0084w\3\2\2\2\u0084|\3\2\2\2\u0085\25\3\2\2\2\u0086")
+        buf.write("\u0088\7\17\2\2\u0087\u0089\t\2\2\2\u0088\u0087\3\2\2")
+        buf.write("\2\u0088\u0089\3\2\2\2\u0089\u008a\3\2\2\2\u008a\u008b")
+        buf.write("\7\20\2\2\u008b\27\3\2\2\2\24\35\'\63\67;?LSX\\chnsu\u0081")
+        buf.write("\u0084\u0088")
         return buf.getvalue()
 
 
@@ -63,12 +69,13 @@ class TikzParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'['", "']'", "'/.'", "'style'", "'\\begin{tikzpicture}'", 
-                     "'\\end{tikzpicture}'", "'\\node'", "'at'", "'every'", 
-                     "'('", "')'", "'{'", "'}'", "'='", "','", "':'", "';'" ]
+    literalNames = [ "<INVALID>", "'['", "']'", "'/.'", "'style'", "'cm'", 
+                     "'\\begin{tikzpicture}'", "'\\end{tikzpicture}'", "'\\node'", 
+                     "'at'", "'every'", "'('", "')'", "'{'", "'}'", "'='", 
+                     "','", "':'", "';'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "BEGINTIKZPICTURE", "ENDTIKZPICTURE", 
+                      "<INVALID>", "<INVALID>", "BEGINTIKZPICTURE", "ENDTIKZPICTURE", 
                       "NODE", "AT", "EVERY", "OPEN_PARANTHESES", "CLOSE_PARANTHESES", 
                       "OPEN_CURLY_BRACKETS", "CLOSE_CURLY_BRACKETS", "EQUAL_TO", 
                       "COMMA", "COLON", "SEMICOLON", "DIGIT", "VARIABLE", 
@@ -95,23 +102,24 @@ class TikzParser ( Parser ):
     T__1=2
     T__2=3
     T__3=4
-    BEGINTIKZPICTURE=5
-    ENDTIKZPICTURE=6
-    NODE=7
-    AT=8
-    EVERY=9
-    OPEN_PARANTHESES=10
-    CLOSE_PARANTHESES=11
-    OPEN_CURLY_BRACKETS=12
-    CLOSE_CURLY_BRACKETS=13
-    EQUAL_TO=14
-    COMMA=15
-    COLON=16
-    SEMICOLON=17
-    DIGIT=18
-    VARIABLE=19
-    COMMENT=20
-    WS=21
+    T__4=5
+    BEGINTIKZPICTURE=6
+    ENDTIKZPICTURE=7
+    NODE=8
+    AT=9
+    EVERY=10
+    OPEN_PARANTHESES=11
+    CLOSE_PARANTHESES=12
+    OPEN_CURLY_BRACKETS=13
+    CLOSE_CURLY_BRACKETS=14
+    EQUAL_TO=15
+    COMMA=16
+    COLON=17
+    SEMICOLON=18
+    DIGIT=19
+    VARIABLE=20
+    COMMENT=21
+    WS=22
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -832,35 +840,68 @@ class TikzParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+
+        def getRuleIndex(self):
+            return TikzParser.RULE_coordinates
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class CartesianCoordinatesContext(CoordinatesContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a TikzParser.CoordinatesContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def OPEN_PARANTHESES(self):
             return self.getToken(TikzParser.OPEN_PARANTHESES, 0)
-
         def DIGIT(self, i:int=None):
             if i is None:
                 return self.getTokens(TikzParser.DIGIT)
             else:
                 return self.getToken(TikzParser.DIGIT, i)
-
+        def COMMA(self):
+            return self.getToken(TikzParser.COMMA, 0)
         def CLOSE_PARANTHESES(self):
             return self.getToken(TikzParser.CLOSE_PARANTHESES, 0)
 
-        def COMMA(self):
-            return self.getToken(TikzParser.COMMA, 0)
-
-        def COLON(self):
-            return self.getToken(TikzParser.COLON, 0)
-
-        def getRuleIndex(self):
-            return TikzParser.RULE_coordinates
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCoordinates" ):
-                listener.enterCoordinates(self)
+            if hasattr( listener, "enterCartesianCoordinates" ):
+                listener.enterCartesianCoordinates(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCoordinates" ):
-                listener.exitCoordinates(self)
+            if hasattr( listener, "exitCartesianCoordinates" ):
+                listener.exitCartesianCoordinates(self)
 
+
+    class PolarCoordinatesContext(CoordinatesContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a TikzParser.CoordinatesContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def OPEN_PARANTHESES(self):
+            return self.getToken(TikzParser.OPEN_PARANTHESES, 0)
+        def DIGIT(self, i:int=None):
+            if i is None:
+                return self.getTokens(TikzParser.DIGIT)
+            else:
+                return self.getToken(TikzParser.DIGIT, i)
+        def COLON(self):
+            return self.getToken(TikzParser.COLON, 0)
+        def CLOSE_PARANTHESES(self):
+            return self.getToken(TikzParser.CLOSE_PARANTHESES, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPolarCoordinates" ):
+                listener.enterPolarCoordinates(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPolarCoordinates" ):
+                listener.exitPolarCoordinates(self)
 
 
 
@@ -870,22 +911,48 @@ class TikzParser ( Parser ):
         self.enterRule(localctx, 18, self.RULE_coordinates)
         self._la = 0 # Token type
         try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 117
-            self.match(TikzParser.OPEN_PARANTHESES)
-            self.state = 118
-            self.match(TikzParser.DIGIT)
-            self.state = 119
-            _la = self._input.LA(1)
-            if not(_la==TikzParser.COMMA or _la==TikzParser.COLON):
-                self._errHandler.recoverInline(self)
-            else:
-                self._errHandler.reportMatch(self)
-                self.consume()
-            self.state = 120
-            self.match(TikzParser.DIGIT)
-            self.state = 121
-            self.match(TikzParser.CLOSE_PARANTHESES)
+            self.state = 130
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
+            if la_ == 1:
+                localctx = TikzParser.CartesianCoordinatesContext(self, localctx)
+                self.enterOuterAlt(localctx, 1)
+                self.state = 117
+                self.match(TikzParser.OPEN_PARANTHESES)
+                self.state = 118
+                self.match(TikzParser.DIGIT)
+                self.state = 119
+                self.match(TikzParser.COMMA)
+                self.state = 120
+                self.match(TikzParser.DIGIT)
+                self.state = 121
+                self.match(TikzParser.CLOSE_PARANTHESES)
+                pass
+
+            elif la_ == 2:
+                localctx = TikzParser.PolarCoordinatesContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
+                self.state = 122
+                self.match(TikzParser.OPEN_PARANTHESES)
+                self.state = 123
+                self.match(TikzParser.DIGIT)
+                self.state = 124
+                self.match(TikzParser.COLON)
+                self.state = 125
+                self.match(TikzParser.DIGIT)
+                self.state = 127
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==TikzParser.T__4:
+                    self.state = 126
+                    self.match(TikzParser.T__4)
+
+
+                self.state = 129
+                self.match(TikzParser.CLOSE_PARANTHESES)
+                pass
+
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -934,13 +1001,13 @@ class TikzParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 123
+            self.state = 132
             self.match(TikzParser.OPEN_CURLY_BRACKETS)
-            self.state = 125
+            self.state = 134
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==TikzParser.DIGIT or _la==TikzParser.VARIABLE:
-                self.state = 124
+                self.state = 133
                 _la = self._input.LA(1)
                 if not(_la==TikzParser.DIGIT or _la==TikzParser.VARIABLE):
                     self._errHandler.recoverInline(self)
@@ -949,7 +1016,7 @@ class TikzParser ( Parser ):
                     self.consume()
 
 
-            self.state = 127
+            self.state = 136
             self.match(TikzParser.CLOSE_CURLY_BRACKETS)
         except RecognitionException as re:
             localctx.exception = re

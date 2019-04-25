@@ -1,10 +1,12 @@
 import sys
 import antlr4
 import logging
+import os
 from grammar.TikzLexer import TikzLexer
 from grammar.TikzParser import TikzParser
 from grammar.TikzListener import TikzListener
 from CustomTikzListener import CustomTikzListener
+from extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZAfterUnrolling
 
 logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-1s [%(filename)s:%(lineno)d] %(message)s',
     datefmt='%Y-%m-%d:%H:%M:%S',
@@ -13,16 +15,27 @@ logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-1s [%(filename)s:
 logger = logging.getLogger(__name__)
 
 def main():
-    inputFileName = './TestCases/graph.tex'
-    input_stream = antlr4.FileStream(inputFileName)
-    lexer = TikzLexer(input_stream)
-    stream = antlr4.CommonTokenStream(lexer)
-    parser = TikzParser(stream)
-    tree = parser.begin()
-    htmlChat = CustomTikzListener(inputFileName, './TestCases/graph.graphml')
-    walker = antlr4.ParseTreeWalker()
-    walker.walk(htmlChat, tree)
+    directory="./TestCases"
+    filename="graph.tex"
+    # filename="edge-editing-v2.tex"
 
+    for value in getCodeInsideTIKZAfterUnrolling(directory, filename):  
+        print("===================================")
+        print (value)
+        print("===================================")
+        input_stream = antlr4.InputStream(value)
+        lexer = TikzLexer(input_stream)
+        stream = antlr4.CommonTokenStream(lexer)
+        parser = TikzParser(stream)
+        tree = parser.begin()
+
+        j = 0
+        while(os.path.exists(directory +"/" + filename + "_" + str(j) + "_graph.graphml")):
+            j+=1
+        saveTo = directory +"/" + filename + "_" + str(j) + "_graph.graphml"
+        htmlChat = CustomTikzListener(filename, saveTo)
+        walker = antlr4.ParseTreeWalker()
+        walker.walk(htmlChat, tree)
 
 if __name__ == '__main__':
     main()
