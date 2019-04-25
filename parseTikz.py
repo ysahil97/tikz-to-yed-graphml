@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 def main(scalingFactor, logLevel, prefix):
     directory="./TestCases"
-    inputFilename="graph.tex"
+    inputFilename="draw.tex"
     if not prefix:
         prefix = inputFilename
 

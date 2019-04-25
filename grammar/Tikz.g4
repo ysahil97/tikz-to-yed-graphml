@@ -74,21 +74,16 @@ individualProperty
     | VARIABLE+
     ;
 
-draw
-    :DRAW edgeProperties nodeList SEMICOLON
-    |DRAW edgeProperties coordinates VARIABLE coordinates SEMICOLON
-    |DRAW edgeProperties coordinates VARIABLE radius SEMICOLON
-    ;
-
 coordinates
-    : OPEN_PARANTHESES DIGIT COMMA DIGIT CLOSE_PARANTHESES #cartesianCoordinates
+    : OPEN_PARANTHESES DIGIT COMMA DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #cartesianCoordinates
     | OPEN_PARANTHESES DIGIT COLON DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #polarCoordinates
     ;
 
-ACTION : '{' ( ACTION | ~[{}] )* '}' ;
+// ACTION : '{' ( ACTION | ~[{}] )* '}' ;
 
 label
-    : OPEN_CURLY_BRACKETS ( label | (VARIABLE|DIGIT))* CLOSE_CURLY_BRACKETS
+    // -    : OPEN_CURLY_BRACKETS ( label | (VARIABLE|DIGIT))* CLOSE_CURLY_BRACKETS
+    : OPEN_CURLY_BRACKETS (VARIABLE|DIGIT)? CLOSE_CURLY_BRACKETS
     ;
 
 // label

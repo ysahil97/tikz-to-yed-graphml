@@ -26,6 +26,15 @@ class TikzListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TikzParser#draw.
+    def enterDraw(self, ctx:TikzParser.DrawContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#draw.
+    def exitDraw(self, ctx:TikzParser.DrawContext):
+        pass
+
+
     # Enter a parse tree produced by TikzParser#radius.
     def enterRadius(self, ctx:TikzParser.RadiusContext):
         pass
@@ -122,15 +131,6 @@ class TikzListener(ParseTreeListener):
 
     # Exit a parse tree produced by TikzParser#individualProperty.
     def exitIndividualProperty(self, ctx:TikzParser.IndividualPropertyContext):
-        pass
-
-
-    # Enter a parse tree produced by TikzParser#draw.
-    def enterDraw(self, ctx:TikzParser.DrawContext):
-        pass
-
-    # Exit a parse tree produced by TikzParser#draw.
-    def exitDraw(self, ctx:TikzParser.DrawContext):
         pass
 
 

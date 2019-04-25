@@ -19,7 +19,7 @@ class CustomTikzListener(TikzListener) :
         self.latestCoordinateX = 0
         self.latestCoordinateY = 0
         self.lastSeenRadius = None
-        self.shapeNodes = []
+        self.shapeNodesCoordinates = []
 
         self.G = Graph(scalingFactor)
         self.inputFileName = inputFileName
@@ -60,7 +60,6 @@ class CustomTikzListener(TikzListener) :
             self.currentNode =  copy.copy(self.globalProperties["node"])
         else:
             self.currentNode = {}
-        self.shapeNodes = []
 
     def exitNode(self, ctx:TikzParser.NodeContext):
         if len(self.currentNode) > 0:
@@ -80,7 +79,7 @@ class CustomTikzListener(TikzListener) :
     def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
         self.latestCoordinateX = eval(ctx.DIGIT(0).getText())
         self.latestCoordinateY = eval(ctx.DIGIT(1).getText())
-        self.shapeNodes.append((self.latestCoordinateX, self.latestCoordinateY))
+        self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
 
     def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         try:
@@ -91,13 +90,12 @@ class CustomTikzListener(TikzListener) :
             print (r, angle, cosA, sinA)
             self.latestCoordinateX = r * cosA
             self.latestCoordinateY = r * sinA
-            self.shapeNodes.append((self.latestCoordinateX, self.latestCoordinateY))
+            self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
 
         except:
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
     def exitLabel(self, ctx:TikzParser.LabelContext):
-        print("LABEL :: " ctx.getText())
         if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
             self.currentNode["label"] = ctx.VARIABLE().getText()
         elif ctx.DIGIT() is not None and ctx.DIGIT().getText() is not None:
@@ -131,9 +129,10 @@ class CustomTikzListener(TikzListener) :
     def enterDraw(self,ctx:TikzParser.DrawContext):
         self.currentEdgeList = []
         self.currentEdgeProperty = {}
+        self.shapeNodesCoordinates = []
 
     def exitDraw(self,ctx:TikzParser.DrawContext):
-        if ctx.VARIABLE():
+        if ctx.VARIABLE() is not None:
             node_shape = ctx.VARIABLE().getText()
             # handle logic for rectangle drawing for now
             total_x = 0
@@ -141,19 +140,19 @@ class CustomTikzListener(TikzListener) :
             height = 0
             width = 0
             if node_shape == 'rectangle':
-                for i in self.shapeNodes:
-                    total_x+=int(i[0])
-                    total_y+=int(i[1])
+                for i in self.shapeNodesCoordinates:
+                    total_x += float(i[0])
+                    total_y += float(i[1])
                 total_x = str(total_x/2)
                 total_y = str(total_y/2)
-                height = float(abs(int(self.shapeNodes[1][1])-int(self.shapeNodes[0][1])))
-                width = float(abs(int(self.shapeNodes[1][0])-int(self.shapeNodes[0][0])))
+                height = float(abs(int(self.shapeNodesCoordinates[1][1]) - float(self.shapeNodesCoordinates[0][1])))
+                width = float(abs(int(self.shapeNodesCoordinates[1][0]) - float(self.shapeNodesCoordinates[0][0])))
             elif node_shape == 'circle':
-                total_x = int(self.shapeNodes[0][0])
-                total_y = int(self.shapeNodes[0][1])
-                height = float(int(self.lastSeenRadius)*2)
-                width = float(int(self.lastSeenRadius)*2)
-            self.G.addNode(X=total_x,Y=total_y,height=height,width=width,shape=node_shape)
+                total_x = float(self.shapeNodesCoordinates[0][0])
+                total_y = float(self.shapeNodesCoordinates[0][1])
+                height = float(float(self.lastSeenRadius)*2)
+                width = float(float(self.lastSeenRadius)*2)
+            self.G.addNode(X=total_x, Y=total_y, height=height, width=width, shape=node_shape)
         else:
             pointed = False
             if "direction" in self.currentEdgeProperty:
