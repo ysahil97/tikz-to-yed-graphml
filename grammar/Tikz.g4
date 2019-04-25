@@ -3,11 +3,35 @@ grammar Tikz;
 
 // TODO see if empty rule can be replace with ?
 
-begin   : BEGINTIKZPICTURE allGlobalProperties instructions* ENDTIKZPICTURE EOF;
+begin   
+    : BEGINTIKZPICTURE allGlobalProperties instructions* ENDTIKZPICTURE EOF
+    ;
 
-instructions    : node instructions
-                | node
-                ;
+instructions
+    : node instructions
+    | draw instructions
+    | draw
+    | node
+    ;
+
+draw
+    : DRAW edgeProperties nodeList SEMICOLON
+    ;
+
+nodeList
+    : edgeNode '--' nodeList
+    | edgeNode
+    ;
+
+edgeNode
+    : coordinates
+    | OPEN_PARANTHESES VARIABLE CLOSE_PARANTHESES
+    ;
+
+edgeProperties
+    : '[' (properties)? ']'
+    |
+    ;
 
 node
     : NODE nodeId nodeProperties AT coordinates label SEMICOLON
@@ -61,6 +85,7 @@ BEGINTIKZPICTURE: '\\begin{tikzpicture}';
 ENDTIKZPICTURE: '\\end{tikzpicture}';
 
 NODE: '\\node';
+DRAW: '\\draw';
 AT: 'at';
 EVERY: 'every';
 
@@ -70,13 +95,13 @@ OPEN_CURLY_BRACKETS: '{';
 CLOSE_CURLY_BRACKETS: '}';
 EQUAL_TO: '=';
 
+//LINE: '--';
 COMMA: ',';
 COLON: ':';
 SEMICOLON: ';';
 
 // DIGIT should be above VARIABLE for higher precedence
 DIGIT: [0-9/*-+]+;
-VARIABLE: [a-zA-Z0-9_!$.]+;
-
+VARIABLE: [-a-zA-Z0-9_!$.><|]+;
 COMMENT : '%' ~[\n]* -> skip ;
 WS : [ \r\t\n]+ -> skip ;
