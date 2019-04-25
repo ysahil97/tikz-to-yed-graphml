@@ -20,20 +20,21 @@ def main():
     # filename="edge-editing-v2.tex"
 
     for value in getCodeInsideTIKZAfterUnrolling(directory, filename):  
-        print("===================================")
-        print (value)
-        print("===================================")
+        logger.info("===================================")
+        logger.info("\n\n" + value + "\n\n")
+        logger.info("===================================")
         input_stream = antlr4.InputStream(value)
         lexer = TikzLexer(input_stream)
         stream = antlr4.CommonTokenStream(lexer)
         parser = TikzParser(stream)
         tree = parser.begin()
 
+        # we save file as filename_t_{n}_graph.graphml
         j = 0
         while(os.path.exists(directory +"/" + filename + "_" + str(j) + "_graph.graphml")):
             j+=1
-        saveTo = directory +"/" + filename + "_" + str(j) + "_graph.graphml"
-        htmlChat = CustomTikzListener(filename, saveTo)
+        outputFilename = directory +"/" + filename + "_" + str(j) + "_graph.graphml"
+        htmlChat = CustomTikzListener(filename, outputFilename)
         walker = antlr4.ParseTreeWalker()
         walker.walk(htmlChat, tree)
 
