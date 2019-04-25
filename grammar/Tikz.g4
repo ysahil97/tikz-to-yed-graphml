@@ -1,7 +1,9 @@
 grammar Tikz;
 // import TikzLex;
 
-begin   : BEGINTIKZPICTURE instructions* ENDTIKZPICTURE EOF;
+// TODO see if empty rule can be replace with ?
+
+begin   : BEGINTIKZPICTURE allGlobalProperties instructions* ENDTIKZPICTURE EOF;
 
 instructions    : node instructions
                 | node
@@ -12,12 +14,23 @@ node
     ;
 
 nodeId
-    : OPEN_PARANTHESES (VARIABLE)? CLOSE_PARANTHESES
+    : OPEN_PARANTHESES (VARIABLE|DIGIT)? CLOSE_PARANTHESES
     |
-;
+    ;
+
+allGlobalProperties
+    : '[' (globalProperties)? ']'
+    |
+    ;
+
+globalProperties
+    : globalProperties ',' globalProperties
+    | EVERY VARIABLE '/.' 'style' '=' '{' properties '}'
+    | properties
+    ;
 
 nodeProperties
-    : '[' properties ']'
+    : '[' (properties)? ']'
     |
     ;
 
@@ -27,7 +40,7 @@ properties
     ;
 
 individualProperty
-    : VARIABLE+ '=' VARIABLE+
+    : VARIABLE+ EQUAL_TO (VARIABLE|DIGIT)+
     | VARIABLE+
     ;
 
@@ -36,7 +49,7 @@ coordinates
     ;
 
 label
-    : OPEN_CURLY_BRACKETS (VARIABLE)? CLOSE_CURLY_BRACKETS
+    : OPEN_CURLY_BRACKETS (VARIABLE|DIGIT)? CLOSE_CURLY_BRACKETS
     ;
 
 // label
@@ -48,11 +61,13 @@ ENDTIKZPICTURE: '\\end{tikzpicture}';
 
 NODE: '\\node';
 AT: 'at';
+EVERY: 'every';
 
 OPEN_PARANTHESES: '(';
 CLOSE_PARANTHESES: ')';
 OPEN_CURLY_BRACKETS: '{';
 CLOSE_CURLY_BRACKETS: '}';
+EQUAL_TO: '=';
 
 COMMA: ',';
 COLON: ':';

@@ -44,6 +44,24 @@ class TikzListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TikzParser#allGlobalProperties.
+    def enterAllGlobalProperties(self, ctx:TikzParser.AllGlobalPropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#allGlobalProperties.
+    def exitAllGlobalProperties(self, ctx:TikzParser.AllGlobalPropertiesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#globalProperties.
+    def enterGlobalProperties(self, ctx:TikzParser.GlobalPropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#globalProperties.
+    def exitGlobalProperties(self, ctx:TikzParser.GlobalPropertiesContext):
+        pass
+
+
     # Enter a parse tree produced by TikzParser#nodeProperties.
     def enterNodeProperties(self, ctx:TikzParser.NodePropertiesContext):
         pass
