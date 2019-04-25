@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def main():
     directory="./TestCases"
-    filename="draw.tex"
+    filename="graph.tex"
 
     for value in getCodeInsideTIKZAfterUnrolling(directory, filename):
         print("===================================")
