@@ -7,7 +7,7 @@ grammar:
 	${antlr4} -Dlanguage=Python3 grammar/Tikz.g4
 
 test:
-	~/anaconda3/bin/python3 parseTikz.py
+	python3 parseTikz.py
 
 clean:
 	cd grammar; ls | grep -vE '*.g4|__pycache__' | xargs rm;
