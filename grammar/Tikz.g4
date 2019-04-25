@@ -15,7 +15,7 @@ instructions
     ;
 
 draw
-    : DRAW edgeProperties nodeList SEMICOLON
+    : DRAW (edgeProperties)? nodeList SEMICOLON
     ;
 
 nodeList

@@ -15,11 +15,13 @@ logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-1s [%(filename)s:
 
 logger = logging.getLogger(__name__)
 
-def main():
+def main(scalingFactor, logLevel, prefix):
     directory="./TestCases"
-    filename="graph.tex"
+    inputFilename="graph.tex"
+    if not prefix:
+        prefix = inputFilename
 
-    for value in getCodeInsideTIKZAfterUnrolling(directory, filename):  
+    for value in getCodeInsideTIKZAfterUnrolling(directory, inputFilename):  
         logger.info("===================================")
         logger.info("\n\n" + value + "\n\n")
         logger.info("===================================")
@@ -31,18 +33,18 @@ def main():
 
         # we save file as filename_t_{n}_graph.graphml
         j = 0
-        while(os.path.exists(directory +"/" + filename + "_" + str(j) + "_graph.graphml")):
+        while(os.path.exists(directory +"/" + prefix + "_" + str(j) + "_graph.graphml")):
             j+=1
-        outputFilename = directory +"/" + filename + "_" + str(j) + "_graph.graphml"
-        htmlChat = CustomTikzListener(filename, outputFilename)
+        outputFilename = directory +"/" + prefix + "_" + str(j) + "_graph.graphml"
+        htmlChat = CustomTikzListener(inputFilename, outputFilename, scalingFactor)
         walker = antlr4.ParseTreeWalker()
         walker.walk(htmlChat, tree)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # parser.add_argument("-h", "--help", type=int, help="Print this menu")
-    parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity")
-    parser.add_argument("-s", "--scale", type=float, help="Scaling Factor")
+    parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity", default=0)
+    parser.add_argument("-s", "--scale", type=float, help="Scaling Factor", default=200)
     parser.add_argument("-prefix",type=str, help="Output file Prefix")
     
     args = parser.parse_args()
@@ -50,6 +52,5 @@ if __name__ == '__main__':
     scalingFactor = args.scale
     logLevel = args.scale
     prefix = args.prefix
-
-    main()
+    main(scalingFactor, logLevel, prefix)
 
