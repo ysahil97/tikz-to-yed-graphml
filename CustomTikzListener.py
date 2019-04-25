@@ -97,6 +97,7 @@ class CustomTikzListener(TikzListener) :
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
     def exitLabel(self, ctx:TikzParser.LabelContext):
+        print("LABEL :: " ctx.getText())
         if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
             self.currentNode["label"] = ctx.VARIABLE().getText()
         elif ctx.DIGIT() is not None and ctx.DIGIT().getText() is not None:
@@ -106,6 +107,8 @@ class CustomTikzListener(TikzListener) :
 
     def exitRadius(self,ctx:TikzParser.RadiusContext):
         self.lastSeenRadius = ctx.VARIABLE().getText()
+        if self.lastSeenRadius[-1] == 't' or self.lastSeenRadius[-1] == 'm':
+            self.lastSeenRadius = self.lastSeenRadius[:-2]
 
     def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
         if ctx.VARIABLE() is not None:
@@ -134,13 +137,13 @@ class CustomTikzListener(TikzListener) :
 
     def exitDraw(self,ctx:TikzParser.DrawContext):
         if ctx.VARIABLE():
-
+            node_shape = ctx.VARIABLE().getText()
             # handle logic for rectangle drawing for now
             total_x = 0
             total_y = 0
             height = 0
             width = 0
-            if self.shape == 'rectangle':
+            if node_shape == 'rectangle':
                 for i in self.shapeNodes:
                     total_x+=int(i[0])
                     total_y+=int(i[1])
@@ -148,12 +151,12 @@ class CustomTikzListener(TikzListener) :
                 total_y = str(total_y/2)
                 height = float(abs(int(self.shapeNodes[1][1])-int(self.shapeNodes[0][1])))
                 width = float(abs(int(self.shapeNodes[1][0])-int(self.shapeNodes[0][0])))
-            elif self.shape == 'circle':
+            elif node_shape == 'circle':
                 total_x = int(self.shapeNodes[0][0])
                 total_y = int(self.shapeNodes[0][1])
                 height = float(int(self.lastSeenRadius)*2)
                 width = float(int(self.lastSeenRadius)*2)
-            self.G.addNode(X=total_x,Y=total_y,height=height,width=width,shape=self.shape)
+            self.G.addNode(X=total_x,Y=total_y,height=height,width=width,shape=node_shape)
         else:
             sz = len(self.currentEdgeList)
             pointed = [False] * sz

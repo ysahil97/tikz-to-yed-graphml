@@ -21,7 +21,7 @@ def main(scalingFactor, logLevel, prefix):
     if not prefix:
         prefix = inputFilename
 
-    for value in getCodeInsideTIKZAfterUnrolling(directory, inputFilename):  
+    for value in getCodeInsideTIKZAfterUnrolling(directory, inputFilename):
         logger.info("===================================")
         logger.info("\n\n" + value + "\n\n")
         logger.info("===================================")
@@ -46,9 +46,9 @@ if __name__ == '__main__':
     parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity", default=0)
     parser.add_argument("-s", "--scale", type=float, help="Scaling Factor", default=200)
     parser.add_argument("-prefix",type=str, help="Output file Prefix")
-    
+
     args = parser.parse_args()
-    
+
     scalingFactor = args.scale
     logLevel = args.scale
     prefix = args.prefix
