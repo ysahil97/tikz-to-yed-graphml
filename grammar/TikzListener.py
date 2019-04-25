@@ -53,6 +53,33 @@ class TikzListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TikzParser#edgeProperties.
+    def enterEdgeProperties(self, ctx:TikzParser.EdgePropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#edgeProperties.
+    def exitEdgeProperties(self, ctx:TikzParser.EdgePropertiesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#eProperties.
+    def enterEProperties(self, ctx:TikzParser.EPropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#eProperties.
+    def exitEProperties(self, ctx:TikzParser.EPropertiesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#singleProperty.
+    def enterSingleProperty(self, ctx:TikzParser.SinglePropertyContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#singleProperty.
+    def exitSingleProperty(self, ctx:TikzParser.SinglePropertyContext):
+        pass
+
+
     # Enter a parse tree produced by TikzParser#nodeList.
     def enterNodeList(self, ctx:TikzParser.NodeListContext):
         pass

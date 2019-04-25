@@ -20,7 +20,21 @@ instructions    : node instructions
                 ;
 
 draw
-    :DRAW nodeList SEMICOLON
+    :DRAW edgeProperties nodeList SEMICOLON
+    ;
+
+edgeProperties
+    : '[' eProperties ']'
+    |
+    ;
+
+eProperties
+    : singleProperty ',' eProperties
+    | singleProperty
+    ;
+
+singleProperty
+    : LINE_SHAPE
     ;
 
 nodeList
@@ -88,6 +102,6 @@ SEMICOLON: ';';
 // DIGIT should be above VARIABLE for higher precedence
 DIGIT: [0-9]+;
 VARIABLE: [a-zA-Z0-9_!$.]+;
-
+LINE_SHAPE: '->'|'<-';
 COMMENT : '%' ~[\n]* -> skip ;
 WS : [ \r\t\n]+ -> skip ;

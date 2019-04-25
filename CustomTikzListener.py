@@ -15,6 +15,7 @@ class CustomTikzListener(TikzListener) :
         self.outputFileName = outputFileName
         self.edgesNodesList = []
         self.uniquecounter = 0
+        self.currentEdgeProperty = {}
 
     def exitBegin(self, ctx:TikzParser.BeginContext):
         try:
@@ -69,7 +70,14 @@ class CustomTikzListener(TikzListener) :
         y1 = "0"
         x2 = "0"
         y2 = "0"
-        for k in self.currentEdgeNode.keys():
+        key_list = list(self.currentEdgeNode.keys())
+        # print(key_list)
+        pointed=False
+        if self.currentEdgeProperty['dir']:
+            pointed = True
+        if self.currentEdgeProperty['dir'] == 'left':
+            key_list.reverse()
+        for k in key_list:
             if first_node_seen:
                 node1 = self.currentEdgeNode[k]
                 x1 = k[0]
@@ -79,8 +87,10 @@ class CustomTikzListener(TikzListener) :
             node2 = self.currentEdgeNode[k]
             x2 = k[0]
             y2 = k[1]
-            self.G.addEdge(node1,node2,x1,y1,x2,y2)
+            self.G.addEdge(node1,node2,pointed,str(x1),str(y1),str(x2),str(y2))
             node1,x1,y1 = node2,x2,y2
+        self.currentEdgeProperty = {}
+        self.currentEdgeNode = {}
 
     def exitIndividualProperty(self, ctx:TikzParser.IndividualPropertyContext):
         key = ""
@@ -101,3 +111,10 @@ class CustomTikzListener(TikzListener) :
             k, v = identifyIndividualProperty(value)
 
         self.currentNode[k] = v
+
+    def exitSingleProperty(self,ctx:TikzParser.SinglePropertyContext):
+        # For now, only assuming line shape property
+        if ctx.LINE_SHAPE().getText() == '->':
+            self.currentEdgeProperty['dir'] = 'right'
+        elif ctx.LINE_SHAPE().getText() == '<-':
+            self.currentEdgeProperty['dir'] = 'left'

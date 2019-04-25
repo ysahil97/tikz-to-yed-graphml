@@ -8,55 +8,68 @@ import sys
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\26")
-        buf.write("\u0092\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27")
+        buf.write("\u00a9\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
-        buf.write("\t\16\4\17\t\17\3\2\3\2\5\2!\n\2\3\2\7\2$\n\2\f\2\16\2")
-        buf.write("\'\13\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3\61\n\3\3\4")
-        buf.write("\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5=\n\5\3\6\3\6")
-        buf.write("\3\6\3\6\3\7\3\7\3\7\3\7\3\7\5\7H\n\7\3\b\3\b\3\b\5\b")
-        buf.write("M\n\b\3\b\3\b\3\b\3\b\3\b\5\bT\n\b\3\t\3\t\3\t\3\t\3\t")
-        buf.write("\3\t\3\t\3\t\3\n\3\n\5\n`\n\n\3\n\3\n\5\nd\n\n\3\13\3")
-        buf.write("\13\3\13\3\13\3\13\5\13k\n\13\3\f\3\f\3\f\3\f\3\f\5\f")
-        buf.write("r\n\f\3\r\6\ru\n\r\r\r\16\rv\3\r\3\r\6\r{\n\r\r\r\16\r")
-        buf.write("|\3\r\6\r\u0080\n\r\r\r\16\r\u0081\5\r\u0084\n\r\3\16")
-        buf.write("\3\16\3\16\3\16\3\16\3\16\3\17\3\17\5\17\u008e\n\17\3")
-        buf.write("\17\3\17\3\17\2\2\20\2\4\6\b\n\f\16\20\22\24\26\30\32")
-        buf.write("\34\2\3\3\2\20\21\2\u0095\2\36\3\2\2\2\4\60\3\2\2\2\6")
-        buf.write("\62\3\2\2\2\b<\3\2\2\2\n>\3\2\2\2\fG\3\2\2\2\16L\3\2\2")
-        buf.write("\2\20U\3\2\2\2\22c\3\2\2\2\24j\3\2\2\2\26q\3\2\2\2\30")
-        buf.write("\u0083\3\2\2\2\32\u0085\3\2\2\2\34\u008b\3\2\2\2\36 \7")
-        buf.write("\7\2\2\37!\5\4\3\2 \37\3\2\2\2 !\3\2\2\2!%\3\2\2\2\"$")
-        buf.write("\5\b\5\2#\"\3\2\2\2$\'\3\2\2\2%#\3\2\2\2%&\3\2\2\2&(\3")
-        buf.write("\2\2\2\'%\3\2\2\2()\7\b\2\2)*\7\2\2\3*\3\3\2\2\2+,\7\3")
-        buf.write("\2\2,-\5\6\4\2-.\7\4\2\2.\61\3\2\2\2/\61\3\2\2\2\60+\3")
-        buf.write("\2\2\2\60/\3\2\2\2\61\5\3\2\2\2\62\63\13\2\2\2\63\7\3")
-        buf.write("\2\2\2\64\65\5\20\t\2\65\66\5\b\5\2\66=\3\2\2\2\678\5")
-        buf.write("\n\6\289\5\b\5\29=\3\2\2\2:=\5\n\6\2;=\5\20\t\2<\64\3")
-        buf.write("\2\2\2<\67\3\2\2\2<:\3\2\2\2<;\3\2\2\2=\t\3\2\2\2>?\7")
-        buf.write("\n\2\2?@\5\f\7\2@A\7\22\2\2A\13\3\2\2\2BC\5\16\b\2CD\7")
-        buf.write("\5\2\2DE\5\f\7\2EH\3\2\2\2FH\5\16\b\2GB\3\2\2\2GF\3\2")
-        buf.write("\2\2H\r\3\2\2\2IJ\7\f\2\2JK\7\24\2\2KM\7\r\2\2LI\3\2\2")
-        buf.write("\2LM\3\2\2\2MS\3\2\2\2NO\7\f\2\2OP\7\23\2\2PQ\t\2\2\2")
-        buf.write("QR\7\23\2\2RT\7\r\2\2SN\3\2\2\2ST\3\2\2\2T\17\3\2\2\2")
-        buf.write("UV\7\t\2\2VW\5\22\n\2WX\5\24\13\2XY\7\13\2\2YZ\5\32\16")
-        buf.write("\2Z[\5\34\17\2[\\\7\22\2\2\\\21\3\2\2\2]_\7\f\2\2^`\7")
-        buf.write("\24\2\2_^\3\2\2\2_`\3\2\2\2`a\3\2\2\2ad\7\r\2\2bd\3\2")
-        buf.write("\2\2c]\3\2\2\2cb\3\2\2\2d\23\3\2\2\2ef\7\3\2\2fg\5\26")
-        buf.write("\f\2gh\7\4\2\2hk\3\2\2\2ik\3\2\2\2je\3\2\2\2ji\3\2\2\2")
-        buf.write("k\25\3\2\2\2lm\5\30\r\2mn\7\20\2\2no\5\26\f\2or\3\2\2")
-        buf.write("\2pr\5\30\r\2ql\3\2\2\2qp\3\2\2\2r\27\3\2\2\2su\7\24\2")
-        buf.write("\2ts\3\2\2\2uv\3\2\2\2vt\3\2\2\2vw\3\2\2\2wx\3\2\2\2x")
-        buf.write("z\7\6\2\2y{\7\24\2\2zy\3\2\2\2{|\3\2\2\2|z\3\2\2\2|}\3")
-        buf.write("\2\2\2}\u0084\3\2\2\2~\u0080\7\24\2\2\177~\3\2\2\2\u0080")
-        buf.write("\u0081\3\2\2\2\u0081\177\3\2\2\2\u0081\u0082\3\2\2\2\u0082")
-        buf.write("\u0084\3\2\2\2\u0083t\3\2\2\2\u0083\177\3\2\2\2\u0084")
-        buf.write("\31\3\2\2\2\u0085\u0086\7\f\2\2\u0086\u0087\7\23\2\2\u0087")
-        buf.write("\u0088\t\2\2\2\u0088\u0089\7\23\2\2\u0089\u008a\7\r\2")
-        buf.write("\2\u008a\33\3\2\2\2\u008b\u008d\7\16\2\2\u008c\u008e\7")
-        buf.write("\24\2\2\u008d\u008c\3\2\2\2\u008d\u008e\3\2\2\2\u008e")
-        buf.write("\u008f\3\2\2\2\u008f\u0090\7\17\2\2\u0090\35\3\2\2\2\22")
-        buf.write(" %\60<GLS_cjqv|\u0081\u0083\u008d")
+        buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\3\2\3\2")
+        buf.write("\5\2\'\n\2\3\2\7\2*\n\2\f\2\16\2-\13\2\3\2\3\2\3\2\3\3")
+        buf.write("\3\3\3\3\3\3\3\3\5\3\67\n\3\3\4\3\4\3\5\3\5\3\5\3\5\3")
+        buf.write("\5\3\5\3\5\3\5\5\5C\n\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3")
+        buf.write("\7\3\7\3\7\5\7O\n\7\3\b\3\b\3\b\3\b\3\b\5\bV\n\b\3\t\3")
+        buf.write("\t\3\n\3\n\3\n\3\n\3\n\5\n_\n\n\3\13\3\13\3\13\5\13d\n")
+        buf.write("\13\3\13\3\13\3\13\3\13\3\13\5\13k\n\13\3\f\3\f\3\f\3")
+        buf.write("\f\3\f\3\f\3\f\3\f\3\r\3\r\5\rw\n\r\3\r\3\r\5\r{\n\r\3")
+        buf.write("\16\3\16\3\16\3\16\3\16\5\16\u0082\n\16\3\17\3\17\3\17")
+        buf.write("\3\17\3\17\5\17\u0089\n\17\3\20\6\20\u008c\n\20\r\20\16")
+        buf.write("\20\u008d\3\20\3\20\6\20\u0092\n\20\r\20\16\20\u0093\3")
+        buf.write("\20\6\20\u0097\n\20\r\20\16\20\u0098\5\20\u009b\n\20\3")
+        buf.write("\21\3\21\3\21\3\21\3\21\3\21\3\22\3\22\5\22\u00a5\n\22")
+        buf.write("\3\22\3\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26\30\32")
+        buf.write("\34\36 \"\2\3\3\2\20\21\2\u00ab\2$\3\2\2\2\4\66\3\2\2")
+        buf.write("\2\68\3\2\2\2\bB\3\2\2\2\nD\3\2\2\2\fN\3\2\2\2\16U\3\2")
+        buf.write("\2\2\20W\3\2\2\2\22^\3\2\2\2\24c\3\2\2\2\26l\3\2\2\2\30")
+        buf.write("z\3\2\2\2\32\u0081\3\2\2\2\34\u0088\3\2\2\2\36\u009a\3")
+        buf.write("\2\2\2 \u009c\3\2\2\2\"\u00a2\3\2\2\2$&\7\7\2\2%\'\5\4")
+        buf.write("\3\2&%\3\2\2\2&\'\3\2\2\2\'+\3\2\2\2(*\5\b\5\2)(\3\2\2")
+        buf.write("\2*-\3\2\2\2+)\3\2\2\2+,\3\2\2\2,.\3\2\2\2-+\3\2\2\2.")
+        buf.write("/\7\b\2\2/\60\7\2\2\3\60\3\3\2\2\2\61\62\7\3\2\2\62\63")
+        buf.write("\5\6\4\2\63\64\7\4\2\2\64\67\3\2\2\2\65\67\3\2\2\2\66")
+        buf.write("\61\3\2\2\2\66\65\3\2\2\2\67\5\3\2\2\289\13\2\2\29\7\3")
+        buf.write("\2\2\2:;\5\26\f\2;<\5\b\5\2<C\3\2\2\2=>\5\n\6\2>?\5\b")
+        buf.write("\5\2?C\3\2\2\2@C\5\n\6\2AC\5\26\f\2B:\3\2\2\2B=\3\2\2")
+        buf.write("\2B@\3\2\2\2BA\3\2\2\2C\t\3\2\2\2DE\7\n\2\2EF\5\f\7\2")
+        buf.write("FG\5\22\n\2GH\7\22\2\2H\13\3\2\2\2IJ\7\3\2\2JK\5\16\b")
+        buf.write("\2KL\7\4\2\2LO\3\2\2\2MO\3\2\2\2NI\3\2\2\2NM\3\2\2\2O")
+        buf.write("\r\3\2\2\2PQ\5\20\t\2QR\7\20\2\2RS\5\16\b\2SV\3\2\2\2")
+        buf.write("TV\5\20\t\2UP\3\2\2\2UT\3\2\2\2V\17\3\2\2\2WX\7\25\2\2")
+        buf.write("X\21\3\2\2\2YZ\5\24\13\2Z[\7\5\2\2[\\\5\22\n\2\\_\3\2")
+        buf.write("\2\2]_\5\24\13\2^Y\3\2\2\2^]\3\2\2\2_\23\3\2\2\2`a\7\f")
+        buf.write("\2\2ab\7\24\2\2bd\7\r\2\2c`\3\2\2\2cd\3\2\2\2dj\3\2\2")
+        buf.write("\2ef\7\f\2\2fg\7\23\2\2gh\t\2\2\2hi\7\23\2\2ik\7\r\2\2")
+        buf.write("je\3\2\2\2jk\3\2\2\2k\25\3\2\2\2lm\7\t\2\2mn\5\30\r\2")
+        buf.write("no\5\32\16\2op\7\13\2\2pq\5 \21\2qr\5\"\22\2rs\7\22\2")
+        buf.write("\2s\27\3\2\2\2tv\7\f\2\2uw\7\24\2\2vu\3\2\2\2vw\3\2\2")
+        buf.write("\2wx\3\2\2\2x{\7\r\2\2y{\3\2\2\2zt\3\2\2\2zy\3\2\2\2{")
+        buf.write("\31\3\2\2\2|}\7\3\2\2}~\5\34\17\2~\177\7\4\2\2\177\u0082")
+        buf.write("\3\2\2\2\u0080\u0082\3\2\2\2\u0081|\3\2\2\2\u0081\u0080")
+        buf.write("\3\2\2\2\u0082\33\3\2\2\2\u0083\u0084\5\36\20\2\u0084")
+        buf.write("\u0085\7\20\2\2\u0085\u0086\5\34\17\2\u0086\u0089\3\2")
+        buf.write("\2\2\u0087\u0089\5\36\20\2\u0088\u0083\3\2\2\2\u0088\u0087")
+        buf.write("\3\2\2\2\u0089\35\3\2\2\2\u008a\u008c\7\24\2\2\u008b\u008a")
+        buf.write("\3\2\2\2\u008c\u008d\3\2\2\2\u008d\u008b\3\2\2\2\u008d")
+        buf.write("\u008e\3\2\2\2\u008e\u008f\3\2\2\2\u008f\u0091\7\6\2\2")
+        buf.write("\u0090\u0092\7\24\2\2\u0091\u0090\3\2\2\2\u0092\u0093")
+        buf.write("\3\2\2\2\u0093\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094")
+        buf.write("\u009b\3\2\2\2\u0095\u0097\7\24\2\2\u0096\u0095\3\2\2")
+        buf.write("\2\u0097\u0098\3\2\2\2\u0098\u0096\3\2\2\2\u0098\u0099")
+        buf.write("\3\2\2\2\u0099\u009b\3\2\2\2\u009a\u008b\3\2\2\2\u009a")
+        buf.write("\u0096\3\2\2\2\u009b\37\3\2\2\2\u009c\u009d\7\f\2\2\u009d")
+        buf.write("\u009e\7\23\2\2\u009e\u009f\t\2\2\2\u009f\u00a0\7\23\2")
+        buf.write("\2\u00a0\u00a1\7\r\2\2\u00a1!\3\2\2\2\u00a2\u00a4\7\16")
+        buf.write("\2\2\u00a3\u00a5\7\24\2\2\u00a4\u00a3\3\2\2\2\u00a4\u00a5")
+        buf.write("\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6\u00a7\7\17\2\2\u00a7")
+        buf.write("#\3\2\2\2\24&+\66BNU^cjvz\u0081\u0088\u008d\u0093\u0098")
+        buf.write("\u009a\u00a4")
         return buf.getvalue()
 
 
@@ -78,26 +91,30 @@ class TikzParser ( Parser ):
                       "<INVALID>", "BEGINTIKZPICTURE", "ENDTIKZPICTURE", 
                       "NODE", "DRAW", "AT", "OPEN_PARANTHESES", "CLOSE_PARANTHESES", 
                       "OPEN_CURLY_BRACKETS", "CLOSE_CURLY_BRACKETS", "COMMA", 
-                      "COLON", "SEMICOLON", "DIGIT", "VARIABLE", "COMMENT", 
-                      "WS" ]
+                      "COLON", "SEMICOLON", "DIGIT", "VARIABLE", "LINE_SHAPE", 
+                      "COMMENT", "WS" ]
 
     RULE_begin = 0
     RULE_globalProperties = 1
     RULE_globalProperty = 2
     RULE_instructions = 3
     RULE_draw = 4
-    RULE_nodeList = 5
-    RULE_edgeNode = 6
-    RULE_node = 7
-    RULE_nodeId = 8
-    RULE_nodeProperties = 9
-    RULE_properties = 10
-    RULE_individualProperty = 11
-    RULE_coordinates = 12
-    RULE_label = 13
+    RULE_edgeProperties = 5
+    RULE_eProperties = 6
+    RULE_singleProperty = 7
+    RULE_nodeList = 8
+    RULE_edgeNode = 9
+    RULE_node = 10
+    RULE_nodeId = 11
+    RULE_nodeProperties = 12
+    RULE_properties = 13
+    RULE_individualProperty = 14
+    RULE_coordinates = 15
+    RULE_label = 16
 
     ruleNames =  [ "begin", "globalProperties", "globalProperty", "instructions", 
-                   "draw", "nodeList", "edgeNode", "node", "nodeId", "nodeProperties", 
+                   "draw", "edgeProperties", "eProperties", "singleProperty", 
+                   "nodeList", "edgeNode", "node", "nodeId", "nodeProperties", 
                    "properties", "individualProperty", "coordinates", "label" ]
 
     EOF = Token.EOF
@@ -119,8 +136,9 @@ class TikzParser ( Parser ):
     SEMICOLON=16
     DIGIT=17
     VARIABLE=18
-    COMMENT=19
-    WS=20
+    LINE_SHAPE=19
+    COMMENT=20
+    WS=21
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -178,29 +196,29 @@ class TikzParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 28
+            self.state = 34
             self.match(TikzParser.BEGINTIKZPICTURE)
-            self.state = 30
+            self.state = 36
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,0,self._ctx)
             if la_ == 1:
-                self.state = 29
+                self.state = 35
                 self.globalProperties()
 
 
-            self.state = 35
+            self.state = 41
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==TikzParser.NODE or _la==TikzParser.DRAW:
-                self.state = 32
+                self.state = 38
                 self.instructions()
-                self.state = 37
+                self.state = 43
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 38
+            self.state = 44
             self.match(TikzParser.ENDTIKZPICTURE)
-            self.state = 39
+            self.state = 45
             self.match(TikzParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -240,16 +258,16 @@ class TikzParser ( Parser ):
         localctx = TikzParser.GlobalPropertiesContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_globalProperties)
         try:
-            self.state = 46
+            self.state = 52
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [TikzParser.T__0]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 41
+                self.state = 47
                 self.match(TikzParser.T__0)
-                self.state = 42
+                self.state = 48
                 self.globalProperty()
-                self.state = 43
+                self.state = 49
                 self.match(TikzParser.T__1)
                 pass
             elif token in [TikzParser.ENDTIKZPICTURE, TikzParser.NODE, TikzParser.DRAW]:
@@ -295,7 +313,7 @@ class TikzParser ( Parser ):
         self.enterRule(localctx, 4, self.RULE_globalProperty)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 48
+            self.state = 54
             self.matchWildcard()
         except RecognitionException as re:
             localctx.exception = re
@@ -343,34 +361,34 @@ class TikzParser ( Parser ):
         localctx = TikzParser.InstructionsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_instructions)
         try:
-            self.state = 58
+            self.state = 64
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,3,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 50
+                self.state = 56
                 self.node()
-                self.state = 51
+                self.state = 57
                 self.instructions()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 53
+                self.state = 59
                 self.draw()
-                self.state = 54
+                self.state = 60
                 self.instructions()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 56
+                self.state = 62
                 self.draw()
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 57
+                self.state = 63
                 self.node()
                 pass
 
@@ -392,6 +410,10 @@ class TikzParser ( Parser ):
 
         def DRAW(self):
             return self.getToken(TikzParser.DRAW, 0)
+
+        def edgeProperties(self):
+            return self.getTypedRuleContext(TikzParser.EdgePropertiesContext,0)
+
 
         def nodeList(self):
             return self.getTypedRuleContext(TikzParser.NodeListContext,0)
@@ -420,12 +442,176 @@ class TikzParser ( Parser ):
         self.enterRule(localctx, 8, self.RULE_draw)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 60
+            self.state = 66
             self.match(TikzParser.DRAW)
-            self.state = 61
+            self.state = 67
+            self.edgeProperties()
+            self.state = 68
             self.nodeList()
-            self.state = 62
+            self.state = 69
             self.match(TikzParser.SEMICOLON)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class EdgePropertiesContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def eProperties(self):
+            return self.getTypedRuleContext(TikzParser.EPropertiesContext,0)
+
+
+        def getRuleIndex(self):
+            return TikzParser.RULE_edgeProperties
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterEdgeProperties" ):
+                listener.enterEdgeProperties(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitEdgeProperties" ):
+                listener.exitEdgeProperties(self)
+
+
+
+
+    def edgeProperties(self):
+
+        localctx = TikzParser.EdgePropertiesContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 10, self.RULE_edgeProperties)
+        try:
+            self.state = 76
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [TikzParser.T__0]:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 71
+                self.match(TikzParser.T__0)
+                self.state = 72
+                self.eProperties()
+                self.state = 73
+                self.match(TikzParser.T__1)
+                pass
+            elif token in [TikzParser.T__2, TikzParser.OPEN_PARANTHESES, TikzParser.SEMICOLON]:
+                self.enterOuterAlt(localctx, 2)
+
+                pass
+            else:
+                raise NoViableAltException(self)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class EPropertiesContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def singleProperty(self):
+            return self.getTypedRuleContext(TikzParser.SinglePropertyContext,0)
+
+
+        def COMMA(self):
+            return self.getToken(TikzParser.COMMA, 0)
+
+        def eProperties(self):
+            return self.getTypedRuleContext(TikzParser.EPropertiesContext,0)
+
+
+        def getRuleIndex(self):
+            return TikzParser.RULE_eProperties
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterEProperties" ):
+                listener.enterEProperties(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitEProperties" ):
+                listener.exitEProperties(self)
+
+
+
+
+    def eProperties(self):
+
+        localctx = TikzParser.EPropertiesContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 12, self.RULE_eProperties)
+        try:
+            self.state = 83
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 78
+                self.singleProperty()
+                self.state = 79
+                self.match(TikzParser.COMMA)
+                self.state = 80
+                self.eProperties()
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 82
+                self.singleProperty()
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class SinglePropertyContext(ParserRuleContext):
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def LINE_SHAPE(self):
+            return self.getToken(TikzParser.LINE_SHAPE, 0)
+
+        def getRuleIndex(self):
+            return TikzParser.RULE_singleProperty
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSingleProperty" ):
+                listener.enterSingleProperty(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSingleProperty" ):
+                listener.exitSingleProperty(self)
+
+
+
+
+    def singleProperty(self):
+
+        localctx = TikzParser.SinglePropertyContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 14, self.RULE_singleProperty)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 85
+            self.match(TikzParser.LINE_SHAPE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -466,24 +652,24 @@ class TikzParser ( Parser ):
     def nodeList(self):
 
         localctx = TikzParser.NodeListContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_nodeList)
+        self.enterRule(localctx, 16, self.RULE_nodeList)
         try:
-            self.state = 69
+            self.state = 92
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 64
+                self.state = 87
                 self.edgeNode()
-                self.state = 65
+                self.state = 88
                 self.match(TikzParser.T__2)
-                self.state = 66
+                self.state = 89
                 self.nodeList()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 68
+                self.state = 91
                 self.edgeNode()
                 pass
 
@@ -547,40 +733,40 @@ class TikzParser ( Parser ):
     def edgeNode(self):
 
         localctx = TikzParser.EdgeNodeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_edgeNode)
+        self.enterRule(localctx, 18, self.RULE_edgeNode)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 74
+            self.state = 97
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
             if la_ == 1:
-                self.state = 71
+                self.state = 94
                 self.match(TikzParser.OPEN_PARANTHESES)
-                self.state = 72
+                self.state = 95
                 self.match(TikzParser.VARIABLE)
-                self.state = 73
+                self.state = 96
                 self.match(TikzParser.CLOSE_PARANTHESES)
 
 
-            self.state = 81
+            self.state = 104
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==TikzParser.OPEN_PARANTHESES:
-                self.state = 76
+                self.state = 99
                 self.match(TikzParser.OPEN_PARANTHESES)
-                self.state = 77
+                self.state = 100
                 self.match(TikzParser.DIGIT)
-                self.state = 78
+                self.state = 101
                 _la = self._input.LA(1)
                 if not(_la==TikzParser.COMMA or _la==TikzParser.COLON):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 79
+                self.state = 102
                 self.match(TikzParser.DIGIT)
-                self.state = 80
+                self.state = 103
                 self.match(TikzParser.CLOSE_PARANTHESES)
 
 
@@ -641,22 +827,22 @@ class TikzParser ( Parser ):
     def node(self):
 
         localctx = TikzParser.NodeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_node)
+        self.enterRule(localctx, 20, self.RULE_node)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 83
+            self.state = 106
             self.match(TikzParser.NODE)
-            self.state = 84
+            self.state = 107
             self.nodeId()
-            self.state = 85
+            self.state = 108
             self.nodeProperties()
-            self.state = 86
+            self.state = 109
             self.match(TikzParser.AT)
-            self.state = 87
+            self.state = 110
             self.coordinates()
-            self.state = 88
+            self.state = 111
             self.label()
-            self.state = 89
+            self.state = 112
             self.match(TikzParser.SEMICOLON)
         except RecognitionException as re:
             localctx.exception = re
@@ -699,25 +885,25 @@ class TikzParser ( Parser ):
     def nodeId(self):
 
         localctx = TikzParser.NodeIdContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_nodeId)
+        self.enterRule(localctx, 22, self.RULE_nodeId)
         self._la = 0 # Token type
         try:
-            self.state = 97
+            self.state = 120
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [TikzParser.OPEN_PARANTHESES]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 91
+                self.state = 114
                 self.match(TikzParser.OPEN_PARANTHESES)
-                self.state = 93
+                self.state = 116
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==TikzParser.VARIABLE:
-                    self.state = 92
+                    self.state = 115
                     self.match(TikzParser.VARIABLE)
 
 
-                self.state = 95
+                self.state = 118
                 self.match(TikzParser.CLOSE_PARANTHESES)
                 pass
             elif token in [TikzParser.T__0, TikzParser.AT]:
@@ -763,18 +949,18 @@ class TikzParser ( Parser ):
     def nodeProperties(self):
 
         localctx = TikzParser.NodePropertiesContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 18, self.RULE_nodeProperties)
+        self.enterRule(localctx, 24, self.RULE_nodeProperties)
         try:
-            self.state = 104
+            self.state = 127
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [TikzParser.T__0]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 99
+                self.state = 122
                 self.match(TikzParser.T__0)
-                self.state = 100
+                self.state = 123
                 self.properties()
-                self.state = 101
+                self.state = 124
                 self.match(TikzParser.T__1)
                 pass
             elif token in [TikzParser.AT]:
@@ -827,24 +1013,24 @@ class TikzParser ( Parser ):
     def properties(self):
 
         localctx = TikzParser.PropertiesContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_properties)
+        self.enterRule(localctx, 26, self.RULE_properties)
         try:
-            self.state = 111
+            self.state = 134
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 106
+                self.state = 129
                 self.individualProperty()
-                self.state = 107
+                self.state = 130
                 self.match(TikzParser.COMMA)
-                self.state = 108
+                self.state = 131
                 self.properties()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 110
+                self.state = 133
                 self.individualProperty()
                 pass
 
@@ -887,35 +1073,35 @@ class TikzParser ( Parser ):
     def individualProperty(self):
 
         localctx = TikzParser.IndividualPropertyContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 22, self.RULE_individualProperty)
+        self.enterRule(localctx, 28, self.RULE_individualProperty)
         self._la = 0 # Token type
         try:
-            self.state = 129
+            self.state = 152
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 114 
+                self.state = 137 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
-                    self.state = 113
+                    self.state = 136
                     self.match(TikzParser.VARIABLE)
-                    self.state = 116 
+                    self.state = 139 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not (_la==TikzParser.VARIABLE):
                         break
 
-                self.state = 118
+                self.state = 141
                 self.match(TikzParser.T__3)
-                self.state = 120 
+                self.state = 143 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
-                    self.state = 119
+                    self.state = 142
                     self.match(TikzParser.VARIABLE)
-                    self.state = 122 
+                    self.state = 145 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not (_la==TikzParser.VARIABLE):
@@ -925,13 +1111,13 @@ class TikzParser ( Parser ):
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 125 
+                self.state = 148 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
-                    self.state = 124
+                    self.state = 147
                     self.match(TikzParser.VARIABLE)
-                    self.state = 127 
+                    self.state = 150 
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     if not (_la==TikzParser.VARIABLE):
@@ -990,24 +1176,24 @@ class TikzParser ( Parser ):
     def coordinates(self):
 
         localctx = TikzParser.CoordinatesContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 24, self.RULE_coordinates)
+        self.enterRule(localctx, 30, self.RULE_coordinates)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 131
+            self.state = 154
             self.match(TikzParser.OPEN_PARANTHESES)
-            self.state = 132
+            self.state = 155
             self.match(TikzParser.DIGIT)
-            self.state = 133
+            self.state = 156
             _la = self._input.LA(1)
             if not(_la==TikzParser.COMMA or _la==TikzParser.COLON):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 134
+            self.state = 157
             self.match(TikzParser.DIGIT)
-            self.state = 135
+            self.state = 158
             self.match(TikzParser.CLOSE_PARANTHESES)
         except RecognitionException as re:
             localctx.exception = re
@@ -1050,21 +1236,21 @@ class TikzParser ( Parser ):
     def label(self):
 
         localctx = TikzParser.LabelContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 26, self.RULE_label)
+        self.enterRule(localctx, 32, self.RULE_label)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 137
+            self.state = 160
             self.match(TikzParser.OPEN_CURLY_BRACKETS)
-            self.state = 139
+            self.state = 162
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==TikzParser.VARIABLE:
-                self.state = 138
+                self.state = 161
                 self.match(TikzParser.VARIABLE)
 
 
-            self.state = 141
+            self.state = 164
             self.match(TikzParser.CLOSE_CURLY_BRACKETS)
         except RecognitionException as re:
             localctx.exception = re

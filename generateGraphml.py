@@ -107,16 +107,19 @@ class Graph:
 		logger.debug("Adding NODE to Graph : \n{}".format(pformat(node)))
 		self.nodes.append(node)
 
-	def addEdge(self, nodeX:str=None, nodeY:str=None, X1:str = "0", Y1:str = "0",X2:str = "0", Y2:str = "0"):
+	def addEdge(self, nodeX:str=None, nodeY:str=None, pointed:bool=False, X1:str = "0", Y1:str = "0",X2:str = "0", Y2:str = "0"):
 		# TODO: Add exception handling when NodeID is referenced without declaring it
 		if nodeX is None:
 			nodeX = self.nodeToNodeID[(X1,Y1)]
 		if nodeY is None:
 			nodeY = self.nodeToNodeID[(X2,Y2)]
-
+		arrowDir = "none"
+		if pointed:
+			arrowDir = "standard"
 		self.edges.append({
 			"x": nodeX,
-			"y": nodeY
+			"y": nodeY,
+			"arrowhead": arrowDir
 		})
 
 
@@ -158,7 +161,8 @@ class Graph:
 		for edge in self.edges:
 			self.G.add_edge(
 				edge["x"],
-				edge["y"]
+				edge["y"],
+				arrowhead=edge["arrowhead"]
 			)
 
 		dom = xml.dom.minidom.parseString(self.G.get_graph())
