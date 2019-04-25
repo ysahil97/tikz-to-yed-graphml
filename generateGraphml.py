@@ -13,7 +13,8 @@ from pylatexenc.latex2text import LatexNodes2Text
 logger = logging.getLogger(__name__)
 
 class Graph:
-	def __init__(self):
+	def __init__(self, scalingFactor:float):
+		self.scalingFactor = scalingFactor
 		self.G = pyyed.Graph()
 		self.numNodes = 0
 		self.numEdges = 0
@@ -38,7 +39,7 @@ class Graph:
 		print(nx.rescale_layout(coordinates, scale))
 
 	def getScalingFactor(self, size, minDistance):
-		return self.maxScaleFactor * size * (3 - 2 * minDistance) * 200
+		return self.maxScaleFactor * size * (3 - 2 * minDistance) * self.scalingFactor
 
 	def getColor(self, fill):
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)

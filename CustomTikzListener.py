@@ -11,7 +11,7 @@ import copy
 logger = logging.getLogger(__name__)
 
 class CustomTikzListener(TikzListener) :
-    def __init__(self, inputFileName:str, outputFileName:str):
+    def __init__(self, inputFileName:str, outputFileName:str, scalingFactor:float):
         self.globalProperties = {}
         self.currentNode = {}
         self.currentEdgeList = []
@@ -21,7 +21,7 @@ class CustomTikzListener(TikzListener) :
         self.lastSeenRadius = None
         self.shapeNodes = []
 
-        self.G = Graph()
+        self.G = Graph(scalingFactor)
         self.inputFileName = inputFileName
         self.outputFileName = outputFileName
 
