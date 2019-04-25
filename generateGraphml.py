@@ -70,7 +70,17 @@ class Graph:
 			"edge_width": "1.0"
 		})
 
-	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None, inner_sep:str = "2.5pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse"):
+	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None, inner_sep:str = "2.5pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
+
+		if rotate != "0":
+			rotate = float(rotate)
+			x = float(X)
+			y = float(Y)
+			cosA = round(math.cos(math.radians(rotate)), 10)
+			sinA = round(math.sin(math.radians(rotate)), 10)
+			X = x * cosA + y * sinA
+			Y = -1 * x * sinA + y * cosA
+
 		clr = self.getColor(fill)
 
 		if nodeID is None:
@@ -78,7 +88,7 @@ class Graph:
 
 		self.numNodes += 1
 
-		if shape == "circle":
+		if shape == "circle" or shape is None:
 			shape = "ellipse"
 
 		if label is not None:
@@ -101,13 +111,15 @@ class Graph:
 			"edge_color": clr,
 			"height": inner_sep,
 			"width": inner_sep,
-			"edge_width": "1.0"
+			"edge_width": "1.0",
+			"regular_polygon_sides": float(regular_polygon_sides)
 		}
 
 		logger.debug("Adding NODE to Graph : \n{}".format(pformat(node)))
 		self.nodes.append(node)
 
-	def addEdge(self, nodeX:str=None, nodeY:str=None, pointed:bool=False, X1:str = "0", Y1:str = "0",X2:str = "0", Y2:str = "0"):
+	def addEdge(self, nodeX:str=None, nodeY:str=None, pointed:bool=False, X1:str = "0", Y1:str = "0",
+		X2:str = "0", Y2:str = "0"):
 		# TODO: Add exception handling when NodeID is referenced without declaring it
 		if nodeX is None:
 			nodeX = self.nodeToNodeID[(X1,Y1)]

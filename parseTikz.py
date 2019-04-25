@@ -29,7 +29,7 @@ def main():
         tree = parser.begin()
 
         j = 0
-        while(os.path.exists(filename + "t" + str(j) + "_unrolled.tex")):
+        while(os.path.exists(directory +"/" + filename + "_" + str(j) + "_graph.graphml")):
             j+=1
         saveTo = directory +"/" + filename + "_" + str(j) + "_graph.graphml"
         htmlChat = CustomTikzListener(filename, saveTo)

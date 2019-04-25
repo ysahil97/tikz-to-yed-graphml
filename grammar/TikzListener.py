@@ -17,24 +17,6 @@ class TikzListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by TikzParser#globalProperties.
-    def enterGlobalProperties(self, ctx:TikzParser.GlobalPropertiesContext):
-        pass
-
-    # Exit a parse tree produced by TikzParser#globalProperties.
-    def exitGlobalProperties(self, ctx:TikzParser.GlobalPropertiesContext):
-        pass
-
-
-    # Enter a parse tree produced by TikzParser#globalProperty.
-    def enterGlobalProperty(self, ctx:TikzParser.GlobalPropertyContext):
-        pass
-
-    # Exit a parse tree produced by TikzParser#globalProperty.
-    def exitGlobalProperty(self, ctx:TikzParser.GlobalPropertyContext):
-        pass
-
-
     # Enter a parse tree produced by TikzParser#instructions.
     def enterInstructions(self, ctx:TikzParser.InstructionsContext):
         pass
@@ -50,33 +32,6 @@ class TikzListener(ParseTreeListener):
 
     # Exit a parse tree produced by TikzParser#draw.
     def exitDraw(self, ctx:TikzParser.DrawContext):
-        pass
-
-
-    # Enter a parse tree produced by TikzParser#edgeProperties.
-    def enterEdgeProperties(self, ctx:TikzParser.EdgePropertiesContext):
-        pass
-
-    # Exit a parse tree produced by TikzParser#edgeProperties.
-    def exitEdgeProperties(self, ctx:TikzParser.EdgePropertiesContext):
-        pass
-
-
-    # Enter a parse tree produced by TikzParser#eProperties.
-    def enterEProperties(self, ctx:TikzParser.EPropertiesContext):
-        pass
-
-    # Exit a parse tree produced by TikzParser#eProperties.
-    def exitEProperties(self, ctx:TikzParser.EPropertiesContext):
-        pass
-
-
-    # Enter a parse tree produced by TikzParser#singleProperty.
-    def enterSingleProperty(self, ctx:TikzParser.SinglePropertyContext):
-        pass
-
-    # Exit a parse tree produced by TikzParser#singleProperty.
-    def exitSingleProperty(self, ctx:TikzParser.SinglePropertyContext):
         pass
 
 
@@ -98,6 +53,24 @@ class TikzListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TikzParser#edgeProperties.
+    def enterEdgeProperties(self, ctx:TikzParser.EdgePropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#edgeProperties.
+    def exitEdgeProperties(self, ctx:TikzParser.EdgePropertiesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#eProperties.
+    def enterEProperties(self, ctx:TikzParser.EPropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#eProperties.
+    def exitEProperties(self, ctx:TikzParser.EPropertiesContext):
+        pass
+
+
     # Enter a parse tree produced by TikzParser#node.
     def enterNode(self, ctx:TikzParser.NodeContext):
         pass
@@ -113,6 +86,24 @@ class TikzListener(ParseTreeListener):
 
     # Exit a parse tree produced by TikzParser#nodeId.
     def exitNodeId(self, ctx:TikzParser.NodeIdContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#allGlobalProperties.
+    def enterAllGlobalProperties(self, ctx:TikzParser.AllGlobalPropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#allGlobalProperties.
+    def exitAllGlobalProperties(self, ctx:TikzParser.AllGlobalPropertiesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#globalProperties.
+    def enterGlobalProperties(self, ctx:TikzParser.GlobalPropertiesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#globalProperties.
+    def exitGlobalProperties(self, ctx:TikzParser.GlobalPropertiesContext):
         pass
 
 
@@ -143,12 +134,21 @@ class TikzListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by TikzParser#coordinates.
-    def enterCoordinates(self, ctx:TikzParser.CoordinatesContext):
+    # Enter a parse tree produced by TikzParser#cartesianCoordinates.
+    def enterCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
         pass
 
-    # Exit a parse tree produced by TikzParser#coordinates.
-    def exitCoordinates(self, ctx:TikzParser.CoordinatesContext):
+    # Exit a parse tree produced by TikzParser#cartesianCoordinates.
+    def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#polarCoordinates.
+    def enterPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#polarCoordinates.
+    def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         pass
 
 
