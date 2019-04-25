@@ -54,31 +54,8 @@ class Graph:
 
 		return clr
 
-
-	def addShape(self, nodeID, X, Y, height, width, label=None, fill="white", edge_color="black", shape="ellipse"):
-
-		fill_clr = self.getColor(fill)
-		edge_clr = self.getColor(edge_color)
-
-		if nodeID is None:
-			nodeID = str(self.numNodes)
-
-		self.numNodes += 1
-		self.nodes.append({
-			"nodeID": nodeID,
-			"shape": shape,
-			"label": label,
-			"X": X,
-			"Y": Y,
-			"shape_fill": fill_clr,
-			"edge_color": edge_clr,
-			"height": height,
-			"width": width,
-			"edge_width": "1.0"
-		})
-
 	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None,
-		height:str = "-", width:str = "-", inner_sep:str = "0.25pt", fill:str = "none",
+		height:str = "-", width:str = "-", inner_sep:str = "0.25pt", fill:str = "none", edge_color:str = "black",
 		scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
 
 		if rotate != "0":
@@ -98,9 +75,6 @@ class Graph:
 
 		self.numNodes += 1
 
-		if shape == "circle" or shape is None:
-			shape = "ellipse"
-
 		if label is not None:
 			label = LatexNodes2Text().latex_to_text(label)
 
@@ -109,6 +83,9 @@ class Graph:
 		m = re.search('^\s*(\d*[.]?\d*)\s*(?:pt)?\s*$', inner_sep)
 		if m and len(m.group(1)) > 0 and m.group(1) != ".":
 			inner_sep = 2 * float(m.group(1))
+
+		if shape == "circle" or shape is None:
+			shape = "ellipse"
 
 		if shape == "regular polygon":
 			if float(regular_polygon_sides) not in [4, 6, 8]:

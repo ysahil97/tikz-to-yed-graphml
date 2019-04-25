@@ -97,6 +97,7 @@ class CustomTikzListener(TikzListener) :
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
     def exitLabel(self, ctx:TikzParser.LabelContext):
+        print("LABEL :: " ctx.getText())
         if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
             self.currentNode["label"] = ctx.VARIABLE().getText()
         elif ctx.DIGIT() is not None and ctx.DIGIT().getText() is not None:
