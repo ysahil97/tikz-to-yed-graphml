@@ -1,3 +1,4 @@
+colour==0.1.5
 numpy==1.16.2
 networkx==2.1
 matplotlib==3.0.3
