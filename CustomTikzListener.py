@@ -6,6 +6,7 @@ from grammar.TikzListener import TikzListener
 from grammar.TikzParser import TikzParser
 from generateGraphml import Graph
 from handleProperties import *
+import copy 
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +48,10 @@ class CustomTikzListener(TikzListener) :
             self.globalProperties.update(properties)
 
     def enterNode(self, ctx:TikzParser.NodeContext):
-        self.currentNode = {}
+        if "node" in  self.globalProperties:
+            self.currentNode =  copy.copy(self.globalProperties["node"])
+        else:
+            self.currentNode = {}
 
     def exitNode(self, ctx:TikzParser.NodeContext):
         if len(self.currentNode) > 0:

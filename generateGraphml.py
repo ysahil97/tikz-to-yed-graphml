@@ -99,6 +99,16 @@ class Graph:
 		if m and len(m.group(1)) > 0 and m.group(1) != ".":
 			inner_sep = 2 * float(m.group(1))
 
+		if shape == "regular polygon":
+			if float(regular_polygon_sides) not in [4, 6, 8]:
+				shape = "ellipse"
+			elif float(regular_polygon_sides) ==4:
+				shape = "parallelogram"
+			elif float(regular_polygon_sides) ==6:
+				shape = "hexagon"
+			elif float(regular_polygon_sides) ==8:
+				shape = "octagon"
+
 		node = {
 			"nodeID": nodeID,
 			"shape": shape,
@@ -110,10 +120,9 @@ class Graph:
 			"height": inner_sep,
 			"width": inner_sep,
 			"edge_width": "1.0",
-			"regular_polygon_sides": float(regular_polygon_sides)
 		}
 
-		logger.debug("Adding NODE to Graph : \n{}".format(pformat(node)))
+		logger.debug("Adding Node to Graph : \n{}".format(pformat(node)))
 		self.nodes.append(node)
 
 	def addEdge(self, nodeX, nodeY):
