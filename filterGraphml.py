@@ -3,7 +3,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 ValidNodeShapes = ["rectangle", "circle", "diamond", "ellipse", "regular polygon"]
-ValidEdgeDirections = ["->", "<-"]  #- means no edge. So no need to check for its validity as that is default
+ValidEdgeDirections = ["->", "<-", "-!-", "--", "<->"]  #- means no edge. So no need to check for its validity as that is default
 
 def isValidColor(value):
     #If value contains ! then it is definatly color (not seem ! in any other variable/property)
@@ -17,21 +17,21 @@ def isValidColor(value):
         return False
 
 def isValidShape(value):
-    if value in ValidNodeShapes:
-        return True
-    return False
+    return value in ValidNodeShapes
 
 def isValidDirection(value):
-    if value in ValidEdgeDirections:
-        return True
-    return False
+    return value in ValidEdgeDirections
 
 # Refer http://www.texample.net/tikz/examples/node-shapes/
 # for Tikz shapes
 def identifyShape(value):
-    if value in ValidNodeShapes:
-        return value
-    return None
+    return value in ValidNodeShapes
+
+def isValidThickness(value):
+    return value.lower() in ["thick", "thin", "ultra thich"]
+
+def isValidEdgeStyle(value):
+    return value.lower() in ["dash", "solid", "dotted" ]
 
 def identifyIndividualProperty(value):
     value = value.strip().lower()
@@ -41,6 +41,11 @@ def identifyIndividualProperty(value):
         return ("shape", value)
     elif isValidDirection(value):
         return ("direction", value)
+    elif isValidThickness(value):
+        return ("width", value)
+    elif isValidEdgeStyle(value):
+        return ("line_type", value)
+    
     #Add other checks here
 
     # We could not identify what property it was so return none
@@ -61,7 +66,18 @@ def identifyKeyValueProperty(key:str, value:str):
     
     elif key == "regular polygon sides":
         return ("regular_polygon_sides", value)
+    
+    elif key == "direction":
+        return ("direction", value)
 
+    elif key == "thickness":
+        return ("width", value)
+
+    elif key == "edgeStyle":
+        return ("edgeStyle", value)
+
+    elif key == "edge label":
+        return ("label", value)
     
     #Add other checks here
 

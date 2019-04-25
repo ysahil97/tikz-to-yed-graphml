@@ -39,7 +39,7 @@ class Graph:
 		print(nx.rescale_layout(coordinates, scale))
 
 	def getScalingFactor(self, size, minDistance):
-		return self.maxScaleFactor * size * (3 - 2 * minDistance) * self.scalingFactor
+		return self.maxScaleFactor * (minDistance) * self.scalingFactor
 
 	def getColor(self, fill):
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)
@@ -78,7 +78,7 @@ class Graph:
 		})
 
 	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None,
-		height:str = "-", width:str = "-", inner_sep:str = "0.25pt", fill:str = "none",
+		height:str = "-", width:str = "-", inner_sep:str = "2.5pt", fill:str = "none",
 		scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
 
 		if rotate != "0":
@@ -137,15 +137,26 @@ class Graph:
 		self.nodes.append(node)
 		return nodeID
 
-	def addEdge(self, nodeX:str=None, nodeY:str=None, pointed:bool=False):
+	def addEdge(self, nodeX:str=None, nodeY:str=None, pointed:bool=False, color:str="black", width:str="1", label:str="", line_type:str="line"):
 		# TODO: Add exception handling when NodeID is referenced without declaring it
+		
+		if line_type == "solid":
+			line_type="line"
+		if line_type == "dash":
+			line_type="dashed"
+
+
 		arrowDir = "none"
 		if pointed:
 			arrowDir = "standard"
 		self.edges.append({
 			"x": nodeX,
 			"y": nodeY,
-			"arrowhead": arrowDir
+			"arrowhead": arrowDir,
+			"color" : color,
+			"width" : width,
+			"label" : label,
+			"line_type" : line_type
 		})
 
 
@@ -193,7 +204,11 @@ class Graph:
 			self.G.add_edge(
 				edge["x"],
 				edge["y"],
-				arrowhead=edge["arrowhead"]
+				arrowhead=edge["arrowhead"],
+				color=edge["color"],
+				width=edge["width"],
+				label=edge["label"],
+				line_type=edge["line_type"]
 			)
 
 		dom = xml.dom.minidom.parseString(self.G.get_graph())

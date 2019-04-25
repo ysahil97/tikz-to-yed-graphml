@@ -116,7 +116,7 @@ class CustomTikzListener(TikzListener) :
             edgeNode = {}
             edgeNode["X"] = coord_x
             edgeNode["Y"] = coord_y
-            edgeNode["inner_sep"] = "0.25pt"   #edge coordinates is of size 0
+            edgeNode["inner_sep"] = "2.5pt"   #edge coordinates is of size 0
             newNodeId = self.G.addNode(**edgeNode)
             self.currentEdgeList.append(newNodeId)
 
@@ -127,7 +127,10 @@ class CustomTikzListener(TikzListener) :
 
     def enterDraw(self,ctx:TikzParser.DrawContext):
         self.currentEdgeList = []
-        self.currentEdgeProperty = {}
+        if "edge" in  self.globalProperties:
+            self.currentEdgeProperty =  copy.copy(self.globalProperties["edge"])
+        else:
+            self.currentEdgeProperty = {}
 
     def exitDraw(self,ctx:TikzParser.DrawContext):
         if ctx.VARIABLE():
@@ -152,19 +155,44 @@ class CustomTikzListener(TikzListener) :
                 width = float(int(self.lastSeenRadius)*2)
             self.G.addNode(X=total_x,Y=total_y,height=height,width=width,shape=self.shape)
         else:
-            pointed = False
-            if "direction" in self.currentEdgeProperty:
-                pointed = True
-                #For left directed edges, adding the edge nodes in reverse
-                if self.currentEdgeProperty['direction'] == '<-':
-                    self.currentEdgeList.reverse()
-
             sz = len(self.currentEdgeList)
+            pointed = [False] * sz
+            color = "black"
+            label = ""
+            width = "1"
+            line_type = "line"
+            a, b = False, False
+            if "direction" in self.currentEdgeProperty:
+                #For left directed edges, adding the edge nodes in reverse
+                if self.currentEdgeProperty['direction'] == '->':
+                    pointed = [True] * sz
+                elif self.currentEdgeProperty['direction'] == '<-':
+                    self.currentEdgeList.reverse()
+                    pointed = [True] * sz
+                elif self.currentEdgeProperty['direction'] == '-!-':
+                    pointed = [False] * sz
+                elif self.currentEdgeProperty['direction'] == '<->':
+                    pointed = [False] * sz
+                    pointed[1] = True
+                    pointed[-1] = True
+            
+            if "fill" in self.currentEdgeProperty:
+                color = self.currentEdgeProperty["fill"]
+            
+            if "width" in self.currentEdgeProperty:
+                width = self.currentEdgeProperty["width"]
+            
+            if "label" in self.currentEdgeProperty:
+                label = self.currentEdgeProperty["label"]
+            
+            if "line_type" in self.currentEdgeProperty:
+                line_type = self.currentEdgeProperty["line_type"]
+            
             for i in range(1, sz, 1):
-                node1, node2 = self.currentEdgeList[i-1], self.currentEdgeList[i]
-                self.G.addEdge(node1, node2, pointed)
+                nodeX, nodeY = self.currentEdgeList[i-1], self.currentEdgeList[i]
+                self.G.addEdge(nodeX=nodeX, nodeY=nodeY, pointed=pointed[i], color=color, width=width, label=label, line_type=line_type)
 
     def exitNodeProperties(self, ctx:TikzParser.NodePropertiesContext):
         if len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:
             nodeProperties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
-            self.currentNode.update(nodeProperties)     #Merging the properties together
+            self.currentNode.update(nodeProperties) 

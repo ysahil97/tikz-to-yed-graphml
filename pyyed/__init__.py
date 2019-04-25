@@ -22,7 +22,6 @@ class Group:
                  font_style="plain", font_size="12", fill="#FFCC00", transparent="false",
                  edge_color="#000000", edge_type="line", edge_width="1.0", height=False,
                  width=False, x=False, y=False):
-
         self.label = label
         if label is None:
             self.label = group_id
