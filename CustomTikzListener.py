@@ -14,6 +14,11 @@ class CustomTikzListener(TikzListener) :
     def __init__(self, inputFileName:str, outputFileName:str):
         self.globalProperties = {}
         self.currentNode = {}
+        self.currentEdgeList = []
+        self.currentEdgeProperty = {}
+        self.latestCoordinateX = 0
+        self.latestCoordinateY = 0
+
         self.G = Graph()
         self.inputFileName = inputFileName
         self.outputFileName = outputFileName
@@ -55,43 +60,77 @@ class CustomTikzListener(TikzListener) :
 
     def exitNode(self, ctx:TikzParser.NodeContext):
         if len(self.currentNode) > 0:
+            self.currentNode["X"] = self.latestCoordinateX
+            self.currentNode["Y"] = self.latestCoordinateY
             logger.info("NodeProperties : {}".format(self.currentNode))
             self.G.addNode(**self.currentNode)
 
     def exitNodeId(self, ctx:TikzParser.NodeIdContext):
-        if ctx.VARIABLE() is not None:
+        if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
             self.currentNode["nodeID"] = ctx.VARIABLE().getText()
-        elif ctx.DIGIT() is not None:
+        elif ctx.DIGIT() is not None and ctx.DIGIT().getText() is not None:
             self.currentNode["nodeID"] = ctx.DIGIT().getText()
         else:
             self.currentNode["nodeID"] = None
 
-    def exitCartesianCoordinates(self, ctx:TikzParser.CoordinatesContext):
-        self.currentNode["X"] = eval(ctx.DIGIT(0).getText())
-        self.currentNode["Y"] = eval(ctx.DIGIT(1).getText())
+    def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
+        self.latestCoordinateX = eval(ctx.DIGIT(0).getText())
+        self.latestCoordinateY = eval(ctx.DIGIT(1).getText())
 
-    def exitPolarCoordinates(self, ctx:TikzParser.CoordinatesContext):
+    def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         try:
             r = eval(ctx.DIGIT(1).getText())
             angle = eval(ctx.DIGIT(0).getText())
             cosA = round(math.cos(math.radians(angle)), 10)
             sinA = round(math.sin(math.radians(angle)), 10)
             print (r, angle, cosA, sinA)
-            self.currentNode["X"] = r * cosA
-            self.currentNode["Y"] = r * sinA
+            self.latestCoordinateX = r * cosA
+            self.latestCoordinateY = r * sinA
         except:
-            logger.error("Cannot Parse ", ctx.getText())
-
-
+            raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
     def exitLabel(self, ctx:TikzParser.LabelContext):
         if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
-            if("label" in self.currentNode):
-                self.currentNode["label"] = self.currentNode["label"] + "\n" + ctx.VARIABLE().getText()
-            else:
-                self.currentNode["label"] = ctx.VARIABLE().getText()
+            self.currentNode["label"] = ctx.VARIABLE().getText()
+        elif ctx.DIGIT() is not None and ctx.DIGIT().getText() is not None:
+            self.currentNode["label"] = ctx.DIGIT().getText()
         else:
             self.currentNode["label"] = None
+
+    def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
+        if ctx.VARIABLE() is not None:
+            self.currentEdgeList.append(ctx.VARIABLE().getText())
+        else:
+            coord_x = self.latestCoordinateX
+            coord_y = self.latestCoordinateY
+            edgeNode = {}
+            edgeNode["X"] = coord_x
+            edgeNode["Y"] = coord_y
+            edgeNode["inner_sep"] = "0.25pt"   #edge coordinates is of size 0
+            newNodeId = self.G.addNode(**edgeNode)
+            self.currentEdgeList.append(newNodeId)
+
+    def exitEdgeProperties(self, ctx:TikzParser.EdgePropertiesContext):
+        if len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:
+            edgeProperties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
+            self.currentEdgeProperty.update(edgeProperties)     #Merging the properties together
+
+    def enterDraw(self,ctx:TikzParser.DrawContext):
+        self.currentEdgeList = []
+        self.currentEdgeProperty = {}
+
+    def exitDraw(self,ctx:TikzParser.DrawContext):
+        pointed = False
+        if "direction" in self.currentEdgeProperty:
+            pointed = True
+            #For left directed edges, adding the edge nodes in reverse
+            if self.currentEdgeProperty['direction'] == '<-':
+                self.currentEdgeList.reverse()
+
+        sz = len(self.currentEdgeList)
+        for i in range(1, sz, 1):
+            node1, node2 = self.currentEdgeList[i-1], self.currentEdgeList[i]
+            self.G.addEdge(node1, node2, pointed)
 
     def exitNodeProperties(self, ctx:TikzParser.NodePropertiesContext):
         if len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:

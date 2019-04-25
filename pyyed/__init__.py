@@ -196,12 +196,12 @@ class Node:
         ET.SubElement(shape, "y:Shape", type=self.shape)
 
         if self.UML:
-            UML = ET.SubElement(shape, "y:UML")  
+            UML = ET.SubElement(shape, "y:UML")
 
-            attributes = ET.SubElement(UML, "y:AttributeLabel", type=self.shape)  
+            attributes = ET.SubElement(UML, "y:AttributeLabel", type=self.shape)
             attributes.text = self.UML["attributes"]
 
-            methods = ET.SubElement(UML, "y:MethodLabel", type=self.shape)  
+            methods = ET.SubElement(UML, "y:MethodLabel", type=self.shape)
             methods.text = self.UML["methods"]
 
             stereotype = self.UML["stereotype"] if "stereotype" in self.UML else ""
@@ -324,7 +324,7 @@ class Graph:
 
         self.nodes[node_name] = Node(node_name, **kwargs)
 
-    def add_edge(self, node1, node2, label="", arrowhead="none", arrowfoot="none",
+    def add_edge(self, node1, node2, label="", arrowhead="convex", arrowfoot="none",
                  color="#000000", line_type="line",
                  width="1.0"):
         # pass node names, not actual node objects

@@ -17,9 +17,8 @@ logger = logging.getLogger(__name__)
 def main():
     directory="./TestCases"
     filename="graph.tex"
-    # filename="edge-editing-v2.tex"
 
-    for value in getCodeInsideTIKZAfterUnrolling(directory, filename):  
+    for value in getCodeInsideTIKZAfterUnrolling(directory, filename):
         print("===================================")
         print (value)
         print("===================================")

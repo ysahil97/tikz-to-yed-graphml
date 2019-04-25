@@ -1,5 +1,6 @@
 import re
 import sys
+import math
 import pyyed
 import logging
 import numpy as np
@@ -28,8 +29,8 @@ class Graph:
 		print(nx.rescale_layout(coordinates, scale))
 
 	def getScalingFactor(self, size, minDistance):
-		return self.maxScaleFactor * size * (3 - 2 * minDistance) * 5
-	
+		return self.maxScaleFactor * size * (3 - 2 * minDistance) * 200
+
 	def getColor(self, fill):
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)
 		if fill == "none" or not m:
@@ -40,7 +41,7 @@ class Graph:
 				clr = colors.to_hex(colors.to_rgba(m.group(1), alpha=alpha/256.0), keep_alpha=True)
 			else:
 				clr = colors.to_hex(colors.to_rgba(m.group(1)), keep_alpha=False)
-		
+
 		return clr
 
 
@@ -53,9 +54,6 @@ class Graph:
 			nodeID = str(self.numNodes)
 
 		self.numNodes += 1
-
-		print("")
-
 		self.nodes.append({
 			"nodeID": nodeID,
 			"shape": shape,
@@ -69,7 +67,7 @@ class Graph:
 			"edge_width": "1.0"
 		})
 
-	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None, inner_sep:str = "2.5pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
+	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None, inner_sep:str = "0.25pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
 
 		if rotate != "0":
 			rotate = float(rotate)
@@ -124,11 +122,17 @@ class Graph:
 
 		logger.debug("Adding Node to Graph : \n{}".format(pformat(node)))
 		self.nodes.append(node)
+		return nodeID
 
-	def addEdge(self, nodeX, nodeY):
+	def addEdge(self, nodeX:str=None, nodeY:str=None, pointed:bool=False):
+		# TODO: Add exception handling when NodeID is referenced without declaring it
+		arrowDir = "none"
+		if pointed:
+			arrowDir = "standard"
 		self.edges.append({
 			"x": nodeX,
-			"y": nodeY
+			"y": nodeY,
+			"arrowhead": arrowDir
 		})
 
 
@@ -158,7 +162,7 @@ class Graph:
 				# yed hax axis inverted to TiKZ
 				# We need to reflect coordinates across X axis to get correct graph
 				x=str(positions[i][0]),
-				y=str(positions[i][1]*(-1)), 	
+				y=str(positions[i][1]*(-1)),
 				shape_fill=node["shape_fill"],
 				edge_color=node["edge_color"],
 				height=str(node["height"] * 10),
@@ -166,11 +170,12 @@ class Graph:
 				font_size=str(int(node["height"]*9)),
 				edge_width=node["edge_width"]
 			)
-		
+
 		for edge in self.edges:
 			self.G.add_edge(
 				edge["x"],
-				edge["y"]
+				edge["y"],
+				arrowhead=edge["arrowhead"]
 			)
 
 		dom = xml.dom.minidom.parseString(self.G.get_graph())
