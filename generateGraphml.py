@@ -29,7 +29,7 @@ class Graph:
 		print(nx.rescale_layout(coordinates, scale))
 
 	def getScalingFactor(self, size, minDistance):
-		return self.maxScaleFactor * size * (3 - 2 * minDistance) * 100
+		return self.maxScaleFactor * size * (3 - 2 * minDistance) * 200
 
 	def getColor(self, fill):
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)
@@ -67,7 +67,7 @@ class Graph:
 			"edge_width": "1.0"
 		})
 
-	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None, inner_sep:str = "2.5pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
+	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None, inner_sep:str = "0.25pt", fill:str = "none", scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
 
 		if rotate != "0":
 			rotate = float(rotate)

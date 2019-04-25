@@ -1,10 +1,11 @@
 \begin{tikzpicture}
     \draw [->] (0,0) -- (4,0) -- (4,4) -- (0,4);
-    \draw [<-] (5,5) -- (9,5) -- (9,9) -- (5,9);
 
     \node (d) [fill=red!60,circle] at (19,7) {};
-    \node (a) [fill=black,rectangle] at (10,5) {};
+    \node (a) [fill=black,rectangle] at (9,5) {};
     \node [fill=blue!60,ellipse] at (13,3) {};
     \node (c) [fill=green,circle] at (15,10) {};
+
+    \draw [<-] (5,5) -- (a) -- (9,9) -- (5,9);
 
 \end{tikzpicture}
