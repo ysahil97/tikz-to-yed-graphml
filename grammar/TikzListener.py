@@ -62,15 +62,6 @@ class TikzListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by TikzParser#eProperties.
-    def enterEProperties(self, ctx:TikzParser.EPropertiesContext):
-        pass
-
-    # Exit a parse tree produced by TikzParser#eProperties.
-    def exitEProperties(self, ctx:TikzParser.EPropertiesContext):
-        pass
-
-
     # Enter a parse tree produced by TikzParser#node.
     def enterNode(self, ctx:TikzParser.NodeContext):
         pass

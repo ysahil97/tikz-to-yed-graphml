@@ -3,13 +3,16 @@ grammar Tikz;
 
 // TODO see if empty rule can be replace with ?
 
-begin   : BEGINTIKZPICTURE allGlobalProperties instructions* ENDTIKZPICTURE EOF;
+begin   
+    : BEGINTIKZPICTURE allGlobalProperties instructions* ENDTIKZPICTURE EOF
+    ;
 
-instructions    : node instructions
-                | draw instructions
-                | draw
-                | node
-                ;
+instructions
+    : node instructions
+    | draw instructions
+    | draw
+    | node
+    ;
 
 draw
     : DRAW edgeProperties nodeList SEMICOLON
@@ -21,20 +24,14 @@ nodeList
     ;
 
 edgeNode
-    : OPEN_PARANTHESES VARIABLE CLOSE_PARANTHESES
-    | OPEN_PARANTHESES DIGIT (COMMA|COLON) DIGIT CLOSE_PARANTHESES
+    : coordinates
+    | OPEN_PARANTHESES VARIABLE CLOSE_PARANTHESES
     ;
 
 edgeProperties
-    : '[' eProperties ']'
+    : '[' (properties)? ']'
     |
     ;
-
-eProperties
-    : individualProperty ',' eProperties
-    | individualProperty
-    ;
-
 
 node
     : NODE nodeId nodeProperties AT coordinates label SEMICOLON
@@ -105,6 +102,6 @@ SEMICOLON: ';';
 
 // DIGIT should be above VARIABLE for higher precedence
 DIGIT: [0-9/*-+]+;
-VARIABLE: [-a-zA-Z0-9_!$.><]+;
+VARIABLE: [-a-zA-Z0-9_!$.><|]+;
 COMMENT : '%' ~[\n]* -> skip ;
 WS : [ \r\t\n]+ -> skip ;
