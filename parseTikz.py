@@ -17,9 +17,9 @@ logger = logging.getLogger(__name__)
 
 def main():
     directory="./TestCases"
-    filename="graph.tex"
+    filename="draw.tex"
 
-    for value in getCodeInsideTIKZAfterUnrolling(directory, filename):  
+    for value in getCodeInsideTIKZAfterUnrolling(directory, filename):
         logger.info("===================================")
         logger.info("\n\n" + value + "\n\n")
         logger.info("===================================")
@@ -44,9 +44,9 @@ if __name__ == '__main__':
     parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity")
     parser.add_argument("-s", "--scale", type=float, help="Scaling Factor")
     parser.add_argument("-prefix",type=str, help="Output file Prefix")
-    
+
     args = parser.parse_args()
-    
+
     scalingFactor = args.scale
     logLevel = args.scale
     prefix = args.prefix

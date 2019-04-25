@@ -14,11 +14,7 @@ instructions
     | node
     ;
 
-draw
-    :DRAW edgeProperties nodeList SEMICOLON
-    |DRAW edgeProperties coordinates VARIABLE coordinates SEMICOLON
-    |DRAW edgeProperties coordinates VARIABLE radius SEMICOLON
-    ;
+
 
 radius
     : OPEN_PARANTHESES VARIABLE CLOSE_PARANTHESES
@@ -74,6 +70,12 @@ individualProperty
     | VARIABLE+
     ;
 
+draw
+    :DRAW edgeProperties nodeList SEMICOLON
+    |DRAW edgeProperties coordinates VARIABLE coordinates SEMICOLON
+    |DRAW edgeProperties coordinates VARIABLE radius SEMICOLON
+    ;
+
 coordinates
     : OPEN_PARANTHESES DIGIT COMMA DIGIT CLOSE_PARANTHESES #cartesianCoordinates
     | OPEN_PARANTHESES DIGIT COLON DIGIT ('cm')? CLOSE_PARANTHESES #polarCoordinates
@@ -101,7 +103,7 @@ OPEN_CURLY_BRACKETS: '{';
 CLOSE_CURLY_BRACKETS: '}';
 EQUAL_TO: '=';
 
-//LINE: '--';
+
 COMMA: ',';
 COLON: ':';
 SEMICOLON: ';';
