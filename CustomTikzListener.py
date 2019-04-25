@@ -141,7 +141,7 @@ class CustomTikzListener(TikzListener) :
             total_y = 0
             height = 0
             width = 0
-            if node_shape == 'rectangle':
+            if node_shape == 'rectangle' or  node_shape == 'ellipse':
                 for i in self.shapeNodesCoordinates:
                     total_x += float(i[0])
                     total_y += float(i[1])

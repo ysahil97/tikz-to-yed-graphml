@@ -111,6 +111,6 @@ SEMICOLON: ';';
 
 // DIGIT should be above VARIABLE for higher precedence
 DIGIT: [0-9/*-+]+;
-VARIABLE: [-a-zA-Z0-9_!$.><|]+;
+VARIABLE: [-a-zA-Z0-9_!$.><|\\+]+;
 COMMENT : '%' ~[\n]* -> skip ;
 WS : [ \r\t\n]+ -> skip ;
