@@ -1,3 +1,4 @@
+import re
 import sys
 import math
 import antlr4
@@ -71,20 +72,18 @@ class CustomTikzListener(TikzListener) :
     def exitNodeId(self, ctx:TikzParser.NodeIdContext):
         if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
             self.currentNode["nodeID"] = ctx.VARIABLE().getText()
-        elif ctx.DIGIT() is not None and ctx.DIGIT().getText() is not None:
-            self.currentNode["nodeID"] = ctx.DIGIT().getText()
         else:
             self.currentNode["nodeID"] = None
 
     def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
-        self.latestCoordinateX = eval(ctx.DIGIT(0).getText())
-        self.latestCoordinateY = eval(ctx.DIGIT(1).getText())
+        self.latestCoordinateX = eval(ctx.VARIABLE(0).getText())
+        self.latestCoordinateY = eval(ctx.VARIABLE(1).getText())
         self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
 
     def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         try:
-            r = eval(ctx.DIGIT(1).getText())
-            angle = eval(ctx.DIGIT(0).getText())
+            r = eval(ctx.VARIABLE(1).getText())
+            angle = eval(ctx.VARIABLE(0).getText())
             cosA = round(math.cos(math.radians(angle)), 10)
             sinA = round(math.sin(math.radians(angle)), 10)
             print (r, angle, cosA, sinA)
@@ -98,15 +97,16 @@ class CustomTikzListener(TikzListener) :
     def exitLabel(self, ctx:TikzParser.LabelContext):
         if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
             self.currentNode["label"] = ctx.VARIABLE().getText()
-        elif ctx.DIGIT() is not None and ctx.DIGIT().getText() is not None:
-            self.currentNode["label"] = ctx.DIGIT().getText()
+        elif ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
+            self.currentNode["label"] = ctx.VARIABLE().getText()
         else:
             self.currentNode["label"] = None
 
     def exitRadius(self,ctx:TikzParser.RadiusContext):
         self.lastSeenRadius = ctx.VARIABLE().getText()
-        if self.lastSeenRadius[-1] == 't' or self.lastSeenRadius[-1] == 'm':
-            self.lastSeenRadius = self.lastSeenRadius[:-2]
+        m = re.search('^\s*(\d*[.]?\d*)\s*(?:pt|cm)?\s*$', self.lastSeenRadius)
+        if m and len(m.group(1)) > 0 and m.group(1) != ".":
+            self.lastSeenRadius = 2 * float(m.group(1))
 
     def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
         if ctx.VARIABLE() is not None:

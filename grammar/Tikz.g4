@@ -44,7 +44,7 @@ node
     ;
 
 nodeId
-    : OPEN_PARANTHESES (VARIABLE|DIGIT)? CLOSE_PARANTHESES
+    : OPEN_PARANTHESES (VARIABLE)? CLOSE_PARANTHESES
     |
     ;
 
@@ -70,20 +70,20 @@ properties
     ;
 
 individualProperty
-    : VARIABLE+ EQUAL_TO (VARIABLE|DIGIT)+
+    : VARIABLE+ EQUAL_TO (VARIABLE)+
     | VARIABLE+
     ;
 
 coordinates
-    : OPEN_PARANTHESES DIGIT COMMA DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #cartesianCoordinates
-    | OPEN_PARANTHESES DIGIT COLON DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #polarCoordinates
+    : OPEN_PARANTHESES VARIABLE COMMA VARIABLE ('cm'|'pt')? CLOSE_PARANTHESES #cartesianCoordinates
+    | OPEN_PARANTHESES VARIABLE COLON VARIABLE ('cm'|'pt')? CLOSE_PARANTHESES #polarCoordinates
     ;
 
 // ACTION : '{' ( ACTION | ~[{}] )* '}' ;
 
 label
-    // -    : OPEN_CURLY_BRACKETS ( label | (VARIABLE|DIGIT))* CLOSE_CURLY_BRACKETS
-    : OPEN_CURLY_BRACKETS (VARIABLE|DIGIT)? CLOSE_CURLY_BRACKETS
+    // -    : OPEN_CURLY_BRACKETS ( label | (VARIABLE))* CLOSE_CURLY_BRACKETS
+    : OPEN_CURLY_BRACKETS (VARIABLE)? CLOSE_CURLY_BRACKETS
     ;
 
 // label
@@ -109,8 +109,6 @@ COMMA: ',';
 COLON: ':';
 SEMICOLON: ';';
 
-// DIGIT should be above VARIABLE for higher precedence
-DIGIT: [0-9/*-+]+;
-VARIABLE: [-a-zA-Z0-9_!$.><|\\+]+;
+VARIABLE: [-a-zA-Z0-9_!$.><|\\+*]+;
 COMMENT : '%' ~[\n]* -> skip ;
 WS : [ \r\t\n]+ -> skip ;
