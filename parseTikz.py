@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 def main():
     directory="./TestCases"
     filename="graph.tex"
+    # filename="edge-editing-v2.tex"
 
     for value in getCodeInsideTIKZAfterUnrolling(directory, filename):  
         print("===================================")
@@ -29,7 +30,7 @@ def main():
         tree = parser.begin()
 
         j = 0
-        while(os.path.exists(filename + "t" + str(j) + "_unrolled.tex")):
+        while(os.path.exists(directory +"/" + filename + "_" + str(j) + "_graph.graphml")):
             j+=1
         saveTo = directory +"/" + filename + "_" + str(j) + "_graph.graphml"
         htmlChat = CustomTikzListener(filename, saveTo)

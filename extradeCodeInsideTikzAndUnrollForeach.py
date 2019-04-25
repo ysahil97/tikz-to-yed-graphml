@@ -79,7 +79,7 @@ def parseAndHandleForEach(tikzBlock):
     # \foreach \from/\to in {B/t4,B/t5,C/t6,C/t7} 
     #     block
     # Not block may contain foreach statement
-    print (tikzBlock)
+    # print (tikzBlock)
     regexForForeach = re.compile("\\\\foreach.*?in[\s]*{.*?}[\s]*", re.MULTILINE)
     firstForeach = None
     

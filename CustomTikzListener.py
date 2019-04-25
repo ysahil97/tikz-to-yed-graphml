@@ -5,7 +5,7 @@ from filterGraphml import *
 from grammar.TikzListener import TikzListener
 from grammar.TikzParser import TikzParser
 from generateGraphml import Graph
-
+import math
 class CustomTikzListener(TikzListener) :
     def __init__(self, inputFileName:str, outputFileName:str):
         self.currentNode = {}
@@ -23,6 +23,9 @@ class CustomTikzListener(TikzListener) :
         except Warning as e:
             logging.warn("Error in converting {} - {}".format(self.inputFileName, e))
 
+    def enterNode(self, ctx:TikzParser.NodeContext):
+        self.currentNode = {}
+
     def exitNode(self, ctx:TikzParser.NodeContext):
         if len(self.currentNode) > 0:
             self.G.addNode(**self.currentNode)
@@ -33,13 +36,30 @@ class CustomTikzListener(TikzListener) :
         else:
             self.currentNode["nodeID"] = None
 
-    def exitCoordinates(self, ctx:TikzParser.CoordinatesContext):
-        self.currentNode["X"] = ctx.DIGIT(0).getText()
-        self.currentNode["Y"] = ctx.DIGIT(1).getText()
+    def exitCartesianCoordinates(self, ctx:TikzParser.CoordinatesContext):
+        self.currentNode["X"] = eval(ctx.DIGIT(0).getText())
+        self.currentNode["Y"] = eval(ctx.DIGIT(1).getText())
+
+    def exitPolarCoordinates(self, ctx:TikzParser.CoordinatesContext):
+        try:
+            r = eval(ctx.DIGIT(1).getText())
+            angle = eval(ctx.DIGIT(0).getText())
+            cosA = round(math.cos(math.radians(angle)), 10)
+            sinA = round(math.sin(math.radians(angle)), 10)
+            print (r, angle, cosA, sinA)
+            self.currentNode["X"] = r * cosA
+            self.currentNode["Y"] = r * sinA
+        except:
+            logger.error("Cannot Parse ", ctx.getText())
+
+
 
     def exitLabel(self, ctx:TikzParser.LabelContext):
         if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
-            self.currentNode["label"] = ctx.VARIABLE().getText()
+            if("label" in self.currentNode):
+                self.currentNode["label"] = self.currentNode["label"] + "\n" + ctx.VARIABLE().getText()
+            else:
+                self.currentNode["label"] = ctx.VARIABLE().getText()
         else:
             self.currentNode["label"] = None
     
@@ -60,5 +80,6 @@ class CustomTikzListener(TikzListener) :
         # individual property of format "x"
         else:
             k, v = identifyIndividualProperty(value)
-
-        self.currentNode[k] = v
+        
+        if k is not None:
+            self.currentNode[k] = v

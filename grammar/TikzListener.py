@@ -89,12 +89,21 @@ class TikzListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by TikzParser#coordinates.
-    def enterCoordinates(self, ctx:TikzParser.CoordinatesContext):
+    # Enter a parse tree produced by TikzParser#cartesianCoordinates.
+    def enterCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
         pass
 
-    # Exit a parse tree produced by TikzParser#coordinates.
-    def exitCoordinates(self, ctx:TikzParser.CoordinatesContext):
+    # Exit a parse tree produced by TikzParser#cartesianCoordinates.
+    def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
+        pass
+
+
+    # Enter a parse tree produced by TikzParser#polarCoordinates.
+    def enterPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
+        pass
+
+    # Exit a parse tree produced by TikzParser#polarCoordinates.
+    def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         pass
 
 

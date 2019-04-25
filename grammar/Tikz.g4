@@ -37,12 +37,13 @@ properties
     ;
 
 individualProperty
-    : VARIABLE+ '=' VARIABLE+
+    : VARIABLE+ '=' (VARIABLE|DIGIT)+
     | VARIABLE+
     ;
 
 coordinates
-    : OPEN_PARANTHESES DIGIT (COMMA|COLON) DIGIT CLOSE_PARANTHESES
+    : OPEN_PARANTHESES DIGIT COMMA DIGIT CLOSE_PARANTHESES #cartesianCoordinates
+    | OPEN_PARANTHESES DIGIT COLON DIGIT ('cm')? CLOSE_PARANTHESES #polarCoordinates
     ;
 
 label
@@ -69,7 +70,7 @@ COLON: ':';
 SEMICOLON: ';';
 
 // DIGIT should be above VARIABLE for higher precedence
-DIGIT: [0-9]+;
+DIGIT: [0-9/*-+]+;
 VARIABLE: [a-zA-Z0-9_!$.]+;
 
 COMMENT : '%' ~[\n]* -> skip ;
