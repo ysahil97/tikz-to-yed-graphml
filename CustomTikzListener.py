@@ -57,10 +57,12 @@ class CustomTikzListener(TikzListener) :
             self.globalProperties.update(properties)
 
     def enterNode(self, ctx:TikzParser.NodeContext):
-        if "node" in  self.globalProperties:
-            self.currentNode =  copy.copy(self.globalProperties["node"])
-        else:
-            self.currentNode = {}
+        self.currentNode = {}
+        for k,v in self.globalProperties.items():
+            if k == "node":
+                self.currentNode.update(v)
+            elif not (k == "edge" or k == "label" or k == "draw"):
+                self.currentNode[k] = v
 
     def exitNode(self, ctx:TikzParser.NodeContext):
         self.currentNode["X"] = self.latestCoordinateX
@@ -134,14 +136,22 @@ class CustomTikzListener(TikzListener) :
 
     def enterDraw(self,ctx:TikzParser.DrawContext):
         self.currentEdgeList = []
-        if "edge" in  self.globalProperties:
-            self.currentEdgeProperty =  copy.copy(self.globalProperties["edge"])
-        else:
-            self.currentEdgeProperty = {}
-        if "node" in  self.globalProperties:
-            self.currentNode =  copy.copy(self.globalProperties["node"])
-        else:
-            self.currentNode = {}
+        self.currentEdgeProperty = {}
+        self.currentNode = {}
+
+        for k,v in self.globalProperties.items():
+            print("k, v : ", k, v)
+            if k == "edge":
+                self.currentNode.update(v)
+            elif not (k == "node" or k == "label" or k == "draw"):
+                self.currentNode[k] = v
+
+        for k,v in self.globalProperties.items():
+            if k == "node":
+                self.currentNode.update(v)
+            elif not (k == "edge" or k == "label" or k == "draw"):
+                self.currentNode[k] = v
+
 
     def exitDraw(self,ctx:TikzParser.DrawContext):
         if ctx.VARIABLE() is not None:

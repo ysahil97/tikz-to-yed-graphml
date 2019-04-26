@@ -57,17 +57,18 @@ class Graph:
 
 	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None,
 		height:str = "-", width:str = "-", inner_sep:str = "2.5pt", fill:str = "none", edge_color:str = "black",
-		scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0"):
+		scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0", auto:str="center"):
 
+
+		print(" rotate :: ", rotate)
 		if rotate != "0":
-			pass
 			rotate = float(rotate)
 			x = float(X)
 			y = float(Y)
 			cosA = round(math.cos(math.radians(rotate)), 10)
 			sinA = round(math.sin(math.radians(rotate)), 10)
 			X = x * cosA + y * sinA
-			Y = -1 * x * sinA + y * cosA
+			Y = x * sinA + y * cosA
 
 		clr = self.getColor(fill)
 
