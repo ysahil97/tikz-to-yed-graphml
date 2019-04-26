@@ -48,7 +48,6 @@ if __name__ == '__main__':
     parser.add_argument("-p", "--prefix", type=str, help="Output file Prefix")
     parser.add_argument("-d", "--directory", type=str, help="Output file directory")
 
-
     args = parser.parse_args()
 
     scalingFactor = args.scale
