@@ -22,7 +22,7 @@ def main(scalingFactor, logLevel, inputFilename, prefix):
 
     for value in getCodeInsideTIKZAfterUnrolling(directory, inputFilename):
         logger.info("===================================")
-        logger.info("\n\n" + value + "\n\n")
+        # logger.info("\n\n" + value + "\n\n")
         logger.info("===================================")
         input_stream = antlr4.InputStream(value)
         lexer = TikzLexer(input_stream)

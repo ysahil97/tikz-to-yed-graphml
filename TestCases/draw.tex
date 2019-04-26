@@ -1,34 +1,38 @@
 \begin{tikzpicture}
-    [scale=.8,auto=center,every node/.style={circle,fill=black!60,inner sep=2.5pt}]
-   \node[fill=none] at (6.5,9) {$H$};
-   \node[fill=none] at (10,9) {$G$};
+    [scale=.9,auto=center,every node/.style={circle,fill=black!60,inner sep=2.5pt}]
+   \node[fill=none] at (6,11) {$G$};
    
-     \node (a)[fill=red!60] at (10,8) {};  	  
-     \node (b)[fill=red!60] at (10,6) {};
-     \node (c)[fill=blue!60] at (8,7) {};
-      \node (d) at (11,7) {};
-     \node (e)[fill=green!60] at (12,7) {};
+     \node (a)[fill=red!60] at (6,8) {};  	  
+     \node (b)[fill=red!60] at (6,6) {};
+     \node (c) at (4,7) {};
+      \node (d) at (7,7) {};
+     \node (e) at (8,7)[fill=blue!60] {};
 
+   \node(p) at (6.4,8.5) {};
+   \node(q) at (7.5,8) {};
 
-   \foreach \from/\to in {a/c,a/d,a/e,b/c,b/d,b/e}
+   \node(r) at (6,9.5) {};
+   \node(s) at (8,8.5) {};
+
+   \foreach \from/\to in {a/c,a/d,a/e,b/c,b/d,b/e,a/p,e/q,a/r,e/s,p/q,r/s}
    \draw (\from) -- (\to);
+
+
+   \node[fill=none] at (12,11) {$G$};
    
-   \node (p) at (6,7) {};
-   \node (q) at (7,7) {};
-   \node (r) at (7,8) {};
-   \node (s) at (6,8) {};       
-   \foreach \from/\to in {p/q,q/r,r/s,s/p}
-   \draw (\from) -- (\to);     
+    \node (a1)[fill=red!60] at (12,8) {};  	  
+     \node (b1)[fill=red!60] at (12,6) {};
+     \node (c1) at (10,7) {};
+      \node (d1) at (13,7) {};
+     \node (e1) at (14,7)[fill=blue!60] {};
 
-   \node[fill=none] at (16,9) {$G$};
-     \node (a1)[fill=red!60] at (16,8) {};  	  
-     \node (b1)[fill=red!60] at (16,6) {};
-     \node (c1)[fill=blue!60] at (14,7) {};
-      \node (d1) at (17,7) {};
-     \node (e1)[fill=green!60] at (18,7) {};
+   \node(p1) at (12.4,8.5) {};
+   \node(q1) at (13.5,8) {};
 
+   \node(r1) at (12,9.5) {};
+   \node(s1) at (14,8.5) {};
 
-   \foreach \from/\to in {a1/c1,a1/d1,a1/e1,b1/c1,b1/d1,b1/e1,a1/b1}
+   \foreach \from/\to in {a1/c1,a1/d1,a1/b1,b1/c1,b1/d1,b1/e1,a1/p1,e1/q1,a1/r1,e1/s1,p1/q1,r1/s1}
    \draw (\from) -- (\to);
-  
+
 \end{tikzpicture}

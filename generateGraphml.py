@@ -39,8 +39,8 @@ class Graph:
 		print(nx.rescale_layout(coordinates, scale))
 
 	def getScalingFactor(self, size, minDistance):
-		return self.maxScaleFactor * minDistance * self.scalingFactor
-		# return self.maxScaleFactor * size * (3 - 2 * minDistance) * self.scalingFactor
+		# return self.maxScaleFactor * minDistance * self.scalingFactor
+		return self.maxScaleFactor * size * (3 - 2 * minDistance) * self.scalingFactor
 
 	def getColor(self, fill):
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)

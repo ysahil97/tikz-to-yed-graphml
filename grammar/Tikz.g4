@@ -40,7 +40,7 @@ edgeProperties
     ;
 
 node
-    : NODE nodeId nodeProperties AT coordinates label SEMICOLON
+    : NODE nodeId nodeProperties AT coordinates nodeProperties label SEMICOLON
     ;
 
 nodeId
