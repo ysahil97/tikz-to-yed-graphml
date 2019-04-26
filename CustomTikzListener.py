@@ -63,11 +63,9 @@ class CustomTikzListener(TikzListener) :
             self.currentNode = {}
 
     def exitNode(self, ctx:TikzParser.NodeContext):
-        if len(self.currentNode) > 0:
-            self.currentNode["X"] = self.latestCoordinateX
-            self.currentNode["Y"] = self.latestCoordinateY
-            logger.info("NodeProperties : {}".format(self.currentNode))
-            self.G.addNode(**self.currentNode)
+        self.currentNode["X"] = self.latestCoordinateX
+        self.currentNode["Y"] = self.latestCoordinateY
+        self.G.addNode(**self.currentNode)
 
     def exitNodeId(self, ctx:TikzParser.NodeIdContext):
         if ctx.VARIABLE() is not None and ctx.VARIABLE().getText() is not None:
@@ -78,29 +76,23 @@ class CustomTikzListener(TikzListener) :
             self.currentNode["nodeID"] = None
 
     def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
-        if ctx.VARIABLE(0) is not None and ctx.VARIABLE(0).getText() is not None:
-            self.latestCoordinateX = eval(self.handleNumbers(ctx.VARIABLE(0).getText()))
-        elif ctx.DIGIT(0) is not None and ctx.DIGIT(0).getText() is not None:
-            self.latestCoordinateX = eval(self.handleNumbers(ctx.DIGIT(0).getText()))
+        try:
+            self.latestCoordinateX = eval(self.handleNumbers(ctx.getChild(1).getText()))
+            self.latestCoordinateY = eval(self.handleNumbers(ctx.getChild(3).getText()))
+            self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
+        except:
+            raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
-        if ctx.VARIABLE(1) is not None and ctx.VARIABLE(1).getText() is not None:
-            self.latestCoordinateY = eval(self.handleNumbers(ctx.VARIABLE(1).getText()))
-        elif ctx.DIGIT(1) is not None and ctx.DIGIT(1).getText() is not None:
-            self.latestCoordinateY = eval(self.handleNumbers(ctx.DIGIT(1).getText()))
-
-        self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
 
     def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         try:
-            r = eval(self.handleNumbers(ctx.VARIABLE(1).getText()))
-            angle = eval(self.handleNumbers(ctx.VARIABLE(0).getText()))
+            angle = eval(self.handleNumbers(ctx.getChild(1).getText()))
+            r = eval(self.handleNumbers(ctx.getChild(3).getText()))
             cosA = round(math.cos(math.radians(angle)), 10)
             sinA = round(math.sin(math.radians(angle)), 10)
-            print (r, angle, cosA, sinA)
             self.latestCoordinateX = r * cosA
             self.latestCoordinateY = r * sinA
             self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
-
         except:
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
@@ -113,7 +105,7 @@ class CustomTikzListener(TikzListener) :
             self.currentNode["label"] = None
 
     def handleNumbers(self, input):
-        m = re.search('^\s*(\d*[.]?\d*)\s*(?:pt|cm)?\s*$', input)
+        m = re.search('^\s*([0-9/*-+.]+)\s*(?:pt|cm)?\s*$', input)
         if m and len(m.group(1)) > 0 and m.group(1) != ".":
             return m.group(1)
        
@@ -147,29 +139,40 @@ class CustomTikzListener(TikzListener) :
             self.currentEdgeProperty =  copy.copy(self.globalProperties["edge"])
         else:
             self.currentEdgeProperty = {}
+        if "node" in  self.globalProperties:
+            self.currentNode =  copy.copy(self.globalProperties["node"])
+        else:
+            self.currentNode = {}
 
     def exitDraw(self,ctx:TikzParser.DrawContext):
         if ctx.VARIABLE() is not None:
-            node_shape = ctx.VARIABLE().getText()
-            # handle logic for rectangle drawing for now
-            total_x = 0
-            total_y = 0
-            height = 0
-            width = 0
-            if node_shape == 'rectangle' or  node_shape == 'ellipse':
-                for i in self.shapeNodesCoordinates:
-                    total_x += float(i[0])
-                    total_y += float(i[1])
-                total_x = str(total_x/2)
-                total_y = str(total_y/2)
-                height = float(abs(int(self.shapeNodesCoordinates[1][1]) - float(self.shapeNodesCoordinates[0][1])))
-                width = float(abs(int(self.shapeNodesCoordinates[1][0]) - float(self.shapeNodesCoordinates[0][0])))
-            elif node_shape == 'circle':
-                total_x = float(self.shapeNodesCoordinates[0][0])
-                total_y = float(self.shapeNodesCoordinates[0][1])
-                height = float(float(self.lastSeenRadius)*2)
-                width = float(float(self.lastSeenRadius)*2)
-            self.G.addNode(X=total_x, Y=total_y, height=height, width=width, shape=node_shape)
+
+            if len(ctx.getTypedRuleContexts(TikzParser.NodePropertiesContext)) == 1:
+                self.currentNode["X"] = self.latestCoordinateX
+                self.currentNode["Y"] = self.latestCoordinateY
+                logger.info("NodeProperties : {}".format(self.currentNode))
+                self.G.addNode(**self.currentNode)
+            else:
+                node_shape = ctx.VARIABLE().getText()
+                # handle logic for rectangle drawing for now
+                total_x = 0
+                total_y = 0
+                height = 0
+                width = 0
+                if node_shape == 'rectangle' or  node_shape == 'ellipse':
+                    for i in self.shapeNodesCoordinates:
+                        total_x += float(i[0])
+                        total_y += float(i[1])
+                    total_x = str(total_x/2)
+                    total_y = str(total_y/2)
+                    height = float(abs(int(self.shapeNodesCoordinates[1][1]) - float(self.shapeNodesCoordinates[0][1])))
+                    width = float(abs(int(self.shapeNodesCoordinates[1][0]) - float(self.shapeNodesCoordinates[0][0])))
+                elif node_shape == 'circle':
+                    total_x = float(self.shapeNodesCoordinates[0][0])
+                    total_y = float(self.shapeNodesCoordinates[0][1])
+                    height = float(float(self.lastSeenRadius)*2)
+                    width = float(float(self.lastSeenRadius)*2)
+                self.G.addNode(X=total_x, Y=total_y, height=height, width=width, shape=node_shape)
         else:
             sz = len(self.currentEdgeList)
             pointed = [False] * sz

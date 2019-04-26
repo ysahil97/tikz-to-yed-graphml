@@ -18,6 +18,7 @@ draw
     : DRAW edgeProperties nodeList SEMICOLON
     | DRAW edgeProperties coordinates VARIABLE coordinates SEMICOLON
     | DRAW edgeProperties coordinates VARIABLE radius SEMICOLON
+    | DRAW edgeProperties coordinates VARIABLE nodeProperties label SEMICOLON
     ;
 
 radius

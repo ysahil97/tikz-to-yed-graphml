@@ -81,7 +81,7 @@ class Graph:
 
 		self.maxScaleFactor = max(self.maxScaleFactor, float(scale))
 
-		m = re.search('^\s*(\d*[.]?\d*)\s*(?:pt)?\s*$', inner_sep)
+		m = re.search('^\s*([0-9/*-+.]+)\s*(?:pt|cm)?\s*$', inner_sep)
 		if m and len(m.group(1)) > 0 and m.group(1) != ".":
 			inner_sep = 2 * float(m.group(1))
 
