@@ -5,7 +5,10 @@ def handleProperties(ctx:TikzParser.PropertiesContext):
     #properties: individualProperty
     if ctx.getChildCount() == 1:
         k, v = handleIndividualProperty(ctx.getTypedRuleContexts(TikzParser.IndividualPropertyContext)[0])
-        return {k: v}
+        if k is None:
+            return {}
+        else:
+            return {k: v}
 
     #properties: individualProperty ',' properties
     else:
@@ -15,7 +18,7 @@ def handleProperties(ctx:TikzParser.PropertiesContext):
         # If same property is present, the later one is given precedence
         if k not in listProperties:
             listProperties[k] = v
-
+        
         return listProperties
 
 def handleIndividualProperty(ctx:TikzParser.IndividualPropertyContext):

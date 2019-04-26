@@ -1,10 +1,34 @@
 \begin{tikzpicture}
-    % \node (d) [fill=red!60,circle] at (13,7) {};
-    % \node (a) [fill=black,rectangle] at (10,5) {};
-    % \node [fill=blue!60,ellipse] at (13,3) {};
-    % \node (c) [fill=green,circle] at (15,10) {};
-    % \draw [<-](a) -- (5,4) -- (d) -- (10,8);
-    \draw (2,2) circle (3.5pt);
-    \draw (10,10) rectangle (15,15);
+    [scale=.8,auto=center,every node/.style={circle,fill=black!60,inner sep=2.5pt}]
+   \node[fill=none] at (6.5,9) {$H$};
+   \node[fill=none] at (10,9) {$G$};
+   
+     \node (a)[fill=red!60] at (10,8) {};  	  
+     \node (b)[fill=red!60] at (10,6) {};
+     \node (c)[fill=blue!60] at (8,7) {};
+      \node (d) at (11,7) {};
+     \node (e)[fill=green!60] at (12,7) {};
 
+
+   \foreach \from/\to in {a/c,a/d,a/e,b/c,b/d,b/e}
+   \draw (\from) -- (\to);
+   
+   \node (p) at (6,7) {};
+   \node (q) at (7,7) {};
+   \node (r) at (7,8) {};
+   \node (s) at (6,8) {};       
+   \foreach \from/\to in {p/q,q/r,r/s,s/p}
+   \draw (\from) -- (\to);     
+
+   \node[fill=none] at (16,9) {$G$};
+     \node (a1)[fill=red!60] at (16,8) {};  	  
+     \node (b1)[fill=red!60] at (16,6) {};
+     \node (c1)[fill=blue!60] at (14,7) {};
+      \node (d1) at (17,7) {};
+     \node (e1)[fill=green!60] at (18,7) {};
+
+
+   \foreach \from/\to in {a1/c1,a1/d1,a1/e1,b1/c1,b1/d1,b1/e1,a1/b1}
+   \draw (\from) -- (\to);
+  
 \end{tikzpicture}
