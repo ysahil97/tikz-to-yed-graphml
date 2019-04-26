@@ -61,8 +61,8 @@ class CustomTikzListener(TikzListener) :
         for k,v in self.globalProperties.items():
             if k == "node":
                 self.currentNode.update(v)
-            elif not (k == "edge" or k == "label" or k == "draw"):
-                self.currentNode[k] = v
+            # elif not (k == "edge" or k == "label" or k == "draw"):
+            #     self.currentNode[k] = v
 
     def exitNode(self, ctx:TikzParser.NodeContext):
         self.currentNode["X"] = self.latestCoordinateX
@@ -140,17 +140,17 @@ class CustomTikzListener(TikzListener) :
         self.currentNode = {}
 
         for k,v in self.globalProperties.items():
-            print("k, v : ", k, v)
+            # print("k, v : ", k, v)
             if k == "edge":
                 self.currentNode.update(v)
-            elif not (k == "node" or k == "label" or k == "draw"):
-                self.currentNode[k] = v
+        #     elif not (k == "node" or k == "label" or k == "draw"):
+        #         self.currentNode[k] = v
 
         for k,v in self.globalProperties.items():
             if k == "node":
                 self.currentNode.update(v)
-            elif not (k == "edge" or k == "label" or k == "draw"):
-                self.currentNode[k] = v
+            # elif not (k == "edge" or k == "label" or k == "draw"):
+            #     self.currentNode[k] = v
 
 
     def exitDraw(self,ctx:TikzParser.DrawContext):
