@@ -1,8 +1,6 @@
-\begin{tikzpicture}[scale=.8,auto=center,every node/.style={circle,inner sep=4pt}]
-
-  \foreach \a in {0,1,2,...,10}{
-  \draw (\a*360/20: 4cm) node[fill=blue!35]{};
-  }
-    
-  \end{tikzpicture}
-  
+\begin{tikzpicture}[scale=.8,auto=center,every node/.style={circle,inner sep=1.5pt}]
+  \foreach \x in {0,...,3}
+     \foreach \y in {0,...,3}  
+       \node[fill=blue!75] at (\x,\y){} ;
+ \end{tikzpicture}
+ 
