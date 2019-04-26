@@ -75,8 +75,8 @@ individualProperty
     ;
 
 coordinates
-    : OPEN_PARANTHESES DIGIT COMMA DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #cartesianCoordinates
-    | OPEN_PARANTHESES DIGIT COLON DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #polarCoordinates
+    : OPEN_PARANTHESES DIGIT ('cm'|'pt')? (COMMA|AND) DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #cartesianCoordinates
+    | OPEN_PARANTHESES DIGIT ('cm'|'pt')? COLON DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #polarCoordinates
     ;
 
 // ACTION : '{' ( ACTION | ~[{}] )* '}' ;
@@ -96,6 +96,7 @@ ENDTIKZPICTURE: '\\end{tikzpicture}';
 NODE: '\\node';
 DRAW: '\\draw';
 AT: 'at';
+AND: 'and';
 EVERY: 'every';
 
 OPEN_PARANTHESES: '(';
