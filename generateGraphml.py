@@ -111,7 +111,7 @@ class Graph:
 			"edge_width": "1.0",
 		}
 
-		logger.debug("Adding Node to Graph : \n{}".format(pformat(node)))
+		# logger.debug("Adding Node to Graph : \n{}".format(pformat(node)))
 		self.nodes.append(node)
 		return nodeID
 

@@ -40,7 +40,7 @@ edgeProperties
     ;
 
 node
-    : NODE nodeId nodeProperties AT coordinates nodeProperties label SEMICOLON
+    : NODE nodeProperties nodeId nodeProperties AT coordinates nodeProperties label SEMICOLON
     ;
 
 nodeId
@@ -108,6 +108,8 @@ EQUAL_TO: '=';
 COMMA: ',';
 COLON: ':';
 SEMICOLON: ';';
+
+PAUSE : '\\pause' -> skip;
 
 // DIGIT should be above VARIABLE for higher precedence
 DIGIT: [0-9/*-+.]+;
