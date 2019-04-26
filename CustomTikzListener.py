@@ -78,14 +78,22 @@ class CustomTikzListener(TikzListener) :
             self.currentNode["nodeID"] = None
 
     def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
-        self.latestCoordinateX = eval(ctx.DIGIT(0).getText())
-        self.latestCoordinateY = eval(ctx.DIGIT(1).getText())
+        if ctx.VARIABLE(0) is not None and ctx.VARIABLE(0).getText() is not None:
+            self.latestCoordinateX = eval(self.handleNumbers(ctx.VARIABLE(0).getText()))
+        elif ctx.DIGIT(0) is not None and ctx.DIGIT(0).getText() is not None:
+            self.latestCoordinateX = eval(self.handleNumbers(ctx.DIGIT(0).getText()))
+
+        if ctx.VARIABLE(1) is not None and ctx.VARIABLE(1).getText() is not None:
+            self.latestCoordinateY = eval(self.handleNumbers(ctx.VARIABLE(1).getText()))
+        elif ctx.DIGIT(1) is not None and ctx.DIGIT(1).getText() is not None:
+            self.latestCoordinateY = eval(self.handleNumbers(ctx.DIGIT(1).getText()))
+
         self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
 
     def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         try:
-            r = eval(ctx.DIGIT(1).getText())
-            angle = eval(ctx.DIGIT(0).getText())
+            r = eval(self.handleNumbers(ctx.VARIABLE(1).getText()))
+            angle = eval(self.handleNumbers(ctx.VARIABLE(0).getText()))
             cosA = round(math.cos(math.radians(angle)), 10)
             sinA = round(math.sin(math.radians(angle)), 10)
             print (r, angle, cosA, sinA)
@@ -104,11 +112,16 @@ class CustomTikzListener(TikzListener) :
         else:
             self.currentNode["label"] = None
 
+    def handleNumbers(self, input):
+        m = re.search('^\s*(\d*[.]?\d*)\s*(?:pt|cm)?\s*$', input)
+        if m and len(m.group(1)) > 0 and m.group(1) != ".":
+            return m.group(1)
+       
+        raise Exception("Could not parse coordinates individual coordinates")
+
     def exitRadius(self,ctx:TikzParser.RadiusContext):
         self.lastSeenRadius = ctx.VARIABLE().getText()
-        m = re.search('^\s*(\d*[.]?\d*)\s*(?:pt|cm)?\s*$', self.lastSeenRadius)
-        if m and len(m.group(1)) > 0 and m.group(1) != ".":
-            self.lastSeenRadius = 2 * float(m.group(1))
+        self.lastSeenRadius = float(self.handleNumbers(self.lastSeenRadius)) * 2
 
     def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
         if ctx.VARIABLE() is not None:

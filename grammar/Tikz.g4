@@ -75,8 +75,8 @@ individualProperty
     ;
 
 coordinates
-    : OPEN_PARANTHESES DIGIT ('cm'|'pt')? (COMMA|AND) DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #cartesianCoordinates
-    | OPEN_PARANTHESES DIGIT ('cm'|'pt')? COLON DIGIT ('cm'|'pt')? CLOSE_PARANTHESES #polarCoordinates
+    : OPEN_PARANTHESES (VARIABLE|DIGIT) (COMMA|AND) (VARIABLE|DIGIT) CLOSE_PARANTHESES #cartesianCoordinates
+    | OPEN_PARANTHESES (VARIABLE|DIGIT) COLON (VARIABLE|DIGIT) CLOSE_PARANTHESES #polarCoordinates
     ;
 
 // ACTION : '{' ( ACTION | ~[{}] )* '}' ;
