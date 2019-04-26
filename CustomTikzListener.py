@@ -83,7 +83,6 @@ class CustomTikzListener(TikzListener) :
         except:
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
-
     def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         try:
             angle = eval(self.handleNumbers(ctx.getChild(1).getText()))
