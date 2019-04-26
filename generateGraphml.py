@@ -38,9 +38,9 @@ class Graph:
 		coordinates = np.array([[X, Y]])
 		print(nx.rescale_layout(coordinates, scale))
 
-	def getScalingFactor(self, size, minDistance):
-		# return self.maxScaleFactor * minDistance * self.scalingFactor
-		return self.maxScaleFactor * size * (3 - 2 * minDistance) * self.scalingFactor
+	def getScalingFactor(self, minDistance):
+		return self.maxScaleFactor * minDistance * self.scalingFactor
+		# return self.maxScaleFactor * size * (3 - 2 * minDistance) * self.scalingFactor
 
 	def getColor(self, fill):
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)
@@ -158,7 +158,7 @@ class Graph:
 			self.rotateCoordinates(positions, self.globalProperties["rotate"])
 
 		#TODO find proper function to find scaling factor using inner_sep, min_distance, scale
-		self.rescaleCoordinates(positions, self.getScalingFactor(node["height"], minDis))
+		self.rescaleCoordinates(positions, self.getScalingFactor(minDis))
 
 
 		for i, node in enumerate(self.nodes):

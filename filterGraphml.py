@@ -79,6 +79,13 @@ def identifyKeyValueProperty(key:str, value:str):
     elif key == "edge label":
         return ("label", value)
     
+    elif key == "scale":
+        return ("scale", value)
+    
+    elif key == "auto":
+        return ("auto", value)
+
+    
     #Add other checks here
 
     logger.warning("Got Unhandled Property, Ignoring it for now ({},{})".format(key, value))
