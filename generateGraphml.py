@@ -29,7 +29,7 @@ class Graph:
 		for index, val in enumerate(coordinates):
 			x, y = val[0], val[1]
 			coordinates[index][0] =  x * cosA + y * sinA
-			coordinates[index][1] =  -1 * x * sinA + y * cosA
+			coordinates[index][1] =  (-1 * x * sinA + y * cosA)*-1
 
 	def rescaleCoordinates(self, coordinates, scale):
 		return nx.rescale_layout(coordinates, scale)
@@ -66,7 +66,7 @@ class Graph:
 			cosA = round(math.cos(math.radians(rotate)), 10)
 			sinA = round(math.sin(math.radians(rotate)), 10)
 			X = x * cosA + y * sinA
-			Y = -1 * x * sinA + y * cosA
+			Y = (-1 * x * sinA + y * cosA) * -1
 
 		clr = self.getColor(fill)
 
@@ -168,7 +168,7 @@ class Graph:
 				# yed hax axis inverted to TiKZ
 				# We need to reflect coordinates across X axis to get correct graph
 				x=str(positions[i][0]),
-				y=str(positions[i][1]*(-1)),
+				y=str(positions[i][1] * -1),
 				shape_fill=node["shape_fill"],
 				edge_color=node["edge_color"],
 				height=str(node["height"] * 10),
