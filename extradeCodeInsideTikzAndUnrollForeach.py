@@ -7,7 +7,7 @@ from pprint import pprint
 
 # This function is range function for floating points
 # Needed because "range(0.5, 10.5, 0.5)" : Not supported by default range function
-def floatRange(stat, end, step):
+def floatRange(start, end, step):
     # Note: end is inclusive
     while(start <= end):
         yield start
@@ -23,7 +23,7 @@ def floatRange(stat, end, step):
 #    A[3] = i;  
 #    A[4] = i;  
 def replaceVarsinForeach(foreachHead, block):
-    block.strip().strip("{").strip("}")
+    block = block.strip().strip("{").strip("}")
     unrolledBlocks=""
 
     # greps variable and their values in foreach statement
@@ -40,7 +40,6 @@ def replaceVarsinForeach(foreachHead, block):
     if(x):
         x = x[0]
         if(x[1].__contains__("...")):
-            x = x[0]
             variable = x[0].strip()
             varRange = x[1].strip()
             rangeOfVariable = varRange.split(",")
@@ -79,7 +78,9 @@ def parseAndHandleForEach(tikzBlock):
     # \foreach \from/\to in {B/t4,B/t5,C/t6,C/t7} 
     #     block
     # Not block may contain foreach statement
+    # print ("====================================")
     # print (tikzBlock)
+    # print ("====================================")
     regexForForeach = re.compile("\\\\foreach.*?in[\s]*{.*?}[\s]*", re.MULTILINE)
     firstForeach = None
     
@@ -133,6 +134,9 @@ def getCodeInsideTIKZAfterUnrolling(directory, filename):
                     while(_oneforeachRemoved.count("\\foreach")>0):
                         _oneforeachRemoved = parseAndHandleForEach(_oneforeachRemoved)
                     unrolledForeachInTikzPart=_oneforeachRemoved
+                    # print("===========================================\n")
+                    # print(unrolledForeachInTikzPart)
+                    # print("===========================================\n")
                     tikzBlocks.append("\\begin{tikzpicture}" + unrolledForeachInTikzPart + "\\end{tikzpicture}")
                     # yield unrolledForeachInTikzPart
     return tikzBlocks

@@ -15,8 +15,8 @@ logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-1s [%(filename)s:
 
 logger = logging.getLogger(__name__)
 
-def main(scalingFactor, logLevel, inputFilename, prefix):
-    directory="./TestCases"
+def main(scalingFactor, logLevel, inputFilename, prefix, directory):
+    
     if not prefix:
         prefix = inputFilename
 
@@ -46,6 +46,8 @@ if __name__ == '__main__':
     parser.add_argument("-s", "--scale", type=float, help="Scaling Factor", default=200)
     parser.add_argument("-i", "--input", type=str, help="Input file name")
     parser.add_argument("-p", "--prefix", type=str, help="Output file Prefix")
+    parser.add_argument("-d", "--directory", type=str, help="Output file directory")
+
 
     args = parser.parse_args()
 
@@ -53,5 +55,9 @@ if __name__ == '__main__':
     logLevel = args.scale
     inputFileName = args.input
     prefix = args.prefix
-    main(scalingFactor, logLevel, inputFileName, prefix)
+    directory = "./"
+    if args.directory:
+        directory=args.directory
+
+    main(scalingFactor, logLevel, inputFileName, prefix, directory)
 
