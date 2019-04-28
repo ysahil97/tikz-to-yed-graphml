@@ -24,6 +24,8 @@ class CustomTikzListener(TikzListener) :
         self.G = Graph(scalingFactor)
         self.inputFileName = inputFileName
         self.outputFileName = outputFileName
+        self.nodeIds = {}
+        self.numNodeIds = {}
 
     def exitBegin(self, ctx:TikzParser.BeginContext):
         try:
@@ -72,7 +74,16 @@ class CustomTikzListener(TikzListener) :
     def exitNodeId(self, ctx:TikzParser.NodeIdContext):
         #nodeID: OPEN_PARANTHESES (VARIABLE|EXPRESSION)? CLOSE_PARANTHESES
         if ctx.getChildCount() == 3:
-            self.currentNode["nodeID"] = ctx.getChild(1).getText()
+            if ctx.getChild(1).getText() in self.nodeIds:
+                self.numNodeIds[ctx.getChild(1).getText()] += 1
+                newNodeId = ctx.getChild(1).getText() + "_" + str(self.numNodeIds[ctx.getChild(1).getText()])
+                self.currentNode["nodeID"] = newNodeId
+                self.nodeIds[ctx.getChild(1).getText()] = newNodeId
+            else:
+                self.nodeIds[ctx.getChild(1).getText()] = ctx.getChild(1).getText()
+                self.numNodeIds[ctx.getChild(1).getText()] = 0
+                self.currentNode["nodeID"] = ctx.getChild(1).getText()
+
         else:
             self.currentNode["nodeID"] = None
 
@@ -109,7 +120,8 @@ class CustomTikzListener(TikzListener) :
     def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
         #edgeNode: OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
         if ctx.getChildCount() == 3:
-            self.currentEdgeList.append(ctx.getChild(1).getText())
+            print ("-------------",self.nodeIds[ctx.getChild(1).getText()])
+            self.currentEdgeList.append(self.nodeIds[ctx.getChild(1).getText()])
         else:
         #edgeNode: coordinates
             coord_x = self.latestCoordinateX
