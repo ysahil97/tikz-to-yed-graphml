@@ -63,6 +63,7 @@ class Graph:
 		scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0", auto:str="center"):
 
 		if rotate != "0":
+			pass
 			rotate = float(rotate)
 			x = float(X)
 			y = float(Y)
