@@ -54,7 +54,7 @@ def replaceVarsinForeach(foreachHead, block):
             for val in floatRange(start, end, step): 
                 remainblock=copy.copy(block)
                 remainblock = re.sub("\\"+variable.strip(), str(val), remainblock)
-                unrolledBlocks += remainblock + "\n"
+                unrolledBlocks += remainblock.strip() + "\n"
         else:
             varList=x[0].split("/")
             var_index_to_name ={}
@@ -68,7 +68,7 @@ def replaceVarsinForeach(foreachHead, block):
                 for i, val in enumerate(rangeValues.strip().split("/")):
                     # Subsitute variable with its value in entire block
                     remainblock = re.sub("\\\\"+var_index_to_name[i], val, remainblock)
-                unrolledBlocks += remainblock + "\n"
+                unrolledBlocks += remainblock.strip() + "\n"
     return unrolledBlocks
 
 
