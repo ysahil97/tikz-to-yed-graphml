@@ -180,11 +180,19 @@ class Node:
             ET.SubElement(shape, "y:Geometry", **self.geom)
         # <y:Geometry height="30.0" width="30.0" x="475.0" y="727.0"/>
 
-        ET.SubElement(shape, "y:Fill", color=self.shape_fill,
+        if self.shape_fill is None:
+            ET.SubElement(shape, "y:Fill", hasColor="false",
+                        transparent=self.transparent)
+        else:
+            ET.SubElement(shape, "y:Fill", color=self.shape_fill,
                       transparent=self.transparent)
 
-        ET.SubElement(shape, "y:BorderStyle", color=self.edge_color, type=self.edge_type,
-                      width=self.edge_width)
+        if self.edge_color is None:
+            ET.SubElement(shape, "y:BorderStyle", hasColor="false", type=self.edge_type,
+                        width=self.edge_width)
+        else:
+            ET.SubElement(shape, "y:BorderStyle", color=self.edge_color, type=self.edge_type,
+                        width=self.edge_width)
 
         label = ET.SubElement(shape, "y:NodeLabel", fontFamily=self.font_family,
                               fontSize=self.font_size,

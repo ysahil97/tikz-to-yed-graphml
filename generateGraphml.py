@@ -43,9 +43,12 @@ class Graph:
 		return self.maxScaleFactor * (3 - 2 * minDistance) * self.scalingFactor
 
 	def getColor(self, fill):
+		if fill is None or fill == "none":
+			return None
+
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)
-		if fill == "none" or not m:
-			clr = colors.to_hex(colors.to_rgba('black', alpha=80/256.0), keep_alpha=True)
+		if not m:
+			clr = None 	#stands for no color / transparent
 		else:
 			if m.group(2) is not None:
 				alpha = float(m.group(2))
@@ -68,7 +71,8 @@ class Graph:
 			X = x * cosA + y * sinA
 			Y = (-1 * x * sinA + y * cosA) * -1
 
-		clr = self.getColor(fill)
+		fillClr = self.getColor(fill)
+		edgeClr = self.getColor(edge_color)
 
 		if nodeID is None:
 			nodeID = str(self.numNodes)
@@ -103,8 +107,8 @@ class Graph:
 			"label": label,
 			"X": float(X),
 			"Y": float(Y),
-			"shape_fill": clr,
-			"edge_color": clr,
+			"shape_fill": fillClr,
+			"edge_color": edgeClr,
 			"height": height if height != '-' else inner_sep,
 			"width": width if width != '-' else inner_sep,
 			"edge_width": "1.0",
@@ -138,10 +142,16 @@ class Graph:
 
 
 	def get_graph(self):
+
+		sz = len(self.nodes)
+
+		if sz == 0:
+			logger.warn("No Nodes are present in the graph. Printing Empty GraphML graph.")
+			return ""
+
 		positions = np.empty((0,2))
 
 		minDis = sys.float_info.max
-		sz = len(self.nodes)
 
 		for i in range(0, sz-1, 1):
 			for j in range(i+1, sz, 1):

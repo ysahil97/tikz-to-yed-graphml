@@ -1,7 +1,6 @@
 grammar Tikz;
 // import TikzLex;
 
-// TODO see if empty rule can be replace with ?
 
 begin
     : BEGINTIKZPICTURE allGlobalProperties instructions* ENDTIKZPICTURE EOF
@@ -16,13 +15,13 @@ instructions
 
 draw
     : DRAW edgeProperties nodeList SEMICOLON
-    | DRAW edgeProperties coordinates VARIABLE coordinates SEMICOLON
-    | DRAW edgeProperties coordinates VARIABLE radius SEMICOLON
-    | DRAW edgeProperties coordinates VARIABLE nodeProperties label SEMICOLON
+    | DRAW edgeProperties coordinates (VARIABLE|EXPRESSION) coordinates SEMICOLON
+    | DRAW edgeProperties coordinates (VARIABLE|EXPRESSION) radius SEMICOLON
+    | DRAW edgeProperties coordinates (VARIABLE|EXPRESSION) nodeProperties label SEMICOLON
     ;
 
 radius
-    : OPEN_PARANTHESES VARIABLE CLOSE_PARANTHESES
+    : OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
     ;
 
 nodeList
@@ -32,7 +31,7 @@ nodeList
 
 edgeNode
     : coordinates
-    | OPEN_PARANTHESES VARIABLE CLOSE_PARANTHESES
+    | OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
     ;
 
 edgeProperties
@@ -45,7 +44,7 @@ node
     ;
 
 nodeId
-    : OPEN_PARANTHESES (VARIABLE|DIGIT)? CLOSE_PARANTHESES
+    : OPEN_PARANTHESES (VARIABLE|EXPRESSION)? CLOSE_PARANTHESES
     |
     ;
 
@@ -56,7 +55,7 @@ allGlobalProperties
 
 globalProperties
     : globalProperties ',' globalProperties
-    | EVERY VARIABLE '/.' 'style' '=' '{' properties '}'
+    | EVERY (VARIABLE|EXPRESSION) '/.' 'style' '=' '{' properties '}'
     | properties
     ;
 
@@ -71,25 +70,18 @@ properties
     ;
 
 individualProperty
-    : VARIABLE+ EQUAL_TO (VARIABLE|DIGIT)+
-    | VARIABLE+
+    : (VARIABLE|EXPRESSION)+ EQUAL_TO (VARIABLE|EXPRESSION)+
+    | (VARIABLE|EXPRESSION)+
     ;
 
 coordinates
-    : OPEN_PARANTHESES (VARIABLE|DIGIT) (COMMA|AND) (VARIABLE|DIGIT) CLOSE_PARANTHESES #cartesianCoordinates
-    | OPEN_PARANTHESES (VARIABLE|DIGIT) COLON (VARIABLE|DIGIT) CLOSE_PARANTHESES #polarCoordinates
+    : OPEN_PARANTHESES (VARIABLE|EXPRESSION) (COMMA|AND) (VARIABLE|EXPRESSION) CLOSE_PARANTHESES #cartesianCoordinates
+    | OPEN_PARANTHESES (VARIABLE|EXPRESSION) COLON (VARIABLE|EXPRESSION) CLOSE_PARANTHESES #polarCoordinates
     ;
-
-// ACTION : '{' ( ACTION | ~[{}] )* '}' ;
 
 label
-    // -    : OPEN_CURLY_BRACKETS ( label | (VARIABLE|DIGIT))* CLOSE_CURLY_BRACKETS
-    : OPEN_CURLY_BRACKETS (VARIABLE|DIGIT)? CLOSE_CURLY_BRACKETS
+    : OPEN_CURLY_BRACKETS (VARIABLE|EXPRESSION)? CLOSE_CURLY_BRACKETS
     ;
-
-// label
-//     : '{' ( '{' | '}' | . )*? '}'
-//     ;
 
 BEGINTIKZPICTURE: '\\begin{tikzpicture}';
 ENDTIKZPICTURE: '\\end{tikzpicture}';
@@ -113,8 +105,9 @@ SEMICOLON: ';';
 
 PAUSE : '\\pause' -> skip;
 
-// DIGIT should be above VARIABLE for higher precedence
-DIGIT: [0-9/*-+.]+;
+// EXPRESSION should be above VARIABLE for higher precedence
+EXPRESSION: [0-9/*-+.]+;
+// VARIABLE: ~[ \r\t\n;()]+?;
 VARIABLE: [-a-zA-Z0-9_!$.><|\\+]+;
 COMMENT : '%' ~[\n]* -> skip ;
 WS : [ \r\t\n]+ -> skip ;

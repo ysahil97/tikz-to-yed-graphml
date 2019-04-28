@@ -111,6 +111,13 @@ venv.bak/
 /**/.settings/
 /**/target
 /**/bin
+grammar/Tikz.interp
+grammar/TikzLexer.interp
+grammar/TikzLexer.py
+grammar/TikzLexer.tokens
+grammar/TikzListener.py
+grammar/TikzParser.py
+grammar/Tikz.tokens
 
 # Visual Studio Generated
 .antlr

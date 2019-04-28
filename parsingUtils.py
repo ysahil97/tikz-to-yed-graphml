@@ -1,5 +1,22 @@
+import re
 from filterGraphml import *
 from grammar.TikzParser import TikzParser
+
+
+supportedNodeTags = ["nodeID", "X", "Y", "label", "height", "width", "inner_sep", "fill", "edge_color",
+		"scale", "shape", "regular_polygon_sides", "rotate", "auto"]
+
+def filterOutNotSupportedNodeTags(propertyDict):
+    for k in list(propertyDict):
+        if k not in supportedNodeTags:
+            del propertyDict[k]
+
+def handleNumbers(input):
+    m = re.search('^\s*([0-9/*-+.]+)\s*(?:pt|cm)?\s*$', input)
+    if m and len(m.group(1)) > 0 and m.group(1) != ".":
+        return m.group(1)
+    
+    raise Exception("Could not parse {} individual coordinates".format(input))
 
 def handleProperties(ctx:TikzParser.PropertiesContext):
     #properties: individualProperty
