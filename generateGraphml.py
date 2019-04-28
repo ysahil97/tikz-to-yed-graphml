@@ -90,7 +90,9 @@ class Graph:
 		# self.maxScaleFactor = max(self.maxScaleFactor, float(scale)*100)
 		# if scale != "1":
 		# 	self.rescaleCoordinate(X, Y, float(scale))
+
 		if inner_sep.__contains__("cm"):
+			inner_sep *= 28.3465
 			pass
 		else:
 			m = re.search('^\s*([0-9/*-+.]+)\s*(?:pt|cm)?\s*$', inner_sep)
