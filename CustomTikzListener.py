@@ -108,10 +108,9 @@ class CustomTikzListener(TikzListener) :
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
     def exitLabel(self, ctx:TikzParser.LabelContext):
-        if ctx.getChildCount() == 3:
-            self.currentNode["label"] = ctx.getChild(1).getText()
-        else:
-            self.currentNode["label"] = None
+        if ctx.LABEL_VARIABLE() is not None:
+            label_value = ctx.LABEL_VARIABLE().getText()
+            self.currentNode["label"] = parseLabelValue(label_value)
 
     def exitRadius(self,ctx:TikzParser.RadiusContext):
         self.lastSeenRadius = ctx.getChild(1).getText()
@@ -153,7 +152,7 @@ class CustomTikzListener(TikzListener) :
         self.currentNode = {}
         self.shapeNodesCoordinates = []
         self.lastSeenRadius = 1     #Default radius of \draw circle
-        
+
         for k,v in self.globalProperties.items():
             if k == "edge" or k == "draw":
                 self.currentEdgeProperty.update(v)
@@ -233,16 +232,16 @@ class CustomTikzListener(TikzListener) :
 
             if "fill" in self.currentEdgeProperty:
                 color = self.currentEdgeProperty["fill"]
-            
+
             if "width" in self.currentEdgeProperty:
                 width = self.currentEdgeProperty["width"]
-            
+
             if "label" in self.currentEdgeProperty:
                 label = self.currentEdgeProperty["label"]
-            
+
             if "line_type" in self.currentEdgeProperty:
                 line_type = self.currentEdgeProperty["line_type"]
-            
+
             for i in range(1, sz, 1):
                 nodeX, nodeY = self.currentEdgeList[i-1], self.currentEdgeList[i]
                 self.G.addEdge(nodeX=nodeX, nodeY=nodeY, pointed=pointed[i], color=color, width=width, label=label, line_type=line_type)
@@ -250,4 +249,4 @@ class CustomTikzListener(TikzListener) :
     def exitNodeProperties(self, ctx:TikzParser.NodePropertiesContext):
         if len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:
             nodeProperties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
-            self.currentNode.update(nodeProperties) 
+            self.currentNode.update(nodeProperties)
