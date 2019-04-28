@@ -111,8 +111,8 @@ class TikzParser ( Parser ):
                       "BEGINTIKZPICTURE", "ENDTIKZPICTURE", "NODE", "DRAW", 
                       "AT", "AND", "EVERY", "OPEN_PARANTHESES", "CLOSE_PARANTHESES", 
                       "EQUAL_TO", "COMMA", "COLON", "SEMICOLON", "PAUSE", 
-                      "INSIDE_LABEL_VARIABLE", "EXPRESSION", "VARIABLE", 
-                      "COMMENT", "WS" ]
+                      "LABEL_VARIABLE", "EXPRESSION", "VARIABLE", "COMMENT", 
+                      "WS" ]
 
     RULE_begin = 0
     RULE_instructions = 1
@@ -158,7 +158,7 @@ class TikzParser ( Parser ):
     COLON=19
     SEMICOLON=20
     PAUSE=21
-    INSIDE_LABEL_VARIABLE=22
+    LABEL_VARIABLE=22
     EXPRESSION=23
     VARIABLE=24
     COMMENT=25
@@ -1487,8 +1487,8 @@ class TikzParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def INSIDE_LABEL_VARIABLE(self):
-            return self.getToken(TikzParser.INSIDE_LABEL_VARIABLE, 0)
+        def LABEL_VARIABLE(self):
+            return self.getToken(TikzParser.LABEL_VARIABLE, 0)
 
         def getRuleIndex(self):
             return TikzParser.RULE_label
@@ -1511,7 +1511,7 @@ class TikzParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 197
-            self.match(TikzParser.INSIDE_LABEL_VARIABLE)
+            self.match(TikzParser.LABEL_VARIABLE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

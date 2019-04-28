@@ -24,6 +24,8 @@ class CustomTikzListener(TikzListener) :
         self.G = Graph(scalingFactor)
         self.inputFileName = inputFileName
         self.outputFileName = outputFileName
+        self.nodeIds = {}
+        self.numNodeIds = {}
 
     def exitBegin(self, ctx:TikzParser.BeginContext):
         try:
@@ -42,11 +44,10 @@ class CustomTikzListener(TikzListener) :
         #globalProperties: EVERY (VARIABLE|EXPRESSION) '/.' 'style' '=' '{' properties '}'
         if len(ctx.getTokens(TikzParser.EVERY)) == 1:
 
-            entityForEveryProperty = ctx.getChild(1).getText()
+            entityForEveryProperty = ctx.getChild(1).getText() 
             assert entityForEveryProperty == "node" or \
-                entityForEveryProperty == "label" or \
                 entityForEveryProperty == "edge" or \
-                entityForEveryProperty == "draw", "Error in parsing {}. Only support \"node,label,edge,draw\" as ENTITY in \"every <ENTITY> /.style{{}}\"".format(ctx.getText())
+                entityForEveryProperty == "draw", "Error in parsing {}. Only support \"node,edge,draw\" as ENTITY in \"every <ENTITY>/.style{{}}\"".format(ctx.getText())
             properties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
             self.globalProperties.update({ entityForEveryProperty : properties })
 
@@ -56,12 +57,10 @@ class CustomTikzListener(TikzListener) :
             self.globalProperties.update(properties)
 
     def enterNode(self, ctx:TikzParser.NodeContext):
-        self.currentNode = {}   #Emptying values before handling a new node
+        self.currentNode = {}           #Emptying values before handling a new node
         for k,v in self.globalProperties.items():
             if k == "node":
                 self.currentNode.update(v)
-            elif not (k == "edge" or k == "label" or k == "draw"):
-                self.currentNode[k] = v
 
     def exitNode(self, ctx:TikzParser.NodeContext):
         self.currentNode["X"] = self.latestCoordinateX
@@ -75,7 +74,16 @@ class CustomTikzListener(TikzListener) :
     def exitNodeId(self, ctx:TikzParser.NodeIdContext):
         #nodeID: OPEN_PARANTHESES (VARIABLE|EXPRESSION)? CLOSE_PARANTHESES
         if ctx.getChildCount() == 3:
-            self.currentNode["nodeID"] = ctx.getChild(1).getText()
+            if ctx.getChild(1).getText() in self.nodeIds:
+                self.numNodeIds[ctx.getChild(1).getText()] += 1
+                newNodeId = ctx.getChild(1).getText() + "_" + str(self.numNodeIds[ctx.getChild(1).getText()])
+                self.currentNode["nodeID"] = newNodeId
+                self.nodeIds[ctx.getChild(1).getText()] = newNodeId
+            else:
+                self.nodeIds[ctx.getChild(1).getText()] = ctx.getChild(1).getText()
+                self.numNodeIds[ctx.getChild(1).getText()] = 0
+                self.currentNode["nodeID"] = ctx.getChild(1).getText()
+
         else:
             self.currentNode["nodeID"] = None
 
@@ -99,30 +107,10 @@ class CustomTikzListener(TikzListener) :
         except:
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
-    def parseLabelValue(self,labelstr):
-        if labelstr[0] != '{':
-            raise Exception("wrong label")
-        
-        new_label_str = labelstr[1:]
-        slice_index = 0
-        for i in range(len(new_label_str)-1,0,-1):
-            if new_label_str[i] == '}':
-                slice_index = i
-                break
-            else:
-                continue
-        return new_label_str[:slice_index]
-
     def exitLabel(self, ctx:TikzParser.LabelContext):
-        # if ctx.getChildCount() == 3:
-        #     self.currentNode["label"] = ctx.getChild(1).getText()
-        # else:
-        #     self.currentNode["label"] = None
-        # print(ctx.INSIDE_LABEL_VARIABLE())
-        if ctx.INSIDE_LABEL_VARIABLE():
-            label_value = ctx.INSIDE_LABEL_VARIABLE().getText()
-            self.currentNode["label"] = self.parseLabelValue(label_value)
-
+        if ctx.LABEL_VARIABLE() is not None:
+            label_value = ctx.LABEL_VARIABLE().getText()
+            self.currentNode["label"] = parseLabelValue(label_value)
 
     def exitRadius(self,ctx:TikzParser.RadiusContext):
         self.lastSeenRadius = ctx.getChild(1).getText()
@@ -131,23 +119,20 @@ class CustomTikzListener(TikzListener) :
     def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
         #edgeNode: OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
         if ctx.getChildCount() == 3:
-            self.currentEdgeList.append(ctx.getChild(1).getText())
+            print ("-------------",self.nodeIds[ctx.getChild(1).getText()])
+            self.currentEdgeList.append(self.nodeIds[ctx.getChild(1).getText()])
         else:
         #edgeNode: coordinates
             coord_x = self.latestCoordinateX
             coord_y = self.latestCoordinateY
 
-            edgeNode ={}
+            edgeNode = {}
             for k,v in self.globalProperties.items():
                 if k == "node":
                     edgeNode.update(v)
-                elif not (k == "edge" or k == "label" or k == "draw"):
-                    edgeNode[k] = v
 
             edgeNode["X"] = coord_x
             edgeNode["Y"] = coord_y
-            edgeNode["fill"] = None
-            edgeNode["edge_color"] = None
 
             # Only send those attributes which are supported
             filterOutNotSupportedNodeTags(edgeNode)
@@ -169,20 +154,16 @@ class CustomTikzListener(TikzListener) :
         self.lastSeenRadius = 1     #Default radius of \draw circle
 
         for k,v in self.globalProperties.items():
-            if k == "edge":
+            if k == "edge" or k == "draw":
                 self.currentEdgeProperty.update(v)
-            elif not (k == "node" or k == "label" or k == "draw"):
-                self.currentEdgeProperty[k] = v
 
         for k,v in self.globalProperties.items():
-            if k == "node":
+            if k == "node" or k == "draw":
                 self.currentNode.update(v)
-            elif not (k == "edge" or k == "label" or k == "draw"):
-                self.currentNode[k] = v
 
     def exitDraw(self,ctx:TikzParser.DrawContext):
         # \draw shape commands
-        if ctx.VARIABLE() is not None:
+        if len(ctx.getTypedRuleContexts(TikzParser.CoordinatesContext)) >= 1:
 
             #\draw[] () node {}
             if len(ctx.getTypedRuleContexts(TikzParser.NodePropertiesContext)) == 1:
@@ -195,8 +176,8 @@ class CustomTikzListener(TikzListener) :
 
                 self.G.addNode(**self.currentNode)
             else:
-                node_shape = ctx.VARIABLE().getText()
-                # handle logic for rectangle drawing for now
+                node_shape = ctx.getChild(3).getText()
+                # handle logic for rectangle drawing
                 total_x = 0
                 total_y = 0
                 height = 0
@@ -213,7 +194,6 @@ class CustomTikzListener(TikzListener) :
                     total_y = str(total_y / 2)
                     height = float(abs(int(self.shapeNodesCoordinates[1][1]) - float(self.shapeNodesCoordinates[0][1])))
                     width = float(abs(int(self.shapeNodesCoordinates[1][0]) - float(self.shapeNodesCoordinates[0][0])))
-
                 elif node_shape == 'circle':
 
                     assert len(self.shapeNodesCoordinates) == 1, "Error in parsing {}. Draw circle shape command has incorrect number of coordinates(!=1)".format(ctx.getText())
@@ -222,6 +202,9 @@ class CustomTikzListener(TikzListener) :
                     total_y = float(self.shapeNodesCoordinates[0][1])
                     height = float(float(self.lastSeenRadius) * 2)
                     width = float(float(self.lastSeenRadius) * 2)
+                else:
+                    raise Exception("Error in parsing {}. Currently only support rectangle/circle/ellipse in \draw command".format(ctx.getText()))
+
                 self.G.addNode(X=total_x, Y=total_y, height=height, width=width, shape=node_shape)
         # \draw line commands
         else:

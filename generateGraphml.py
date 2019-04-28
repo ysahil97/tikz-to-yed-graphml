@@ -22,6 +22,7 @@ class Graph:
 		self.nodes = []
 		self.edges = []
 		self.globalProperties = {}
+		self.default_fontSize = str(int(2.5*self.scalingFactor))
 
 	def rotateCoordinates(self, coordinates, angle):
 		cosA = round(math.cos(math.radians(float(angle))), 10)
@@ -32,11 +33,12 @@ class Graph:
 			coordinates[index][1] =  (-1 * x * sinA + y * cosA)*-1
 
 	def rescaleCoordinates(self, coordinates, scale):
-		return nx.rescale_layout(coordinates, scale)
+		for index, val in enumerate(coordinates):
+			coordinates[index] = [float(val[0]) * scale, float(val[1]) * scale]
 
 	def rescaleCoordinate(self, X, Y, scale):
 		coordinates = np.array([[X, Y]])
-		print(nx.rescale_layout(coordinates, scale))
+		return (nx.rescale_layout(coordinates, scale))
 
 	def getScalingFactor(self, minDistance):
 		# return self.maxScaleFactor * minDistance * self.scalingFactor
@@ -59,8 +61,9 @@ class Graph:
 		return clr
 
 	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None,
-		height:str = "-", width:str = "-", inner_sep:str = "2.5pt", fill:str = "none", edge_color:str = "black",
-		scale:str = ".8", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0", auto:str="center"):
+		height:str = "-", width:str = "-", inner_sep:str = "3.3333pt", fill:str = "none", edge_color:str = None,
+		scale:str = "1", shape:str = "ellipse", regular_polygon_sides:str="0", rotate:str="0", auto:str="center"):
+
 
 		if rotate != "0":
 			pass
@@ -74,6 +77,7 @@ class Graph:
 
 		fillClr = self.getColor(fill)
 		edgeClr = self.getColor(edge_color)
+		
 
 		if nodeID is None:
 			nodeID = str(self.numNodes)
@@ -83,11 +87,17 @@ class Graph:
 		if label is not None:
 			label = LatexNodes2Text().latex_to_text(label)
 
-		self.maxScaleFactor = max(self.maxScaleFactor, float(scale))
+		# self.maxScaleFactor = max(self.maxScaleFactor, float(scale)*100)
+		# if scale != "1":
+		# 	self.rescaleCoordinate(X, Y, float(scale))
 
-		m = re.search('^\s*([0-9/*-+.]+)\s*(?:pt|cm)?\s*$', inner_sep)
-		if m and len(m.group(1)) > 0 and m.group(1) != ".":
-			inner_sep = 2 * float(m.group(1))
+		if inner_sep.__contains__("cm"):
+			inner_sep *= 28.3465
+			pass
+		else:
+			m = re.search('^\s*([0-9/*-+.]+)\s*(?:pt|cm)?\s*$', inner_sep)
+			if m and len(m.group(1)) > 0 and m.group(1) != ".":
+				inner_sep = float(m.group(1))
 
 		if shape == "circle" or shape is None:
 			shape = "ellipse"
@@ -106,16 +116,16 @@ class Graph:
 			"nodeID": nodeID,
 			"shape": shape,
 			"label": label,
-			"X": float(X),
-			"Y": float(Y),
+			"X": float(X) * 28.3465, # Converting Xpt to Xcm so factor of 28.3465 involved
+			"Y": float(Y) * 28.3465, # Converting Xpt to Xcm so factor of 28.3465 involved
 			"shape_fill": fillClr,
 			"edge_color": edgeClr,
-			"height": height if height != '-' else inner_sep,
+			"height": height if height != '-' else inner_sep ,
 			"width": width if width != '-' else inner_sep,
 			"edge_width": "1.0",
 		}
 
-		# logger.debug("Adding Node to Graph : \n{}".format(pformat(node)))
+		logger.debug("Adding Node to Graph : \n{}".format(pformat(node)))
 		self.nodes.append(node)
 		return nodeID
 
@@ -152,24 +162,29 @@ class Graph:
 
 		positions = np.empty((0,2))
 
-		minDis = sys.float_info.max
+		# minDis = sys.float_info.max
+		# rescaleFactor = sys.float_info.max
+		# maxDistance = 0
+		# for i in range(0, sz-1, 1):
+		# 	for j in range(i+1, sz, 1):
+		# 		aa = 0
+		# 		dis = (self.nodes[i]["X"]-self.nodes[j]["X"])**2 + (self.nodes[i]["Y"]-self.nodes[j]["Y"])**2 
+		# 		if dis == 0.0:
+		# 			continue
+		# 		sumofNodeSized = max(float(self.nodes[i]["height"]), float(self.nodes[i]["width"])) + max(float(self.nodes[j]["height"]), float(self.nodes[j]["width"]))
+		# 		maxDistance = max(maxDistance, dis)
+		# 		rescaleFactor = min(rescaleFactor, (2*float(sumofNodeSized)/0.0352778) / float(math.sqrt(dis)))
 
-		for i in range(0, sz-1, 1):
-			for j in range(i+1, sz, 1):
-				dis = (self.nodes[i]["X"]-self.nodes[j]["X"])**2 + (self.nodes[i]["Y"]-self.nodes[j]["Y"])**2
-				if dis == 0.0:
-					continue
-				minDis = min(minDis, dis)
-
+		
 		for node in self.nodes:
 			positions = np.append(positions, [[node["X"], node["Y"]]], axis=0)
 
+		
 		if "rotate" in self.globalProperties:
+			logger.debug("Rotating Coordinates by {}".format(self.globalProperties["rotate"]))
 			self.rotateCoordinates(positions, self.globalProperties["rotate"])
 
-		#TODO find proper function to find scaling factor using inner_sep, min_distance, scale
-		self.rescaleCoordinates(positions, self.getScalingFactor(minDis))
-
+		nx.rescale_layout(positions, 23.4) # 23.4 is width of PDF
 
 		for i, node in enumerate(self.nodes):
 			self.G.add_node(
@@ -178,13 +193,13 @@ class Graph:
 				label=node["label"],
 				# yed hax axis inverted to TiKZ
 				# We need to reflect coordinates across X axis to get correct graph
-				x=str(positions[i][0]),
-				y=str(positions[i][1] * -1),
+				x=str(positions[i][0] * 4*self.scalingFactor),
+				y=str(positions[i][1] * -4*self.scalingFactor),
 				shape_fill=node["shape_fill"],
 				edge_color=node["edge_color"],
-				height=str(node["height"] * 10),
-				width=str(node["width"] * 10),
-				font_size=str(int(node["height"]*9)),
+				height=str(node["height"] * self.scalingFactor),
+				width=str(node["width"]* self.scalingFactor),
+				font_size=self.default_fontSize,
 				edge_width=node["edge_width"]
 			)
 

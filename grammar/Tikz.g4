@@ -80,7 +80,7 @@ coordinates
     ;
 
 label
-    :  INSIDE_LABEL_VARIABLE
+    :  LABEL_VARIABLE
     ;
 
 BEGINTIKZPICTURE: '\\begin{tikzpicture}';
@@ -104,7 +104,7 @@ SEMICOLON: ';';
 PAUSE : '\\pause' -> skip;
 
 // EXPRESSION should be above VARIABLE for higher precedence
-INSIDE_LABEL_VARIABLE: '{' ~'\n'*? '}' [ \r\t]* ';';
+LABEL_VARIABLE: '{' ~'\n'*? '}' [ \r\t]* ';';
 EXPRESSION: [0-9/*-+.]+;
 // VARIABLE: ~[ \r\t\n;()]+?;
 VARIABLE: [-a-zA-Z0-9_!$.><|\\+]+;
