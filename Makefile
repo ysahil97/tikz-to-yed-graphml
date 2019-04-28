@@ -13,4 +13,7 @@ clean:
 	cd grammar; ls | grep -vE '*.g4|__pycache__' | xargs rm;
 	rm -rf TestCases/*.graphml
 
+removeGraphs:
+	rm -f TestCases/*.graphml
+
 .PHONY: test clean grammar
