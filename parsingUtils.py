@@ -11,6 +11,25 @@ def filterOutNotSupportedNodeTags(propertyDict):
         if k not in supportedNodeTags:
             del propertyDict[k]
 
+def parseLabelValue(labelstr):
+
+    if labelstr[0] != '{':
+        raise Exception("Expected '{' at the beginning of label. Label starts with incorrect bracket. Got " + labelstr)
+    
+    new_label_str = labelstr[1:]
+    slice_index = -1
+    for i in range(len(new_label_str)-1, -1,-1):
+        if new_label_str[i] == '}':
+            slice_index = i
+            break
+        else:
+            continue
+
+    if slice_index == -1:
+        raise Exception("Expected '};' at the end of label. Got " + labelstr)
+
+    return new_label_str[:slice_index]
+
 def handleNumbers(input):
     m = re.search('^\s*([0-9/*-+.]+)\s*(?:pt|cm)?\s*$', input)
     if m and len(m.group(1)) > 0 and m.group(1) != ".":

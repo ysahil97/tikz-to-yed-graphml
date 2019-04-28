@@ -1,0 +1,73 @@
+\begin{tikzpicture}
+	 [scale=.8,auto=center,every node/.style={circle,fill=black!60,inner sep=1pt}]
+	\node (n1) at (18,12) {};
+	  \node (n2) at (17,11) {};
+	  \node (n3) at (19,11) {};
+	  \node (n4) at (16.5,10) {};
+ 	  \node (n5) at (17.5,10) {};
+	  \node (n6) at (18.5,10) {};
+   	  \node (n7) at (19.5,10) {};
+
+   	  \node [fill=none](L1) at (18,9) {$H$};
+
+	\foreach \from/\to in {n1/n2,n1/n3,n2/n4,n2/n5,n3/n6,n3/n7}
+    \draw (\from) -- (\to);
+
+	  \node (a1) at (12,11.5) {};
+	  \node (a2) at (11.2,10.5) {};
+	  \node (a3) at (12.8,10.5) {};
+
+	\foreach \from/\to in {a1/a2,a1/a3}
+    \draw (\from) -- (\to);
+
+%   	  \node[fill=none] (L1) at (12,9) {$P_3$};
+
+	    \draw (12,5) rectangle (16,2);
+
+	  \node (B) at (13,4) {};
+	  \node (C) at (14,4) {};
+	  \node (A) at (13.5,3) {};
+
+	\foreach \from/\to in {A/B,A/C}
+    \draw (\from) -- (\to);
+
+	\node[fill=none] (L3) at (11,3.5) {$G$};
+
+
+%    \draw (10,7) ellipse (1.5cm and 0.7cm);
+
+     \node (r4) at (9.5,7) {};
+	  \node (r5) at (10,7) {};
+	  \node (r6) at (10.5,7) {};
+   	  \node (r7) at (11,7) {};
+
+
+	\foreach \from/\to in {B/r4,B/r5,C/r6,C/r7}
+    \draw (\from) -- (\to);
+
+
+     \node (s4) at (12.75,7) {};
+ 	  \node (s5) at (13.25,7) {};
+	  \node (s6) at (13.75,7) {};
+   	  \node (s7) at (14.25,7) {};
+
+	\foreach \from/\to in {B/s4,B/s5,C/s6,C/s7}
+    \draw (\from) -- (\to);
+
+     \node (t4) at (16,7) {};
+ 	  \node (t5) at (16.5,7) {};
+	  \node (t6) at (17.25,7) {};
+   	  \node (t7) at (18,7) {};
+
+
+%	\foreach \from/\to in {B/t4,B/t5,C/t6,C/t7}
+%    \draw (\from) -- (\to);
+
+
+%    \draw (13.5,7) ellipse (1.5cm and 0.7cm);
+%    \draw (17,7) ellipse (1.5cm and 0.7cm);
+
+%    \node[fill=none] (L4) at (11,8) {$k+1$ copies};
+
+\end{tikzpicture}
+

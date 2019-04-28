@@ -17,7 +17,7 @@ draw
     : DRAW edgeProperties nodeList SEMICOLON
     | DRAW edgeProperties coordinates (VARIABLE|EXPRESSION) coordinates SEMICOLON
     | DRAW edgeProperties coordinates (VARIABLE|EXPRESSION) radius SEMICOLON
-    | DRAW edgeProperties coordinates (VARIABLE|EXPRESSION) nodeProperties label SEMICOLON
+    | DRAW edgeProperties coordinates (VARIABLE|EXPRESSION) nodeProperties label
     ;
 
 radius
@@ -40,7 +40,7 @@ edgeProperties
     ;
 
 node
-    : NODE nodeProperties nodeId nodeProperties AT coordinates nodeProperties label SEMICOLON
+    : NODE nodeProperties nodeId nodeProperties AT coordinates nodeProperties label
     ;
 
 nodeId
@@ -80,7 +80,7 @@ coordinates
     ;
 
 label
-    : OPEN_CURLY_BRACKETS (VARIABLE|EXPRESSION)? CLOSE_CURLY_BRACKETS
+    :  LABEL_VARIABLE
     ;
 
 BEGINTIKZPICTURE: '\\begin{tikzpicture}';
@@ -94,8 +94,6 @@ EVERY: 'every';
 
 OPEN_PARANTHESES: '(';
 CLOSE_PARANTHESES: ')';
-OPEN_CURLY_BRACKETS: '{';
-CLOSE_CURLY_BRACKETS: '}';
 EQUAL_TO: '=';
 
 
@@ -106,6 +104,7 @@ SEMICOLON: ';';
 PAUSE : '\\pause' -> skip;
 
 // EXPRESSION should be above VARIABLE for higher precedence
+LABEL_VARIABLE: '{' ~'\n'*? '}' [ \r\t]* ';';
 EXPRESSION: [0-9/*-+.]+;
 // VARIABLE: ~[ \r\t\n;()]+?;
 VARIABLE: [-a-zA-Z0-9_!$.><|\\+]+;
