@@ -100,6 +100,9 @@ class CustomTikzListener(TikzListener) :
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
     def parseLabelValue(self,labelstr):
+        if labelstr[0] != '{':
+            raise Exception("wrong label")
+        
         new_label_str = labelstr[1:]
         slice_index = 0
         for i in range(len(new_label_str)-1,0,-1):

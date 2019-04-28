@@ -94,8 +94,6 @@ EVERY: 'every';
 
 OPEN_PARANTHESES: '(';
 CLOSE_PARANTHESES: ')';
-/* OPEN_CURLY_BRACKETS: '{';
-CLOSE_CURLY_BRACKETS: '}'; */
 EQUAL_TO: '=';
 
 
@@ -106,7 +104,7 @@ SEMICOLON: ';';
 PAUSE : '\\pause' -> skip;
 
 // EXPRESSION should be above VARIABLE for higher precedence
-INSIDE_LABEL_VARIABLE: '{' ~'\n'*? '}' [ \r\t\n]* ';';
+INSIDE_LABEL_VARIABLE: '{' ~'\n'*? '}' [ \r\t]* ';';
 EXPRESSION: [0-9/*-+.]+;
 // VARIABLE: ~[ \r\t\n;()]+?;
 VARIABLE: [-a-zA-Z0-9_!$.><|\\+]+;
