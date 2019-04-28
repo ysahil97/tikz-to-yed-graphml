@@ -21,11 +21,11 @@ def printContents(value):
         print(i+1, ": ", line)
 
 def main(scalingFactor, logLevel, inputFilename, prefix, directory):
-    
+
     if not prefix:
         prefix = inputFilename
 
-    for value in getCodeInsideTIKZAfterUnrolling(directory, inputFilename):
+    for value in getCodeInsideTIKZAfterUnrolling(inputFilename):
         logger.info("\n\n===================================\n\n")
         printContents(value)
         logger.info("\n\n===================================\n\n")
@@ -39,7 +39,7 @@ def main(scalingFactor, logLevel, inputFilename, prefix, directory):
         # we save file as filename_t_{n}_graph.graphml
         j = 0
         while(os.path.exists(directory +"/" + prefix + "_" + str(j) + "_graph.graphml")):
-            j+=1
+            j += 1
         outputFilename = directory +"/" + prefix + "_" + str(j) + "_graph.graphml"
         htmlChat = CustomTikzListener(inputFilename, outputFilename, scalingFactor)
         walker = antlr4.ParseTreeWalker()
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     # parser.add_argument("-h", "--help", type=int, help="Print this menu")
     parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity", default=0)
     parser.add_argument("-s", "--scale", type=float, help="Scaling Factor", default=200)
-    parser.add_argument("-i", "--input", type=str, help="Input file name")
+    parser.add_argument("-i", "--input", type=str, help="Input file path")
     parser.add_argument("-p", "--prefix", type=str, help="Output file Prefix")
     parser.add_argument("-d", "--directory", type=str, help="Output file directory")
 

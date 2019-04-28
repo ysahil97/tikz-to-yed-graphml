@@ -13,7 +13,7 @@ def floatRange(start, end, step):
         yield start
         start+=step
 
-# Unrolls the loop completly
+# Unrolls the loop completely
 # Replace variables with their values
 # Example:
 # for i in {1,2,3,4} { A[i] = i; } 
@@ -88,36 +88,35 @@ def parseAndHandleForEach(tikzBlock):
         firstForeach = x
         break
 
-
-    if(not firstForeach):
+    if not firstForeach:
         return tikzBlock
-    block=""
-    paraenthesis = 0
-    startswithParaenthesis = False
+
+    block = ""
+    parantheses = 0
+    startswithParantheses = False
     startOffset = 0
-    if(tikzBlock[firstForeach.end(0)] == '{'):
-        block+="{"
-        paraenthesis=1
-        startswithParaenthesis=True
+    if tikzBlock[firstForeach.end(0)] == '{':
+        block += "{"
+        parantheses = 1
+        startswithParantheses = True
         startOffset = 1
        
     for char in tikzBlock[firstForeach.end(0)+startOffset:]:
-        block+=char
-        if(char=="{"):
-            paraenthesis+=1
-        elif(char=="}"):
-            paraenthesis-=1
-            if(paraenthesis==0 and startswithParaenthesis):
+        block += char
+        if char == "{":
+            parantheses += 1
+        elif char == "}":
+            parantheses -= 1
+            if parantheses == 0 and startswithParantheses:
                 break
-        elif(char==";" and paraenthesis==0):
+        elif char == ";" and parantheses == 0:
             break
     return tikzBlock[:firstForeach.start(0)] + replaceVarsinForeach(tikzBlock[firstForeach.start(0): firstForeach.end(0)], block) + tikzBlock[firstForeach.end(0)+len(block):]
 
 
-def getCodeInsideTIKZAfterUnrolling(directory, filename):
+def getCodeInsideTIKZAfterUnrolling(filename):
     tikzBlocks = []
-    fileNameWithPath=directory+"/"+filename
-    with open(fileNameWithPath) as inputFile:
+    with open(filename) as inputFile:
         fileContent = inputFile.read()
     regextToGetTikzPictureCode = re.compile("\\\\end[\s]*{tikzpicture}", re.MULTILINE)
     i = -1
@@ -125,26 +124,18 @@ def getCodeInsideTIKZAfterUnrolling(directory, filename):
         if(block.__contains__("tikzpicture")):
             for codeInsideTikzPicture in (re.split("\\\\begin{tikzpicture}", block)):
                 i += 1
-                if(i%2==1):
+                if i%2 == 1:
                     # print "==========================================="
                     # print("\nCalling parseAndHandleForEach for:\n")
                     # print(codeInsideTikzPicture)
                     # print "===========================================\n"
-                    _oneforeachRemoved = parseAndHandleForEach(codeInsideTikzPicture)
-                    while(_oneforeachRemoved.count("\\foreach")>0):
-                        _oneforeachRemoved = parseAndHandleForEach(_oneforeachRemoved)
-                    unrolledForeachInTikzPart=_oneforeachRemoved
+                    oneforeachRemoved = parseAndHandleForEach(codeInsideTikzPicture)
+                    while(oneforeachRemoved.count("\\foreach")>0):
+                        oneforeachRemoved = parseAndHandleForEach(oneforeachRemoved)
+                    unrolledForeachInTikzPart = oneforeachRemoved
                     # print("===========================================\n")
                     # print(unrolledForeachInTikzPart)
                     # print("===========================================\n")
                     tikzBlocks.append("\\begin{tikzpicture}" + unrolledForeachInTikzPart + "\\end{tikzpicture}")
                     # yield unrolledForeachInTikzPart
     return tikzBlocks
-
-
-if __name__ == "__main__":    
-    # fileName = "TestCases/rg-v2.tex"
-    pass
-    
-
-    
