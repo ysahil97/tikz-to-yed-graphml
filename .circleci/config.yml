@@ -11,7 +11,7 @@ jobs:
             curl -O https://www.antlr.org/download/antlr-4.7.2-complete.jar
             make grammar CLASSPATH=`pwd`/antlr-4.7.2-complete.jar
 
-  build:
+  test:
     docker:
       - image: circleci/python:3.6.7
     steps:
@@ -29,4 +29,4 @@ workflows:
   build_and_test:
     jobs:
       - grammar
-      - build
+      - test
