@@ -1,4 +1,0 @@
-\begin{tikzpicture}
-  \foreach \i in {5,...,8}
-    \node[regular polygon, regular polygon sides=\i, draw] at (\i,0)
-\end{tikzpicture}
