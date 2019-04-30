@@ -1,10 +1,10 @@
 import re
-from filterGraphml import *
+import filterGraphml
 from grammar.TikzParser import TikzParser
 
 
 supportedNodeTags = ["nodeID", "X", "Y", "label", "height", "width", "inner_sep", "fill", "edge_color",
-		"scale", "shape", "regular_polygon_sides", "rotate", "auto"]
+                     "scale", "shape", "regular_polygon_sides", "rotate", "auto"]
 
 def filterOutNotSupportedNodeTags(propertyDict):
     for k in list(propertyDict):
@@ -40,8 +40,8 @@ def handleNumbers(input):
     except:
         raise Exception("Cannot Evaluate Math Expression {}".format(input))
 
-def handleProperties(ctx:TikzParser.PropertiesContext):
-    #properties: individualProperty
+def handleProperties(ctx: TikzParser.PropertiesContext):
+    # properties: individualProperty
     if ctx.getChildCount() == 1:
         k, v = handleIndividualProperty(ctx.getTypedRuleContexts(TikzParser.IndividualPropertyContext)[0])
         if k is None:
@@ -49,7 +49,7 @@ def handleProperties(ctx:TikzParser.PropertiesContext):
         else:
             return {k: v}
 
-    #properties: individualProperty ',' properties
+    # properties: individualProperty ',' properties
     else:
         k, v = handleIndividualProperty(ctx.getTypedRuleContext(TikzParser.IndividualPropertyContext, 0))
         listProperties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
@@ -60,7 +60,7 @@ def handleProperties(ctx:TikzParser.PropertiesContext):
         
         return listProperties
 
-def handleIndividualProperty(ctx:TikzParser.IndividualPropertyContext):
+def handleIndividualProperty(ctx: TikzParser.IndividualPropertyContext):
     key = ""
     value = ""
     currentValue = ""
@@ -73,9 +73,9 @@ def handleIndividualProperty(ctx:TikzParser.IndividualPropertyContext):
     value = currentValue
     # property of Key Value of format "x = y"
     if len(key) > 0:
-        k, v = identifyKeyValueProperty(key, value)
+        k, v = filterGraphml.identifyKeyValueProperty(key, value)
     # individual property of format "x"
     else:
-        k, v = identifyIndividualProperty(value)
+        k, v = filterGraphml.identifyIndividualProperty(value)
 
     return k, v

@@ -1,9 +1,5 @@
-import sys
 import re
-import os
 import copy
-from pprint import pprint
-
 
 # This function is range function for floating points
 # Needed because "range(0.5, 10.5, 0.5)" : Not supported by default range function
@@ -11,7 +7,7 @@ def floatRange(start, end, step):
     # Note: end is inclusive
     while(start <= end):
         yield start
-        start+=step
+        start += step
 
 # Unrolls the loop completely
 # Replace variables with their values
@@ -24,7 +20,7 @@ def floatRange(start, end, step):
 #    A[4] = i;  
 def replaceVarsinForeach(foreachHead, block):
     block = block.strip().strip("{").strip("}")
-    unrolledBlocks=""
+    unrolledBlocks = ""
     # greps variable and their values in foreach statement
     #
     # Example 
@@ -35,7 +31,7 @@ def replaceVarsinForeach(foreachHead, block):
     #    \from : B, B, C, C
     #    \to : t4, t5, t6, t7
     # }
-    x=re.findall("\\\\foreach(.*)in[\s]*{(.*?)}", foreachHead)
+    x = re.findall("\\\\foreach(.*)in[\s]*{(.*?)}", foreachHead)
     if(x):
         x = x[0]
         if(x[1].__contains__("...")):
@@ -43,27 +39,27 @@ def replaceVarsinForeach(foreachHead, block):
             varRange = x[1].strip()
             rangeOfVariable = varRange.split(",")
             start = float(rangeOfVariable[0])
-            if(isinstance(rangeOfVariable[1],float)):
+            if(isinstance(rangeOfVariable[1], float)):
                 # 1,2.....10
-                step=float(rangeOfVariable[1])-float(rangeOfVariable[0])
+                step = float(rangeOfVariable[1])-float(rangeOfVariable[0])
             else:
                 # 1.....10
-                step=1
+                step = 1
             end = float(rangeOfVariable[-1])
             for val in floatRange(start, end, step): 
-                remainblock=copy.copy(block)
+                remainblock = copy.copy(block)
                 remainblock = re.sub("\\"+variable.strip(), str(val), remainblock)
                 unrolledBlocks += remainblock.strip() + "\n"
         else:
-            varList=x[0].split("/")
-            var_index_to_name ={}
+            varList = x[0].split("/")
+            var_index_to_name = {}
             rangeOfVariables = x[1].strip().split(",")
             for i, var in enumerate(varList):
                 var_index_to_name[i] = var.strip().strip("\\")
             # \x/\y in 1/2,3/4,5/6,7/8
             # its like x and y pairwise (1,2) then (3,4) then so on
             for rangeValues in rangeOfVariables:
-                remainblock=copy.copy(block)
+                remainblock = copy.copy(block)
                 for i, val in enumerate(rangeValues.strip().split("/")):
                     # Subsitute variable with its value in entire block
                     remainblock = re.sub("\\\\"+var_index_to_name[i], val, remainblock)
@@ -116,7 +112,7 @@ def getCodeInsideTIKZAfterUnrolling(filename):
         if(block.__contains__("tikzpicture")):
             for codeInsideTikzPicture in (re.split("\\\\begin{tikzpicture}", block)):
                 i += 1
-                if i%2 == 1:
+                if i % 2 == 1:
                     oneforeachRemoved = parseAndHandleForEach(codeInsideTikzPicture)
                     while(oneforeachRemoved.count("\\foreach")>0):
                         oneforeachRemoved = parseAndHandleForEach(oneforeachRemoved)

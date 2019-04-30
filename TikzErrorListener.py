@@ -1,7 +1,5 @@
-import sys
-from grammar.TikzListener import TikzListener
-from grammar.TikzParser import TikzParser
 from antlr4.error.ErrorListener import ErrorListener
+
 
 class TikzErrorListener(ErrorListener):
 

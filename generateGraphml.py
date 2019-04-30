@@ -1,19 +1,19 @@
 import re
-import sys
 import math
 import pyyed
 import logging
 import numpy as np
 import networkx as nx
 import xml.dom.minidom
-from pprint import pformat
 from matplotlib import colors
 from pylatexenc.latex2text import LatexNodes2Text
 
 logger = logging.getLogger(__name__)
 
+
 class Graph:
-	def __init__(self, scalingFactor:float):
+
+	def __init__(self, scalingFactor: float):
 		self.scalingFactor = scalingFactor
 		self.G = pyyed.Graph()
 		self.numNodes = 0
@@ -50,7 +50,7 @@ class Graph:
 			return None
 		m = re.search('^\s*([a-zA-Z]+)(?:!(\d+))?\s*$', fill)
 		if not m:
-			clr = None 	#stands for no color / transparent
+			clr = None 	# stands for no color / transparent
 		else:
 			if m.group(2) is not None:
 				alpha = float(m.group(2))
@@ -63,7 +63,7 @@ class Graph:
 		height:str = "-", width:str = "-", inner_sep:str = "", fill:str = "1", edge_color:str = None,
 		scale:str = "1", shape:str = "rectangle", regular_polygon_sides:str="0", rotate:str="0", auto:str="center", transparent:bool="false"):
 		
-		if inner_sep=="":
+		if inner_sep == "":
 			inner_sep = self.defaultNodeSide
 
 		# This rotate is rotation of shape of node
