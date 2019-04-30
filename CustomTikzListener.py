@@ -88,17 +88,15 @@ class CustomTikzListener(TikzListener) :
             self.currentNode["nodeID"] = None
 
     def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
-        try:
-            self.latestCoordinateX = eval(handleNumbers(ctx.getChild(1).getText()))
-            self.latestCoordinateY = eval(handleNumbers(ctx.getChild(3).getText()))
+        
+            self.latestCoordinateX = handleNumbers(ctx.getChild(1).getText())
+            self.latestCoordinateY = handleNumbers(ctx.getChild(3).getText())
             self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
-        except:
-            raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
     def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
         try:
-            angle = eval(handleNumbers(ctx.getChild(1).getText()))
-            r = eval(handleNumbers(ctx.getChild(3).getText()))
+            angle = handleNumbers(ctx.getChild(1).getText())
+            r = handleNumbers(ctx.getChild(3).getText())
             cosA = round(math.cos(math.radians(angle)), 10)
             sinA = round(math.sin(math.radians(angle)), 10)
             self.latestCoordinateX = r * cosA
@@ -114,7 +112,7 @@ class CustomTikzListener(TikzListener) :
 
     def exitRadius(self,ctx:TikzParser.RadiusContext):
         self.lastSeenRadius = ctx.getChild(1).getText()
-        self.lastSeenRadius = float(handleNumbers(self.lastSeenRadius)) * 2
+        self.lastSeenRadius = float(handleNumbers(self.lastSeenRadius))
 
     def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
         #edgeNode: OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
@@ -133,8 +131,8 @@ class CustomTikzListener(TikzListener) :
 
             edgeNode["X"] = coord_x
             edgeNode["Y"] = coord_y
-
-            # Only send those attributes which are supported
+            edgeNode["transparent"] = "true"
+            # Only send those attributes which are s    upported
             filterOutNotSupportedNodeTags(edgeNode)
 
             newNodeId = self.G.addNode(**edgeNode)
@@ -173,7 +171,7 @@ class CustomTikzListener(TikzListener) :
 
                 # Only send those attributes which are supported
                 filterOutNotSupportedNodeTags(self.currentNode)
-
+                print("---------------------->", self.currentNode)
                 self.G.addNode(**self.currentNode)
             else:
                 node_shape = ctx.getChild(3).getText()
@@ -182,30 +180,40 @@ class CustomTikzListener(TikzListener) :
                 total_y = 0
                 height = 0
                 width = 0
-                if node_shape == 'rectangle' or  node_shape == 'ellipse':
-
+                if node_shape == 'rectangle':
                     assert len(self.shapeNodesCoordinates) == 2, "Error in parsing {}. Draw shape command has incorrect number of coordinates (!=2)".format(ctx.getText())
 
-                    for i in self.shapeNodesCoordinates:
-                        total_x += float(i[0])
-                        total_y += float(i[1])
+                    minx = sys.float_info.max
+                    miny = sys.float_info.min
 
-                    total_x = str(total_x / 2)
-                    total_y = str(total_y / 2)
+                    for i in self.shapeNodesCoordinates:
+                        total_x += i[0]
+                        total_y += i[1]
+                        # minx = min(minx, i[0])
+                        # miny = min(miny, i[1])
+                    total_x /= 2.0
+                    total_y /= 2.0
+                    
                     height = float(abs(int(self.shapeNodesCoordinates[1][1]) - float(self.shapeNodesCoordinates[0][1])))
                     width = float(abs(int(self.shapeNodesCoordinates[1][0]) - float(self.shapeNodesCoordinates[0][0])))
+                
+                elif node_shape == 'ellipse':
+                    assert len(self.shapeNodesCoordinates) == 2, "Error in parsing {}. Draw shape command has incorrect number of coordinates (!=2)".format(ctx.getText())
+                    total_x = self.shapeNodesCoordinates[0][0]
+                    total_y = self.shapeNodesCoordinates[0][1]
+                    width = float(self.shapeNodesCoordinates[1][0]) * 2
+                    height = float(self.shapeNodesCoordinates[1][1]) * 2
+
                 elif node_shape == 'circle':
-
                     assert len(self.shapeNodesCoordinates) == 1, "Error in parsing {}. Draw circle shape command has incorrect number of coordinates(!=1)".format(ctx.getText())
-
+                    height  = float(float(self.lastSeenRadius) * 2)
+                    width   = float(float(self.lastSeenRadius) * 2)
                     total_x = float(self.shapeNodesCoordinates[0][0])
                     total_y = float(self.shapeNodesCoordinates[0][1])
-                    height = float(float(self.lastSeenRadius) * 2)
-                    width = float(float(self.lastSeenRadius) * 2)
                 else:
                     raise Exception("Error in parsing {}. Currently only support rectangle/circle/ellipse in \draw command".format(ctx.getText()))
+                self.G.addNode(X=total_x, Y=total_y, height=height, width=width, shape=node_shape, edge_color="black")
 
-                self.G.addNode(X=total_x, Y=total_y, height=height, width=width, shape=node_shape)
         # \draw line commands
         else:
             sz = len(self.currentEdgeList)
@@ -234,7 +242,7 @@ class CustomTikzListener(TikzListener) :
                 color = self.currentEdgeProperty["fill"]
 
             if "width" in self.currentEdgeProperty:
-                width = self.currentEdgeProperty["width"]
+                width = str(float(self.currentEdgeProperty["width"])* 0.0352778)
 
             if "label" in self.currentEdgeProperty:
                 label = self.currentEdgeProperty["label"]

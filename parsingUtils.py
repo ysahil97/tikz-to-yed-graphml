@@ -31,11 +31,16 @@ def parseLabelValue(labelstr):
     return new_label_str[:slice_index]
 
 def handleNumbers(input):
-    m = re.search('^\s*([0-9/*-+.]+)\s*(?:pt|cm)?\s*$', input)
-    if m and len(m.group(1)) > 0 and m.group(1) != ".":
-        return m.group(1)
-    
-    raise Exception("Could not parse {} individual coordinates".format(input))
+    m = re.search('^\s*([0-9/*-+.]+)\s*(?:(pt|cm))?\s*$', input)
+    try:
+        if m and len(m.group(1)) > 0 and m.group(1) != ".":
+            if m.group(2) and m.group(2) == "cm":
+                print (float(eval(m.group(1))))
+                return float(eval(m.group(1)))
+            print (float(eval(m.group(1))))
+            return float(eval(m.group(1)))
+    except:
+        raise Exception("Cannot Evaluate Math Expression {}".format(input))
 
 def handleProperties(ctx:TikzParser.PropertiesContext):
     #properties: individualProperty
