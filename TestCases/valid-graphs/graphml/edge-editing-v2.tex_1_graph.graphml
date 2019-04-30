@@ -1,0 +1,419 @@
+<?xml version="1.0" ?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:java="http://www.yworks.com/xml/yfiles-common/1.0/java" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
+	<key for="node" id="data_node" yfiles.type="nodegraphics"/>
+	<key for="edge" id="data_edge" yfiles.type="edgegraphics"/>
+	<graph edgedefault="directed" id="G">
+		<node id="0">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1164.7222" y="-2235.2778"/>
+					<y:Fill hasColor="false" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false">G</y:NodeLabel>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="a">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1164.7222" y="-1635.2778"/>
+					<y:Fill color="#ff00003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="b">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1164.7222" y="-1235.2778"/>
+					<y:Fill color="#ff00003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="c">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="764.7222" y="-1435.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="d">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1364.7222" y="-1435.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="e">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1564.7222" y="-1435.2778"/>
+					<y:Fill color="#0000ff3c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="p">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1244.7222" y="-1735.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="q">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1464.7222" y="-1635.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="r">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1164.7222" y="-1935.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="s">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1564.7222" y="-1735.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="10">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2364.7222" y="-2235.2778"/>
+					<y:Fill hasColor="false" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false">Here is Ĝ</y:NodeLabel>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="a1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2364.7222" y="-1635.2778"/>
+					<y:Fill color="#ff00003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="b1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2364.7222" y="-1235.2778"/>
+					<y:Fill color="#ff00003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="c1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="1964.7222" y="-1435.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="d1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2564.7222" y="-1435.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="e1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2764.7222" y="-1435.2778"/>
+					<y:Fill color="#0000ff3c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="p1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2444.7222" y="-1735.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="q1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2664.7222" y="-1635.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="r1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2364.7222" y="-1935.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<node id="s1">
+			<data key="data_node">
+				<y:ShapeNode>
+					<y:Geometry height="70.5556" width="70.5556" x="2764.7222" y="-1735.2778"/>
+					<y:Fill color="#0000003c" transparent="false"/>
+					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:Shape type="ellipse"/>
+				</y:ShapeNode>
+			</data>
+		</node>
+		<edge id="a_c" source="a" target="c">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a_d" source="a" target="d">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a_e" source="a" target="e">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="b_c" source="b" target="c">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="b_d" source="b" target="d">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="b_e" source="b" target="e">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a_p" source="a" target="p">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="e_q" source="e" target="q">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a_r" source="a" target="r">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="e_s" source="e" target="s">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="p_q" source="p" target="q">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="r_s" source="r" target="s">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a1_c1" source="a1" target="c1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a1_d1" source="a1" target="d1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a1_b1" source="a1" target="b1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="b1_c1" source="b1" target="c1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="b1_d1" source="b1" target="d1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="b1_e1" source="b1" target="e1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a1_p1" source="a1" target="p1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="e1_q1" source="e1" target="q1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="a1_r1" source="a1" target="r1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="e1_s1" source="e1" target="s1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="p1_q1" source="p1" target="q1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+		<edge id="r1_s1" source="r1" target="s1">
+			<data key="data_edge">
+				<y:PolyLineEdge>
+					<y:Arrows source="none" target="none"/>
+					<y:LineStyle color="black" type="line" width="1"/>
+				</y:PolyLineEdge>
+			</data>
+		</edge>
+	</graph>
+</graphml>

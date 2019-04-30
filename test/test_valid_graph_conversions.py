@@ -2,22 +2,20 @@ import os
 import unittest
 from parseTikz import ParseTikz
 
-
-# DONOT add "./" at the beginning of any path. It gives problems in the CI
 x = [
     {
-        "inputFilePath": "TestCases/valid-graphs/tex/example_test.tex",
-        "expectedOutputPathPrefix": "TestCases/valid-graphs/graphml/example_test.tex_",
+        "inputFilePath": "./TestCases/valid-graphs/tex/example_test.tex",
+        "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/example_test.tex_",
         "numTikzTestCases": 1
     },
     {
-        "inputFilePath": "TestCases/valid-graphs/tex/edge-editing-v2.tex",
-        "expectedOutputPathPrefix": "TestCases/valid-graphs/graphml/edge-editing-v2.tex_",
+        "inputFilePath": "./TestCases/valid-graphs/tex/edge-editing-v2.tex",
+        "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/edge-editing-v2.tex_",
         "numTikzTestCases": 8
     },
     {
-        "inputFilePath": "TestCases/valid-graphs/tex/rg-v2.tex",
-        "expectedOutputPathPrefix": "TestCases/valid-graphs/graphml/rg-v2.tex_",
+        "inputFilePath": "./TestCases/valid-graphs/tex/rg-v2.tex",
+        "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/rg-v2.tex_",
         "numTikzTestCases": 3
     }
 ]

@@ -12,11 +12,11 @@ logger = logging.getLogger(__name__)
 
 
 class ParseTikz:
-    def printContents(self,value):
-        print ("===================================\n")
+    def printContents(self, value):
+        print("===================================\n")
         for i, line in enumerate(value.split('\n')):
             print(i+1, ": ", line)
-        print ("===================================\n")
+        print("===================================\n")
 
     def run(self, scalingFactor: float, logLevel: int, inputFilename: str, prefix: str, directory: str):
 
