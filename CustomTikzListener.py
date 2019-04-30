@@ -1,24 +1,24 @@
 import sys
 import math
-import antlr4
 import logging
+import parsingUtils
 from grammar.TikzListener import TikzListener
 from grammar.TikzParser import TikzParser
 from generateGraphml import Graph
-from parsingUtils import *
 import copy
 
 logger = logging.getLogger(__name__)
 
-class CustomTikzListener(TikzListener) :
-    def __init__(self, inputFileName:str, outputFileName:str, scalingFactor:float):
+
+class CustomTikzListener(TikzListener):
+    def __init__(self, inputFileName: str, outputFileName: str, scalingFactor: float):
         self.globalProperties = {}
         self.currentNode = {}
         self.currentEdgeList = []
         self.currentEdgeProperty = {}
         self.latestCoordinateX = 0
         self.latestCoordinateY = 0
-        self.lastSeenRadius = 1     #Default radius of \draw circle
+        self.lastSeenRadius = 1     # Default radius of \draw circle
         self.shapeNodesCoordinates = []
 
         self.G = Graph(scalingFactor)
@@ -27,7 +27,7 @@ class CustomTikzListener(TikzListener) :
         self.nodeIds = {}
         self.numNodeIds = {}
 
-    def exitBegin(self, ctx:TikzParser.BeginContext):
+    def exitBegin(self, ctx: TikzParser.BeginContext):
         try:
             logger.info("Trying to convert Tikz into GraphML")
             logger.info("GlobalProperties : {}".format(self.globalProperties))
@@ -39,40 +39,40 @@ class CustomTikzListener(TikzListener) :
         except Warning as e:
             logging.warn("Error in converting {} - {}".format(self.inputFileName, e))
 
-    def exitGlobalProperties(self, ctx:TikzParser.GlobalPropertiesContext):
+    def exitGlobalProperties(self, ctx: TikzParser.GlobalPropertiesContext):
 
-        #globalProperties: EVERY (VARIABLE|EXPRESSION) '/.' 'style' '=' '{' properties '}'
+        # globalProperties: EVERY (VARIABLE|EXPRESSION) '/.' 'style' '=' '{' properties '}'
         if len(ctx.getTokens(TikzParser.EVERY)) == 1:
 
             entityForEveryProperty = ctx.getChild(1).getText() 
             assert entityForEveryProperty == "node" or \
                 entityForEveryProperty == "edge" or \
                 entityForEveryProperty == "draw", "Error in parsing {}. Only support \"node,edge,draw\" as ENTITY in \"every <ENTITY>/.style{{}}\"".format(ctx.getText())
-            properties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
-            self.globalProperties.update({ entityForEveryProperty : properties })
+            properties = parsingUtils.handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
+            self.globalProperties.update({entityForEveryProperty: properties})
 
-        #globalProperties: properties
+        # globalProperties: properties
         elif len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:
-            properties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
+            properties = parsingUtils.handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
             self.globalProperties.update(properties)
 
-    def enterNode(self, ctx:TikzParser.NodeContext):
-        self.currentNode = {}           #Emptying values before handling a new node
-        for k,v in self.globalProperties.items():
+    def enterNode(self, ctx: TikzParser.NodeContext):
+        self.currentNode = {}           # Emptying values before handling a new node
+        for k, v in self.globalProperties.items():
             if k == "node":
                 self.currentNode.update(v)
 
-    def exitNode(self, ctx:TikzParser.NodeContext):
+    def exitNode(self, ctx: TikzParser.NodeContext):
         self.currentNode["X"] = self.latestCoordinateX
         self.currentNode["Y"] = self.latestCoordinateY
 
         # Only send those attributes which are supported
-        filterOutNotSupportedNodeTags(self.currentNode)
+        parsingUtils.filterOutNotSupportedNodeTags(self.currentNode)
 
         self.G.addNode(**self.currentNode)
 
-    def exitNodeId(self, ctx:TikzParser.NodeIdContext):
-        #nodeID: OPEN_PARANTHESES (VARIABLE|EXPRESSION)? CLOSE_PARANTHESES
+    def exitNodeId(self, ctx: TikzParser.NodeIdContext):
+        # nodeID: OPEN_PARANTHESES (VARIABLE|EXPRESSION)? CLOSE_PARANTHESES
         if ctx.getChildCount() == 3:
             if ctx.getChild(1).getText() in self.nodeIds:
                 self.numNodeIds[ctx.getChild(1).getText()] += 1
@@ -87,16 +87,15 @@ class CustomTikzListener(TikzListener) :
         else:
             self.currentNode["nodeID"] = None
 
-    def exitCartesianCoordinates(self, ctx:TikzParser.CartesianCoordinatesContext):
-        
-            self.latestCoordinateX = handleNumbers(ctx.getChild(1).getText())
-            self.latestCoordinateY = handleNumbers(ctx.getChild(3).getText())
-            self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
+    def exitCartesianCoordinates(self, ctx: TikzParser.CartesianCoordinatesContext):        
+        self.latestCoordinateX = parsingUtils.handleNumbers(ctx.getChild(1).getText())
+        self.latestCoordinateY = parsingUtils.handleNumbers(ctx.getChild(3).getText())
+        self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
 
-    def exitPolarCoordinates(self, ctx:TikzParser.PolarCoordinatesContext):
+    def exitPolarCoordinates(self, ctx: TikzParser.PolarCoordinatesContext):
         try:
-            angle = handleNumbers(ctx.getChild(1).getText())
-            r = handleNumbers(ctx.getChild(3).getText())
+            angle = parsingUtils.handleNumbers(ctx.getChild(1).getText())
+            r = parsingUtils.handleNumbers(ctx.getChild(3).getText())
             cosA = round(math.cos(math.radians(angle)), 10)
             sinA = round(math.sin(math.radians(angle)), 10)
             self.latestCoordinateX = r * cosA
@@ -105,27 +104,26 @@ class CustomTikzListener(TikzListener) :
         except:
             raise Exception("Cannot Evaluate Math Expression {}".format(ctx.getText()))
 
-    def exitLabel(self, ctx:TikzParser.LabelContext):
+    def exitLabel(self, ctx: TikzParser.LabelContext):
         if ctx.LABEL_VARIABLE() is not None:
             label_value = ctx.LABEL_VARIABLE().getText()
-            self.currentNode["label"] = parseLabelValue(label_value)
+            self.currentNode["label"] = parsingUtils.parseLabelValue(label_value)
 
-    def exitRadius(self,ctx:TikzParser.RadiusContext):
+    def exitRadius(self, ctx: TikzParser.RadiusContext):
         self.lastSeenRadius = ctx.getChild(1).getText()
-        self.lastSeenRadius = float(handleNumbers(self.lastSeenRadius))
+        self.lastSeenRadius = float(parsingUtils.handleNumbers(self.lastSeenRadius))
 
-    def exitEdgeNode(self, ctx:TikzParser.EdgeNodeContext):
-        #edgeNode: OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
+    def exitEdgeNode(self, ctx: TikzParser.EdgeNodeContext):
+        # edgeNode: OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
         if ctx.getChildCount() == 3:
-            print ("-------------",self.nodeIds[ctx.getChild(1).getText()])
             self.currentEdgeList.append(self.nodeIds[ctx.getChild(1).getText()])
         else:
-        #edgeNode: coordinates
+            # edgeNode: coordinates
             coord_x = self.latestCoordinateX
             coord_y = self.latestCoordinateY
 
             edgeNode = {}
-            for k,v in self.globalProperties.items():
+            for k, v in self.globalProperties.items():
                 if k == "node":
                     edgeNode.update(v)
 
@@ -133,44 +131,44 @@ class CustomTikzListener(TikzListener) :
             edgeNode["Y"] = coord_y
             edgeNode["transparent"] = "true"
             # Only send those attributes which are s    upported
-            filterOutNotSupportedNodeTags(edgeNode)
+            parsingUtils.filterOutNotSupportedNodeTags(edgeNode)
 
             newNodeId = self.G.addNode(**edgeNode)
             self.currentEdgeList.append(newNodeId)
 
-    def exitEdgeProperties(self, ctx:TikzParser.EdgePropertiesContext):
+    def exitEdgeProperties(self, ctx: TikzParser.EdgePropertiesContext):
         if len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:
-            edgeProperties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
-            self.currentEdgeProperty.update(edgeProperties)     #Merging the properties together
+            edgeProperties = parsingUtils.handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
+            self.currentEdgeProperty.update(edgeProperties)     # Merging the properties together
 
-    def enterDraw(self,ctx:TikzParser.DrawContext):
-        #Emptying data structures before handling a new node/edge
+    def enterDraw(self, ctx: TikzParser.DrawContext):
+        # Emptying data structures before handling a new node/edge
         self.currentEdgeList = []
         self.currentEdgeProperty = {}
         self.currentNode = {}
         self.shapeNodesCoordinates = []
-        self.lastSeenRadius = 1     #Default radius of \draw circle
+        self.lastSeenRadius = 1     # Default radius of \draw circle
 
-        for k,v in self.globalProperties.items():
+        for k, v in self.globalProperties.items():
             if k == "edge" or k == "draw":
                 self.currentEdgeProperty.update(v)
 
-        for k,v in self.globalProperties.items():
+        for k, v in self.globalProperties.items():
             if k == "node" or k == "draw":
                 self.currentNode.update(v)
 
-    def exitDraw(self,ctx:TikzParser.DrawContext):
+    def exitDraw(self, ctx: TikzParser.DrawContext):
         # \draw shape commands
         if len(ctx.getTypedRuleContexts(TikzParser.CoordinatesContext)) >= 1:
 
-            #\draw[] () node {}
+            # \draw[] () node {}
             if len(ctx.getTypedRuleContexts(TikzParser.NodePropertiesContext)) == 1:
                 self.currentNode["X"] = self.latestCoordinateX
                 self.currentNode["Y"] = self.latestCoordinateY
                 logger.info("NodeProperties : {}".format(self.currentNode))
 
                 # Only send those attributes which are supported
-                filterOutNotSupportedNodeTags(self.currentNode)
+                parsingUtils.filterOutNotSupportedNodeTags(self.currentNode)
                 print("---------------------->", self.currentNode)
                 self.G.addNode(**self.currentNode)
             else:
@@ -183,14 +181,9 @@ class CustomTikzListener(TikzListener) :
                 if node_shape == 'rectangle':
                     assert len(self.shapeNodesCoordinates) == 2, "Error in parsing {}. Draw shape command has incorrect number of coordinates (!=2)".format(ctx.getText())
 
-                    minx = sys.float_info.max
-                    miny = sys.float_info.min
-
                     for i in self.shapeNodesCoordinates:
                         total_x += i[0]
                         total_y += i[1]
-                        # minx = min(minx, i[0])
-                        # miny = min(miny, i[1])
                     total_x /= 2.0
                     total_y /= 2.0
                     
@@ -222,17 +215,16 @@ class CustomTikzListener(TikzListener) :
             label = ""
             width = "1"
             line_type = "line"
-            a, b = False, False
             if "direction" in self.currentEdgeProperty:
                 if self.currentEdgeProperty['direction'] == '->':
                     pointed = [True] * sz
-                #For left directed edges, adding the edge nodes in reverse
+                # For left directed edges, adding the edge nodes in reverse
                 elif self.currentEdgeProperty['direction'] == '<-':
                     self.currentEdgeList.reverse()
                     pointed = [True] * sz
                 elif self.currentEdgeProperty['direction'] == '-!-':
                     pointed = [False] * sz
-                #Only first and last edge should be directed
+                # Only first and last edge should be directed
                 elif self.currentEdgeProperty['direction'] == '<->':
                     pointed = [False] * sz
                     pointed[0] = True
@@ -242,7 +234,7 @@ class CustomTikzListener(TikzListener) :
                 color = self.currentEdgeProperty["fill"]
 
             if "width" in self.currentEdgeProperty:
-                width = str(float(self.currentEdgeProperty["width"])* 0.0352778)
+                width = str(float(self.currentEdgeProperty["width"]) * 0.0352778)
 
             if "label" in self.currentEdgeProperty:
                 label = self.currentEdgeProperty["label"]
@@ -254,7 +246,7 @@ class CustomTikzListener(TikzListener) :
                 nodeX, nodeY = self.currentEdgeList[i-1], self.currentEdgeList[i]
                 self.G.addEdge(nodeX=nodeX, nodeY=nodeY, pointed=pointed[i], color=color, width=width, label=label, line_type=line_type)
 
-    def exitNodeProperties(self, ctx:TikzParser.NodePropertiesContext):
+    def exitNodeProperties(self, ctx: TikzParser.NodePropertiesContext):
         if len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:
-            nodeProperties = handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
+            nodeProperties = parsingUtils.handleProperties(ctx.getTypedRuleContext(TikzParser.PropertiesContext, 0))
             self.currentNode.update(nodeProperties)
