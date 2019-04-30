@@ -2,20 +2,22 @@ import os
 import unittest
 from parseTikz import ParseTikz
 
+
+# DONOT add "./" at the beginning of any path. It gives problems in the CI
 x = [
     {
-        "inputFilePath": "./TestCases/valid-graphs/tex/example_test.tex",
-        "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/example_test.tex_",
+        "inputFilePath": "TestCases/valid-graphs/tex/example_test.tex",
+        "expectedOutputPathPrefix": "TestCases/valid-graphs/graphml/example_test.tex_",
         "numTikzTestCases": 1
     },
     {
-        "inputFilePath": "./TestCases/valid-graphs/tex/edge-editing-v2.tex",
-        "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/edge-editing-v2.tex_",
+        "inputFilePath": "TestCases/valid-graphs/tex/edge-editing-v2.tex",
+        "expectedOutputPathPrefix": "TestCases/valid-graphs/graphml/edge-editing-v2.tex_",
         "numTikzTestCases": 8
     },
     {
-        "inputFilePath": "./TestCases/valid-graphs/tex/rg-v2.tex",
-        "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/rg-v2.tex_",
+        "inputFilePath": "TestCases/valid-graphs/tex/rg-v2.tex",
+        "expectedOutputPathPrefix": "TestCases/valid-graphs/graphml/rg-v2.tex_",
         "numTikzTestCases": 3
     }
 ]
@@ -31,7 +33,7 @@ class TestValidGraphConversions(unittest.TestCase):
         TikzConverter = ParseTikz()
         graphmlCounter = 0
         for i in x:
-            inputFilePath = i["inputFilePath"]
+            inputFilePath = os.path.join(os.getcwd(), i["inputFilePath"])
             generated_str = ""
             expected_str = ""
 
@@ -39,7 +41,7 @@ class TestValidGraphConversions(unittest.TestCase):
 
             for j in range(i["numTikzTestCases"]):
 
-                expectedOutputPath = i["expectedOutputPathPrefix"] + str(j) + "_graph.graphml"
+                expectedOutputPath = os.path.join(os.getcwd(), i["expectedOutputPathPrefix"] + str(j) + "_graph.graphml")
                 generatedOutputPath = os.path.join(directory, prefix + "_" + str(graphmlCounter) + "_graph.graphml")
 
                 with open(expectedOutputPath, 'r') as f:
