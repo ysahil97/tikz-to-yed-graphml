@@ -7,13 +7,19 @@ grammar:
 	${antlr4} -Dlanguage=Python3 grammar/Tikz.g4
 
 test:
-	python3 parseTikz.py -i TestCases/draw.tex -s 300 -d ./TestCases
+	rm -f output/*.graphml
+	python3 -m unittest discover test
+
+sample-test:
+	python3 main.py -i TestCases/valid-graphs/tex/graph.tex -s 200 -d ./TestCases
 
 clean:
 	cd grammar; ls | grep -vE '*.g4|__pycache__' | xargs rm -f;
 	rm -f TestCases/*.graphml
+	rm -f output/*.graphml
 
 removeGraphs:
 	rm -f TestCases/*.graphml
+	rm -f output/*.graphml
 
 .PHONY: test clean grammar

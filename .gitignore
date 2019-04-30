@@ -133,3 +133,5 @@ venv.bak/
 *.out
 *.snm
 *.toc
+
+output/
