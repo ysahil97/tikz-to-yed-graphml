@@ -9,7 +9,7 @@
 					<y:Geometry height="70.5556" width="70.5556" x="3364.7222" y="-1235.2778"/>
 					<y:Fill color="#0000003c" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false"/>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -20,7 +20,7 @@
 					<y:Geometry height="70.5556" width="70.5556" x="3564.7222" y="-1235.2778"/>
 					<y:Fill color="#0000003c" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false"/>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -31,7 +31,7 @@
 					<y:Geometry height="70.5556" width="70.5556" x="3564.7222" y="-1435.2778"/>
 					<y:Fill color="#0000003c" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false"/>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -42,7 +42,7 @@
 					<y:Geometry height="70.5556" width="70.5556" x="3364.7222" y="-1435.2778"/>
 					<y:Fill color="#0000003c" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false"/>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -53,7 +53,7 @@
 					<y:Geometry height="70.5556" width="70.5556" x="3164.7222" y="-1035.2778"/>
 					<y:Fill color="#0000003c" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false"/>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -64,7 +64,7 @@
 					<y:Geometry height="70.5556" width="70.5556" x="3764.7222" y="-1035.2778"/>
 					<y:Fill color="#0000003c" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false"/>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -75,7 +75,7 @@
 					<y:Geometry height="70.5556" width="70.5556" x="3764.7222" y="-1635.2778"/>
 					<y:Fill color="#0000003c" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false"/>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -86,7 +86,7 @@
 					<y:Geometry height="70.5556" width="70.5556" x="3164.7222" y="-1635.2778"/>
 					<y:Fill color="#0000003c" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="200" fontStyle="plain" underlinedText="false"/>
+					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false"/>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
