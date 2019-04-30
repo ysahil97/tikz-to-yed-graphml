@@ -22,7 +22,7 @@ class Graph:
 		self.nodes = []
 		self.edges = []
 		self.globalProperties = {}
-		self.default_fontSize = str(int(2.5*self.scalingFactor))
+		self.default_fontSize = str(int(0.20 * self.scalingFactor))
 		self.defaultNodeSide = "10"
 
 
