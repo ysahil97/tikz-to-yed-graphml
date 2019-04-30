@@ -35,9 +35,7 @@ def handleNumbers(input):
     try:
         if m and len(m.group(1)) > 0 and m.group(1) != ".":
             if m.group(2) and m.group(2) == "cm":
-                print (float(eval(m.group(1))))
                 return float(eval(m.group(1)))
-            print (float(eval(m.group(1))))
             return float(eval(m.group(1)))
     except:
         raise Exception("Cannot Evaluate Math Expression {}".format(input))

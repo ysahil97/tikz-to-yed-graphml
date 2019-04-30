@@ -1,8 +1,9 @@
 \begin{tikzpicture}
     \draw (0,0) ellipse (5cm and 7cm);
-    \draw (0,0) rectangle (10cm, 10cm);
+    \draw (0,0) rectangle (10cm,10cm);
     \draw (0,0) circle (2cm);
-    \node (b) [fill=blue] at (5,5) {};
-    \node (c) [fill=blue] at (5,10) {};
+    \node (b) [fill=blue!100] at (5,5) {};
+    \node (c) [fill=blue!100] at (5,10) {};
     \draw (b) -- (c);
+    \draw (0*360/5: 3.5cm) node[fill=green!90,inner sep=3pt]{};
 \end{tikzpicture}

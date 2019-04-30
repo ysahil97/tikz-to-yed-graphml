@@ -25,7 +25,6 @@ def floatRange(start, end, step):
 def replaceVarsinForeach(foreachHead, block):
     block = block.strip().strip("{").strip("}")
     unrolledBlocks=""
-
     # greps variable and their values in foreach statement
     #
     # Example 
@@ -71,26 +70,19 @@ def replaceVarsinForeach(foreachHead, block):
                 unrolledBlocks += remainblock.strip() + "\n"
     return unrolledBlocks
 
-
 # Find Foreach block in code and then copy blocks and in each block replace variables by their values
 def parseAndHandleForEach(tikzBlock):
     # Find all the foreach and its corresponding block in tikz code and call the replaceVars function
     # \foreach \from/\to in {B/t4,B/t5,C/t6,C/t7} 
     #     block
     # Not block may contain foreach statement
-    # print ("====================================")
-    # print (tikzBlock)
-    # print ("====================================")
     regexForForeach = re.compile("\\\\foreach.*?in[\s]*{.*?}[\s]*", re.MULTILINE)
     firstForeach = None
-    
     for x in re.finditer(regexForForeach, tikzBlock):
         firstForeach = x
         break
-
     if not firstForeach:
         return tikzBlock
-
     block = ""
     parantheses = 0
     startswithParantheses = False
@@ -100,7 +92,6 @@ def parseAndHandleForEach(tikzBlock):
         parantheses = 1
         startswithParantheses = True
         startOffset = 1
-       
     for char in tikzBlock[firstForeach.end(0)+startOffset:]:
         block += char
         if char == "{":
@@ -113,7 +104,8 @@ def parseAndHandleForEach(tikzBlock):
             break
     return tikzBlock[:firstForeach.start(0)] + replaceVarsinForeach(tikzBlock[firstForeach.start(0): firstForeach.end(0)], block) + tikzBlock[firstForeach.end(0)+len(block):]
 
-
+# returns list of blocks with unrolled for loops
+# A block is the code inside tikz begin and end
 def getCodeInsideTIKZAfterUnrolling(filename):
     tikzBlocks = []
     with open(filename) as inputFile:
@@ -125,17 +117,9 @@ def getCodeInsideTIKZAfterUnrolling(filename):
             for codeInsideTikzPicture in (re.split("\\\\begin{tikzpicture}", block)):
                 i += 1
                 if i%2 == 1:
-                    # print "==========================================="
-                    # print("\nCalling parseAndHandleForEach for:\n")
-                    # print(codeInsideTikzPicture)
-                    # print "===========================================\n"
                     oneforeachRemoved = parseAndHandleForEach(codeInsideTikzPicture)
                     while(oneforeachRemoved.count("\\foreach")>0):
                         oneforeachRemoved = parseAndHandleForEach(oneforeachRemoved)
                     unrolledForeachInTikzPart = oneforeachRemoved
-                    # print("===========================================\n")
-                    # print(unrolledForeachInTikzPart)
-                    # print("===========================================\n")
                     tikzBlocks.append("\\begin{tikzpicture}" + unrolledForeachInTikzPart + "\\end{tikzpicture}")
-                    # yield unrolledForeachInTikzPart
     return tikzBlocks
