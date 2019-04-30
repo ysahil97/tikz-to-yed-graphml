@@ -7,18 +7,16 @@ from TikzErrorListener import TikzErrorListener
 from CustomTikzListener import CustomTikzListener
 from extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZAfterUnrolling
 
-logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-1s [%(filename)s:%(lineno)d] %(message)s',
-                    datefmt='%Y-%m-%d:%H:%M:%S',
-                    level=logging.DEBUG)
-
+logging.basicConfig(format='%(levelname)-1s : [%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 class ParseTikz:
-
-    def printContents(self, value: str):
+    def printContents(self,value):
+        print ("===================================\n")
         for i, line in enumerate(value.split('\n')):
             print(i+1, ": ", line)
+        print ("===================================\n")
 
     def run(self, scalingFactor: float, logLevel: int, inputFilename: str, prefix: str, directory: str):
 
@@ -29,9 +27,7 @@ class ParseTikz:
             os.makedirs(directory)
 
         for value in getCodeInsideTIKZAfterUnrolling(inputFilename):
-            logger.info("\n\n===================================\n\n")
             self.printContents(value)
-            logger.info("\n\n===================================\n\n")
             input_stream = antlr4.InputStream(value)
             lexer = TikzLexer(input_stream)
             stream = antlr4.CommonTokenStream(lexer)

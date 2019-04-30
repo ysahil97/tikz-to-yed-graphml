@@ -2,7 +2,7 @@ from colour import Color
 import logging
 logger = logging.getLogger(__name__)
 
-ValidNodeShapes = ["rectangle", "circle", "diamond", "ellipse", "regular polygon"]
+ValidNodeShapes = ["rectangle", "circle", "diamond", "ellipse"]
 ValidEdgeDirections = ["->", "<-", "-!-", "--", "<->"]  #- means no edge. So no need to check for its validity as that is default
 
 def isValidColor(value):
@@ -63,9 +63,6 @@ def identifyKeyValueProperty(key:str, value:str):
 
     elif key == "inner sep":
         return ("inner_sep", value)
-    
-    elif key == "regular polygon sides":
-        return ("regular_polygon_sides", value)
     
     elif key == "direction":
         return ("direction", value)
