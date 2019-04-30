@@ -1,30 +1,32 @@
 import os
-import sys
 import antlr4
 import logging
-import argparse
 from grammar.TikzLexer import TikzLexer
 from grammar.TikzParser import TikzParser
-from grammar.TikzListener import TikzListener
 from TikzErrorListener import TikzErrorListener
 from CustomTikzListener import CustomTikzListener
 from extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZAfterUnrolling
 
 logging.basicConfig(format='%(asctime)s,%(msecs)d %(levelname)-1s [%(filename)s:%(lineno)d] %(message)s',
-    datefmt='%Y-%m-%d:%H:%M:%S',
-    level=logging.DEBUG)
+                    datefmt='%Y-%m-%d:%H:%M:%S',
+                    level=logging.DEBUG)
 
 logger = logging.getLogger(__name__)
 
+
 class ParseTikz:
-    def printContents(self,value):
+
+    def printContents(self, value: str):
         for i, line in enumerate(value.split('\n')):
             print(i+1, ": ", line)
 
-    def run(self,scalingFactor, logLevel, inputFilename, prefix, directory):
+    def run(self, scalingFactor: float, logLevel: int, inputFilename: str, prefix: str, directory: str):
 
         if not prefix:
-            prefix = inputFilename
+            prefix = os.path.basename(inputFilename)
+
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
         for value in getCodeInsideTIKZAfterUnrolling(inputFilename):
             logger.info("\n\n===================================\n\n")
@@ -38,10 +40,11 @@ class ParseTikz:
             tree = parser.begin()
 
             # we save file as filename_t_{n}_graph.graphml
+            # Getting next available output file path
             j = 0
-            while(os.path.exists(directory +"/" + prefix + "_" + str(j) + "_graph.graphml")):
+            while(os.path.exists(directory + "/" + prefix + "_" + str(j) + "_graph.graphml")):
                 j += 1
-            outputFilename = directory +"/" + prefix + "_" + str(j) + "_graph.graphml"
+            outputFilename = directory + "/" + prefix + "_" + str(j) + "_graph.graphml"
             htmlChat = CustomTikzListener(inputFilename, outputFilename, scalingFactor)
             walker = antlr4.ParseTreeWalker()
             walker.walk(htmlChat, tree)
