@@ -182,7 +182,6 @@ class CustomTikzListener(TikzListener):
 
                 if node_shape == 'rectangle':
                     assert len(self.shapeNodesCoordinates) == 2, "Error in parsing {}. Draw shape command has incorrect number of coordinates (!=2)".format(ctx.getText())
-
                     for i in self.shapeNodesCoordinates:
                         X += i[0]
                         Y += i[1]
@@ -214,25 +213,28 @@ class CustomTikzListener(TikzListener):
         else:
             logging.debug("Draw Edge(line) Instruction {}".format(ctx.getText()))
             sz = len(self.currentEdgeList)
-            pointed = [False] * sz
+            arrowFoot = False
+            arrowHead = False
             color = "black"
             label = ""
             width = "1"
             line_type = "line"
             if "direction" in self.currentEdgeProperty:
                 if self.currentEdgeProperty['direction'] == '->':
-                    pointed = [True] * sz
+                    arrowHead = True
                 # For left directed edges, adding the edge nodes in reverse
                 elif self.currentEdgeProperty['direction'] == '<-':
                     self.currentEdgeList.reverse()
-                    pointed = [True] * sz
+                    arrowHead = True
                 elif self.currentEdgeProperty['direction'] == '-!-':
-                    pointed = [False] * sz
+                    arrowHead = False
                 # Only first and last edge should be directed
                 elif self.currentEdgeProperty['direction'] == '<->':
-                    pointed = [False] * sz
-                    pointed[0] = True
-                    pointed[-1] = True
+                    arrowFoot = True
+                    arrowHead = True
+                    # arrowHead = [False] * sz
+                    # arrowHead[0] = True
+                    # arrowHead[-1] = True
 
             if "fill" in self.currentEdgeProperty:
                 color = self.currentEdgeProperty["fill"]
@@ -248,8 +250,19 @@ class CustomTikzListener(TikzListener):
 
             for i in range(1, sz, 1):
                 nodeX, nodeY = self.currentEdgeList[i-1], self.currentEdgeList[i]
-                logging.debug("Adding Edge: {nodeX} {nodeY} {pointed} {color} {width} {label} {line_type}".format(nodeX=nodeX, nodeY=nodeY, pointed=pointed[i], color=color, width=width, label=label, line_type=line_type))
-                self.G.addEdge(nodeX=nodeX, nodeY=nodeY, pointed=pointed[i], color=color, width=width, label=label, line_type=line_type)
+                logging.debug("Adding Edge: {nodeX} {nodeY} {arrowHead} {arrowFoot} {color} {width} {label} {line_type}".format(nodeX=nodeX, nodeY=nodeY, arrowHead=arrowHead, arrowFoot=arrowFoot, color=color, width=width, label=label, line_type=line_type))
+                self.G.addEdge(nodeX=nodeX, nodeY=nodeY, arrowHead=arrowHead, arrowFoot=arrowFoot, color=color, width=width, label=label, line_type=line_type)
+
+            # if self.currentEdgeProperty['direction'] == '<->':
+            #     print (self.currentEdgeList)
+            #     self.currentEdgeList.reverse()
+            #     for i in range(1, sz, 1):
+            #         nodeX, nodeY = self.currentEdgeList[i-1], self.currentEdgeList[i]
+            #         logging.debug("Adding Edge: {nodeX} {nodeY} {arrowHead} {color} {width} {label} {line_type}".format(nodeX=nodeX, nodeY=nodeY, arrowHead=True, color=color, width=width, label=label, line_type=line_type))
+            #         self.G.addEdge(nodeX=nodeX, nodeY=nodeY, arrowHead=True, color=color, width=width, label=label, line_type=line_type)
+            #         print (nodeX, nodeY)
+
+
 
     def exitNodeProperties(self, ctx: TikzParser.NodePropertiesContext):
         if len(ctx.getTypedRuleContexts(TikzParser.PropertiesContext)) == 1:

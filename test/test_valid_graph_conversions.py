@@ -17,11 +17,17 @@ x = [
         "inputFilePath": "./TestCases/valid-graphs/tex/rg-v2.tex",
         "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/rg-v2.tex_",
         "numTikzTestCases": 3
+    },
+    {
+        "inputFilePath": "./TestCases/valid-graphs/tex/TestCaseForShape.tex",
+        "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/TestCaseForShape.tex_",
+        "numTikzTestCases": 1
     }
 ]
 
 
 class TestValidGraphConversions(unittest.TestCase):
+    maxDiff = None
     def test_split(self):
         scale = 200
         logLevel = 0
@@ -47,7 +53,7 @@ class TestValidGraphConversions(unittest.TestCase):
 
                 with open(generatedOutputPath, 'r') as f:
                     generated_str = f.read()
-
+                
                 self.assertMultiLineEqual(expected_str, generated_str)
                 graphmlCounter += 1
 

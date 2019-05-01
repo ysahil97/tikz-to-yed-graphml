@@ -113,21 +113,18 @@ class Graph:
 		return nodeID
 
 	# TODO: Add exception handling when NodeID is referenced without declaring it
-	def addEdge(self, nodeX:str=None, nodeY:str=None, pointed:bool=False, color:str="black", width:str="1", label:str="", line_type:str="line"):
+	def addEdge(self, nodeX:str=None, nodeY:str=None, arrowHead:bool=False, arrowFoot:bool=False, color:str="black", width:str="1", label:str="", line_type:str="line"):
 
 		if line_type is not None and line_type == "solid":
 			line_type="line"
 		elif line_type is not None and line_type == "dash":
 			line_type="dashed"
 		
-		arrowDir = "none"
-		if pointed:
-			arrowDir = "standard"
-		
 		self.edges.append({
 			"x": nodeX,
 			"y": nodeY,
-			"arrowhead": arrowDir,
+			"arrowhead": "standard" if arrowHead==True else "none",
+			"arrowfoot": "standard" if arrowFoot==True else "none",
 			"color" : color,
 			"width" : width,
 			"label" : label,
@@ -190,6 +187,7 @@ class Graph:
 				edge["x"],
 				edge["y"],
 				arrowhead=edge["arrowhead"],
+				arrowfoot=edge["arrowfoot"],
 				color=edge["color"],
 				width=edge["width"],
 				label=edge["label"],

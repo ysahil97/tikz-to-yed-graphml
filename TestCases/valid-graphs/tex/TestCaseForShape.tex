@@ -1,9 +1,20 @@
 \begin{tikzpicture}
-    \draw (0,0) ellipse (5cm and 7cm);
-    \draw (0,0) rectangle (10cm,10cm);
-    \draw (0,0) circle (2cm);
-    \node (b) [fill=blue!100] at (5,5) {};
-    \node (c) [fill=blue!100] at (5,10) {};
-    \draw (b) -- (c);
-    \draw (0*360/5: 3.5cm) node[fill=green!90,inner sep=3pt]{};
+    \draw (6,6) ellipse (3cm and 6cm);
+    \draw (6,6) ellipse (2.5cm and 5cm);
+    \draw (6,6) ellipse (2cm and 4cm);
+    \draw (6,6) ellipse (1.5cm and 3cm);
+    \draw (6,6) ellipse (1cm and 2cm);
+    \draw (0,12) rectangle (12,0);
+    \node (a) [fill=green] at (0,6) {};
+    \node (b) [fill=blue] at (12,6) {};
+    \node (c) [fill=red] at (6,0) {};
+    \node (d) [fill=black] at (6,12) {};
+    \draw (6,6) circle (6cm);
+    \draw [<->] (a) -- (b);
+    \draw [->] (d) -- (c);
+    \draw (6,6) ellipse (6cm and 2cm);
+    \draw (6,6) ellipse (6cm and 6cm);
+    \draw (6,6) ellipse (6cm and 5cm);
+    \draw (6,6) ellipse (6cm and 4cm);
+    \draw (6,6) ellipse (6cm and 3cm);
 \end{tikzpicture}
