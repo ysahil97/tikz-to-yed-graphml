@@ -62,7 +62,6 @@ class Graph:
 	def addNode(self, nodeID:str = None, X:str = "0", Y:str = "0", label:str = None,
 		height:str = "-", width:str = "-", inner_sep:str = "", fill:str = "1", edge_color:str = None,
 		scale:str = "1", shape:str = "rectangle", regular_polygon_sides:str="0", rotate:str="0", auto:str="center", transparent:bool="false"):
-		
 		if inner_sep == "":
 			inner_sep = self.defaultNodeSide
 
@@ -156,7 +155,7 @@ class Graph:
                  y=False, node_type="ShapeNode", UML=False):
 			"""
 			
-			if node["shape"]=="rectangle" or node["shape"]=="ellipse":
+			if node["shape"] in ["rectangle", "ellipse", "diamond"] :
 				positions[i][0] = positions[i][0] - node["width"]/2.0
 				# yed has axis inverted to TiKZ
 				# So the formula for y is bit different than standard rotate for cartessian coordinates

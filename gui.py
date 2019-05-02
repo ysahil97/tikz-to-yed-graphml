@@ -1,15 +1,7 @@
-import os
-import argparse
-
-from tikz2graphml.parseTikz import ParseTikz
 import tkinter
-from tkinter import ttk, StringVar, Label, Entry, LEFT, W, Text, END, messagebox
+from tkinter import ttk, StringVar, Label, Entry, LEFT, W, Text, END
 from tkinter.filedialog import askopenfilename, askdirectory
-import logging
-
-logging.basicConfig(format='%(levelname)-1s : [%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
-
+import os
 class GUI:
     def __init__(self, window): 
         # 'StringVar()' is used to get the instance of input field
@@ -42,8 +34,7 @@ class GUI:
     def set_input_file_name(self):
         self.inputFileNameVar.set(askopenfilename())
         path, filename = os.path.split(self.inputFileNameVar.get())
-        if(os.path.isdir(path)):
-            self.outputDirectoryVar.set(path)
+        self.outputDirectoryVar.set(path)
 
     def set_output_directory(self):
         self.outputDirectoryVar.set(askdirectory())
@@ -58,21 +49,11 @@ class GUI:
         return self.scaleVar.get()
 
     def convertFile(self):
-        logger.debug("Converting file")
-        logger.debug("InputFile : {}".format(self.get_input_file_name()))
-        logger.debug("Output Directory : ".format(self.get_output_directory()))
-        logger.debug("Scale : ".format(self.getScale()))
-
-        if(not os.path.isfile(self.get_input_file_name())):
-            messagebox.showerror("tikz to graphml", "Entered File is Incorrect")
-            return
-        
-        if(not os.path.isdir(self.get_output_directory())):
-            messagebox.showerror("tikz to graphml", "Entered Directory is Incorrect")
-            return
-
-        ParseTikz().run(float(self.getScale()), 1.0, self.get_input_file_name(), os.path.basename(os.path.splitext(self.get_input_file_name())[0]), self.get_output_directory())
-        messagebox.showinfo("tikz to graphml", "Conversion Successfull\nFiles stored in {}".format(self.get_output_directory()))
+        print("Converting file")
+        print("InputFile : ", self.get_input_file_name())
+        print("Output Directory : ", self.get_output_directory())
+        print("Scale : ", self.getScale())
+        pass
 
 if __name__ == '__main__':
     window = tkinter.Tk()
@@ -84,24 +65,5 @@ if __name__ == '__main__':
         window.columnconfigure(rows,weight=2)
         rows += 1
 
-    gui = GUI(window)
+    gui = GUI(window, )
     window.mainloop()
-
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser()
-#     # parser.add_argument("-h", "--help", type=int, help="Print this menu")
-#     parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity", default=0)
-#     parser.add_argument("-s", "--scale", default=200, type=float, help="Scaling Factor")
-#     parser.add_argument("-i", "--input", type=str, help="Input file path", required=True)
-#     parser.add_argument("-p", "--prefix", type=str, help="Output file Prefix")
-#     parser.add_argument("-d", "--directory", default="./output", type=str, help="Output file directory")
-
-#     args = parser.parse_args()
-
-#     scalingFactor = args.scale
-#     logLevel = args.verbosity
-#     inputFileName = args.input
-#     prefix = args.prefix
-#     directory = args.directory
-
-    

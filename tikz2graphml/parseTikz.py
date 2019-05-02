@@ -10,7 +10,6 @@ from tikz2graphml.TikzErrorListener import TikzErrorListener
 from tikz2graphml.CustomTikzListener import CustomTikzListener
 from tikz2graphml.extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZAfterUnrolling
 
-logging.basicConfig(format='%(levelname)-1s : [%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
