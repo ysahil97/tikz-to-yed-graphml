@@ -1,5 +1,3 @@
-import argparse
-from parseTikz import ParseTikz
 import tkinter
 from tkinter import ttk, StringVar, Label, Entry, LEFT, W, Text, END
 from tkinter.filedialog import askopenfilename, askdirectory
@@ -55,19 +53,7 @@ class GUI:
         print("InputFile : ", self.get_input_file_name())
         print("Output Directory : ", self.get_output_directory())
         print("Scale : ", self.getScale())
-
-        if(not os.path.isfile(self.get_input_file_name())):
-            print("Entered File is Incorrect")
-            window.quit()
-        
-        if(not os.path.isdir(self.get_output_directory())):
-            print("Entered Directory is Incorrect")
-            window.quit()
-
-        ParseTikz().run(float(self.getScale()), 1.0, self.get_input_file_name(), os.path.basename(os.path.splitext(self.get_input_file_name())[0]), self.get_output_directory())
-        print("Done Converting")
-        window.quit()
-
+        pass
 
 if __name__ == '__main__':
     window = tkinter.Tk()
@@ -79,24 +65,5 @@ if __name__ == '__main__':
         window.columnconfigure(rows,weight=2)
         rows += 1
 
-    gui = GUI(window)
+    gui = GUI(window, )
     window.mainloop()
-
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser()
-#     # parser.add_argument("-h", "--help", type=int, help="Print this menu")
-#     parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity", default=0)
-#     parser.add_argument("-s", "--scale", default=200, type=float, help="Scaling Factor")
-#     parser.add_argument("-i", "--input", type=str, help="Input file path", required=True)
-#     parser.add_argument("-p", "--prefix", type=str, help="Output file Prefix")
-#     parser.add_argument("-d", "--directory", default="./output", type=str, help="Output file directory")
-
-#     args = parser.parse_args()
-
-#     scalingFactor = args.scale
-#     logLevel = args.verbosity
-#     inputFileName = args.input
-#     prefix = args.prefix
-#     directory = args.directory
-
-    

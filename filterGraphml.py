@@ -25,7 +25,7 @@ def isValidDirection(value):
 # Refer http://www.texample.net/tikz/examples/node-shapes/
 # for Tikz shapes
 def identifyShape(value):
-    return value in ValidNodeShapes
+    return value if value in ValidNodeShapes else "rectangle"
 
 def isValidThickness(value):
     return value.lower() in ["thick", "thin", "ultra thich"]
