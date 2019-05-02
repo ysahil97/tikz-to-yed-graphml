@@ -1,11 +1,11 @@
 import re
 import math
-import pyyed
 import logging
 import numpy as np
 import networkx as nx
 import xml.dom.minidom
 from matplotlib import colors
+import tikz2graphml.pyyed as pyyed
 from pylatexenc.latex2text import LatexNodes2Text
 
 logger = logging.getLogger(__name__)

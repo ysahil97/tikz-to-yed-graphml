@@ -1,9 +1,9 @@
 import math
 import logging
-import parsingUtils
-from grammar.TikzListener import TikzListener
-from grammar.TikzParser import TikzParser
-from generateGraphml import Graph
+import tikz2graphml.parsingUtils as parsingUtils
+from tikz2graphml.grammar.TikzListener import TikzListener
+from tikz2graphml.grammar.TikzParser import TikzParser
+from tikz2graphml.generateGraphml import Graph
 import copy
 
 logger = logging.getLogger(__name__)

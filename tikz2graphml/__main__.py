@@ -1,7 +1,7 @@
 import argparse
-from parseTikz import ParseTikz
+from tikz2graphml.parseTikz import ParseTikz
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     # parser.add_argument("-h", "--help", type=int, help="Print this menu")
     parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity", default=0)
@@ -19,3 +19,7 @@ if __name__ == '__main__':
     directory = args.directory
 
     ParseTikz().run(scalingFactor, logLevel, inputFileName, prefix, directory)
+
+
+if __name__ == '__main__':
+    main()

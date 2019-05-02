@@ -1,6 +1,6 @@
 import re
-import filterGraphml
-from grammar.TikzParser import TikzParser
+import tikz2graphml.filterGraphml as filterGraphml
+from tikz2graphml.grammar.TikzParser import TikzParser
 
 
 supportedNodeTags = ["nodeID", "X", "Y", "label", "height", "width", "inner_sep", "fill", "edge_color",

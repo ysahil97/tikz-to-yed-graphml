@@ -1,11 +1,14 @@
+# from tikz2graphml import grammar
+# from tikz2graphml import pyyed
+
 import os
 import antlr4
 import logging
-from grammar.TikzLexer import TikzLexer
-from grammar.TikzParser import TikzParser
-from TikzErrorListener import TikzErrorListener
-from CustomTikzListener import CustomTikzListener
-from extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZAfterUnrolling
+from tikz2graphml.grammar.TikzLexer import TikzLexer
+from tikz2graphml.grammar.TikzParser import TikzParser
+from tikz2graphml.TikzErrorListener import TikzErrorListener
+from tikz2graphml.CustomTikzListener import CustomTikzListener
+from tikz2graphml.extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZAfterUnrolling
 
 logging.basicConfig(format='%(levelname)-1s : [%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)

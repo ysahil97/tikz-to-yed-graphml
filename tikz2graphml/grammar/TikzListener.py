@@ -1,4 +1,4 @@
-# Generated from grammar/Tikz.g4 by ANTLR 4.7.2
+# Generated from tikz2graphml/grammar/Tikz.g4 by ANTLR 4.7.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .TikzParser import TikzParser

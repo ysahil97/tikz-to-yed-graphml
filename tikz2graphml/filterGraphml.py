@@ -1,5 +1,5 @@
-from colour import Color
 import logging
+from colour import Color
 logger = logging.getLogger(__name__)
 
 ValidNodeShapes = ["rectangle", "circle", "diamond", "ellipse"]

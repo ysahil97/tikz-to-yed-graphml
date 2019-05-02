@@ -1,4 +1,4 @@
-# Generated from grammar/Tikz.g4 by ANTLR 4.7.2
+# Generated from tikz2graphml/grammar/Tikz.g4 by ANTLR 4.7.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
