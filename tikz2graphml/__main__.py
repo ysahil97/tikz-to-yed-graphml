@@ -1,20 +1,21 @@
 import os
-import argparse
-
+import sys
+import logging
 from tikz2graphml.parseTikz import ParseTikz
 import tkinter
 from tkinter import ttk, StringVar, Label, Entry, LEFT, W, Text, END, messagebox
 from tkinter.filedialog import askopenfilename, askdirectory
-import logging
 
-logging.basicConfig(format='%(levelname)-1s : [%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(levelname)-1s : [%(filename)s:%(lineno)d] %(message)s')
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 
 class GUI:
     def __init__(self, window):
         # 'StringVar()' is used to get the instance of input field
         self.inputFileNameVar = StringVar()
-        self.outputDirectoryVar = StringVar(value=os.getcwd())
+        self.outputDirectoryVar = StringVar(value=os.path.join(os.getcwd(), 'output'))
         self.scaleVar = StringVar(value='100')
         window.title("Tikz to GraphML convertor")
 
@@ -69,8 +70,8 @@ class GUI:
     def convertFile(self):
         logger.debug("Converting file")
         logger.debug("InputFile : {}".format(self.get_input_file_name()))
-        logger.debug("Output Directory : ".format(self.get_output_directory()))
-        logger.debug("Scale : ".format(self.getScale()))
+        logger.debug("Output Directory : {}".format(self.get_output_directory()))
+        logger.debug("Scale : {}".format(self.getScale()))
 
         if(not os.path.isfile(self.get_input_file_name())):
             messagebox.showerror("tikz to graphml", "Entered File is Incorrect")
@@ -80,10 +81,11 @@ class GUI:
             messagebox.showerror("tikz to graphml", "Entered Directory is Incorrect")
             return
 
-        ParseTikz().run(float(self.getScale()), 1.0, self.get_input_file_name(), os.path.basename(os.path.splitext(self.get_input_file_name())[0]), self.get_output_directory())
+        ParseTikz().run(float(self.getScale()), self.get_input_file_name(), os.path.basename(os.path.splitext(self.get_input_file_name())[0]), self.get_output_directory())
         messagebox.showinfo("tikz to graphml", "Conversion Successfull\nFiles stored in {}".format(self.get_output_directory()))
 
 if __name__ == '__main__':
+
     # Right now, we use GUI(default) to take in Tikz files and output
     # in specified directory
     window = tkinter.Tk()
@@ -97,25 +99,3 @@ if __name__ == '__main__':
 
     gui = GUI(window)
     window.mainloop()
-<<<<<<< HEAD:tikz2graphml/__main__.py
-
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser()
-#     # parser.add_argument("-h", "--help", type=int, help="Print this menu")
-#     parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity", default=0)
-#     parser.add_argument("-s", "--scale", default=200, type=float, help="Scaling Factor")
-#     parser.add_argument("-i", "--input", type=str, help="Input file path", required=True)
-#     parser.add_argument("-p", "--prefix", type=str, help="Output file Prefix")
-#     parser.add_argument("-d", "--directory", default="./output", type=str, help="Output file directory")
-
-#     args = parser.parse_args()
-
-#     scalingFactor = args.scale
-#     logLevel = args.verbosity
-#     inputFileName = args.input
-#     prefix = args.prefix
-#     directory = args.directory
-
-    
-=======
->>>>>>> 47fdbec54f2a22507e7ba73d6004c68fe9e66221:main.py

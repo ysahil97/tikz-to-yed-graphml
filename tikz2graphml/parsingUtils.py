@@ -1,7 +1,9 @@
 import re
+import logging
 import tikz2graphml.filterGraphml as filterGraphml
 from tikz2graphml.grammar.TikzParser import TikzParser
 
+logger = logging.getLogger()
 
 supportedNodeTags = ["nodeID", "X", "Y", "label", "height", "width", "inner_sep", "fill", "edge_color",
                      "scale", "shape", "regular_polygon_sides", "rotate", "auto"]

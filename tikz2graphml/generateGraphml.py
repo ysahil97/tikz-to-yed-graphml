@@ -8,7 +8,7 @@ from matplotlib import colors
 import tikz2graphml.pyyed as pyyed
 from pylatexenc.latex2text import LatexNodes2Text
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 """
 Main Graph class storing all the properties of the edges and nodes of the graph

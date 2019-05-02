@@ -1,6 +1,7 @@
 import logging
 from colour import Color
-logger = logging.getLogger(__name__)
+
+logger = logging.getLogger()
 
 ValidNodeShapes = ["rectangle", "circle", "diamond", "ellipse"]
 ValidEdgeDirections = ["->", "<-", "-!-", "--", "<->"]  #- means no edge. So no need to check for its validity as that is default

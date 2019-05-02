@@ -1,13 +1,12 @@
+import copy
 import math
 import logging
 import tikz2graphml.parsingUtils as parsingUtils
 from tikz2graphml.grammar.TikzListener import TikzListener
 from tikz2graphml.grammar.TikzParser import TikzParser
 from tikz2graphml.generateGraphml import Graph
-import copy
 
-logger = logging.getLogger(__name__)
-
+logger = logging.getLogger()
 
 # Custom Tikz Listener to augment Tikz Parsing with appropriate custiom actions
 class CustomTikzListener(TikzListener):
@@ -38,11 +37,10 @@ class CustomTikzListener(TikzListener):
             graphml = self.G.get_graph().encode("utf-8")
             with open(self.outputFileName, 'wb') as outFile:
                 outFile.write(graphml)
-            logging.debug("Converted Tikz Graph to GraphML")
-            logging.info("GraphML File Location: {}\n\n".format(self.outputFileName))
+            logger.debug("Converted Tikz Graph to GraphML")
+            logger.info("GraphML File Location: {}\n\n".format(self.outputFileName))
         except Warning as e:
-            logging.warn("Error in converting {} - {}".format(self.inputFileName, e))
-
+            logger.warn("Error in converting {} - {}".format(self.inputFileName, e))
 
     def exitGlobalProperties(self, ctx: TikzParser.GlobalPropertiesContext):
         # globalProperties: EVERY (VARIABLE|EXPRESSION) '/.' 'style' '=' '{' properties '}'
@@ -64,7 +62,7 @@ class CustomTikzListener(TikzListener):
         Flushing out all node related data before analyzing it
         """
         self.currentNode = {}           # Emptying values before handling a new node
-        logging.debug("Parsing Node {}".format(ctx.getText()))
+        logger.debug("Parsing Node {}".format(ctx.getText()))
         for k, v in self.globalProperties.items():
             if k == "node":
                 self.currentNode.update(v)
@@ -78,7 +76,7 @@ class CustomTikzListener(TikzListener):
         self.currentNode["Y"] = self.latestCoordinateY
         # Only send those attributes which are supported
         parsingUtils.filterOutNotSupportedNodeTags(self.currentNode)
-        logging.debug("Got Node: {}".format(self.currentNode))
+        logger.debug("Got Node: {} in input {}".format(self.currentNode, ctx.getText()))
         self.G.addNode(**self.currentNode)
 
     def exitNodeId(self, ctx: TikzParser.NodeIdContext):
@@ -88,28 +86,28 @@ class CustomTikzListener(TikzListener):
             Repeated nodeID checking done here
             """
             if ctx.getChild(1).getText() in self.nodeIds:
-                logging.debug("Got repeated nodeId")
+                logger.debug("Got repeated nodeId : {}".format(ctx.getText()))
                 self.numNodeIds[ctx.getChild(1).getText()] += 1
                 newNodeId = ctx.getChild(1).getText() + "_" + str(self.numNodeIds[ctx.getChild(1).getText()])
                 self.currentNode["nodeID"] = newNodeId
                 self.nodeIds[ctx.getChild(1).getText()] = newNodeId
             else:
-                logging.debug("Got new nodeId")
+                logger.debug("Got new nodeId : {}".format(ctx.getText()))
                 self.nodeIds[ctx.getChild(1).getText()] = ctx.getChild(1).getText()
                 self.numNodeIds[ctx.getChild(1).getText()] = 0
                 self.currentNode["nodeID"] = ctx.getChild(1).getText()
         else:
-            logging.debug("No NodeId present")
+            logger.debug("No NodeId present : {}".format(ctx.getText()))
             self.currentNode["nodeID"] = None
 
     def exitCartesianCoordinates(self, ctx: TikzParser.CartesianCoordinatesContext):
-        logging.debug("Cartesian Coordinates {}".format(ctx.getText()))
+        logger.debug("Cartesian Coordinates {}".format(ctx.getText()))
         self.latestCoordinateX = parsingUtils.handleNumbers(ctx.getChild(1).getText())
         self.latestCoordinateY = parsingUtils.handleNumbers(ctx.getChild(3).getText())
         self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
 
     def exitPolarCoordinates(self, ctx: TikzParser.PolarCoordinatesContext):
-        logging.debug("Polar Coordinates {}".format(ctx.getText()))
+        logger.debug("Polar Coordinates {}".format(ctx.getText()))
         angle = parsingUtils.handleNumbers(ctx.getChild(1).getText())
         r = parsingUtils.handleNumbers(ctx.getChild(3).getText())
         cosA = round(math.cos(math.radians(angle)), 10)
@@ -126,14 +124,14 @@ class CustomTikzListener(TikzListener):
             self.currentNode["label"] = parsingUtils.parseLabelValue(label_value)
 
     def exitRadius(self, ctx: TikzParser.RadiusContext):
-        logging.debug("Radius {}".format(ctx.getText()))
+        logger.debug("Radius {}".format(ctx.getText()))
         self.lastSeenRadius = ctx.getChild(1).getText()
         self.lastSeenRadius = float(parsingUtils.handleNumbers(self.lastSeenRadius))
 
     def exitEdgeNode(self, ctx: TikzParser.EdgeNodeContext):
         # edgeNode: OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
         if ctx.getChildCount() == 3:
-            logging.debug("EdgeNode, Orinial Nodeid: current id -- {}:{}".format(ctx.getChild(1).getText(), self.nodeIds[ctx.getChild(1).getText()]))
+            logger.debug("EdgeNode, Original Nodeid: current id -- {}:{}".format(ctx.getChild(1).getText(), self.nodeIds[ctx.getChild(1).getText()]))
             self.currentEdgeList.append(self.nodeIds[ctx.getChild(1).getText()])
         else:
             # edgeNode: coordinates
@@ -183,7 +181,7 @@ class CustomTikzListener(TikzListener):
 
             # \draw[] () node {}
             if len(ctx.getTypedRuleContexts(TikzParser.NodePropertiesContext)) == 1:
-                logging.debug("Draw Node Instruction {}".format(ctx.getText()))
+                logger.debug("Draw Node Instruction {}".format(ctx.getText()))
                 self.currentNode["X"] = self.latestCoordinateX
                 self.currentNode["Y"] = self.latestCoordinateY
                 logger.debug("NodeProperties : {}".format(self.currentNode))
@@ -192,7 +190,7 @@ class CustomTikzListener(TikzListener):
                 parsingUtils.filterOutNotSupportedNodeTags(self.currentNode)
                 self.G.addNode(**self.currentNode)
             else:
-                logging.debug("Draw Shape Instruction {}".format(ctx.getText()))
+                logger.debug("Draw Shape Instruction {}".format(ctx.getText()))
                 node_shape = ctx.getChild(3).getText()
                 # handle logic for rectangle drawing
                 X = 0
@@ -231,7 +229,7 @@ class CustomTikzListener(TikzListener):
 
         # \draw line commands
         else:
-            logging.debug("Draw Edge(line) Instruction {}".format(ctx.getText()))
+            logger.debug("Draw Edge(line) Instruction {}".format(ctx.getText()))
             sz = len(self.currentEdgeList)
             arrowFoot = False
             arrowHead = False
@@ -267,7 +265,7 @@ class CustomTikzListener(TikzListener):
 
             for i in range(1, sz, 1):
                 nodeX, nodeY = self.currentEdgeList[i-1], self.currentEdgeList[i]
-                logging.debug("Adding Edge: {nodeX} {nodeY} {arrowHead} {arrowFoot} {color} {width} {label} {line_type}".format(nodeX=nodeX, nodeY=nodeY, arrowHead=arrowHead, arrowFoot=arrowFoot, color=color, width=width, label=label, line_type=line_type))
+                logger.debug("Adding Edge: {nodeX} {nodeY} {arrowHead} {arrowFoot} {color} {width} {label} {line_type}".format(nodeX=nodeX, nodeY=nodeY, arrowHead=arrowHead, arrowFoot=arrowFoot, color=color, width=width, label=label, line_type=line_type))
                 self.G.addEdge(nodeX=nodeX, nodeY=nodeY, arrowHead=arrowHead, arrowFoot=arrowFoot, color=color, width=width, label=label, line_type=line_type)
 
 

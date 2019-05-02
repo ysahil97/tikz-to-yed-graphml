@@ -1,5 +1,8 @@
 import re
 import copy
+import logging
+
+logger = logging.getLogger()
 
 # This function is range function for floating points
 # Needed because "range(0.5, 10.5, 0.5)" : Not supported by default range function

@@ -10,7 +10,7 @@ from tikz2graphml.TikzErrorListener import TikzErrorListener
 from tikz2graphml.CustomTikzListener import CustomTikzListener
 from tikz2graphml.extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZAfterUnrolling
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 """
 Higher level class to handle conversion of Tikz graph to GraphML format
@@ -30,7 +30,7 @@ class ParseTikz:
     inputFilename: path of the input Tikz File
     directory: path of the output directory to save the generated GraphML file
     """
-    def run(self, scalingFactor: float, logLevel: int, inputFilename: str, prefix: str, directory: str):
+    def run(self, scalingFactor: float, inputFilename: str, prefix: str, directory: str):
 
         if not prefix:
             prefix = os.path.basename(inputFilename)
