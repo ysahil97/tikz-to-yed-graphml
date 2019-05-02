@@ -5,6 +5,11 @@ logger = logging.getLogger(__name__)
 ValidNodeShapes = ["rectangle", "circle", "diamond", "ellipse"]
 ValidEdgeDirections = ["->", "<-", "-!-", "--", "<->"]  #- means no edge. So no need to check for its validity as that is default
 
+"""
+A list of functions which try to check the validity of each attribute
+and optionally defining a default value wherever required
+"""
+
 def isValidColor(value):
     # If value contains ! then it is definatly color (not seem ! in any other variable/property)
     if value.__contains__("!"):
@@ -45,7 +50,7 @@ def identifyIndividualProperty(value):
         return ("width", value)
     elif isValidEdgeStyle(value):
         return ("line_type", value)
-    
+
     # Add other checks here
 
     # We could not identify what property it was so return none
@@ -63,7 +68,7 @@ def identifyKeyValueProperty(key: str, value: str):
 
     elif key == "inner sep":
         return ("inner_sep", value)
-    
+
     elif key == "direction":
         return ("direction", value)
 
@@ -75,10 +80,10 @@ def identifyKeyValueProperty(key: str, value: str):
 
     elif key == "edge label":
         return ("label", value)
-    
+
     elif key == "scale":
         return ("scale", value)
-    
+
     elif key == "auto":
         return ("auto", value)
 
@@ -86,5 +91,3 @@ def identifyKeyValueProperty(key: str, value: str):
 
     logger.warning("Got Unhandled Property, Ignoring it for now ({},{})".format(key, value))
     return None, None
-
-

@@ -2,6 +2,10 @@ import os
 import unittest
 from parseTikz import ParseTikz
 
+
+"""
+Driver stub to iterate over all the possible test cases for automatic testing
+"""
 x = [
     {
         "inputFilePath": "./TestCases/valid-graphs/tex/example_test.tex",
@@ -25,7 +29,9 @@ x = [
     }
 ]
 
-
+"""
+Module to automate testing of valid graph test cases
+"""
 class TestValidGraphConversions(unittest.TestCase):
     maxDiff = None
     def test_split(self):
@@ -53,7 +59,7 @@ class TestValidGraphConversions(unittest.TestCase):
 
                 with open(generatedOutputPath, 'r') as f:
                     generated_str = f.read()
-                
+
                 self.assertMultiLineEqual(expected_str, generated_str)
                 graphmlCounter += 1
 

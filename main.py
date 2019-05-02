@@ -8,7 +8,7 @@ from tkinter import messagebox
 
 
 class GUI:
-    def __init__(self, window): 
+    def __init__(self, window):
         # 'StringVar()' is used to get the instance of input field
         self.inputFileNameVar = StringVar()
         self.outputDirectoryVar = StringVar(value=os.getcwd())
@@ -16,44 +16,53 @@ class GUI:
         window.title("Tikz to GraphML convertor")
 
         startRow = 0
-        
+
         Label(window ,text = "TikZ to GraphML",font=("Helvetica", 30), width=100).grid(row = startRow, column = 0, sticky=W, ipadx=25, ipady=2,columnspan=10)
         startRow+=1
 
+        # Define Input File Field which is obtained by choosing a file from browsing the file explorer
         Label(window ,text = "Input File Name : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=25, ipady=2)
         ttk.Button(window, text = "Choose File", command = lambda: self.set_input_file_name()).grid(row = startRow,column=3, ipadx=10, ipady=2, padx=10)
         ttk.Entry(window, textvariable = self.inputFileNameVar, width = 70).grid( row = startRow, column = 1, ipadx=1, ipady=2)
 
+        # Define Output Directory to save all the files to that folder
+        # (Default) saves it in same directory as input file
         startRow+=1
         Label(window ,text = "Output File Directory : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=25, ipady=2)
         ttk.Button(window, text = "Choose File", command = lambda: self.set_output_directory()).grid(row = startRow,column=3, ipadx=10, ipady=2, padx=10)
         ttk.Entry(window, textvariable = self.outputDirectoryVar, width = 70).grid( row = startRow, column = 1, ipadx=1, ipady=2)
-        
+
+        # Add a scale field to convert resulting graphml files into resonable graphs
         startRow+=1
         Label(window ,text = "Scale : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=25, ipady=2)
         ttk.Entry(window, textvariable = self.scaleVar, width = 70).grid(row = startRow, column = 1, ipadx=1, ipady=2)
-        
+
+        # Convert Tikz files to GraphML files by a button!
         startRow+=1
         ttk.Button(window, text = "Convert", command = lambda: self.convertFile()).grid(row = 20,column = 3, ipadx=1, ipady=1)
 
+    # Set the user inputs on inputFilename and outputDirectoryVar
     def set_input_file_name(self):
         self.inputFileNameVar.set(askopenfilename())
         path, filename = os.path.split(self.inputFileNameVar.get())
         if(os.path.isdir(path)):
             self.outputDirectoryVar.set(path)
 
+    # Set output directory path
     def set_output_directory(self):
         self.outputDirectoryVar.set(askdirectory())
 
-    def get_input_file_name(self): 
+    def get_input_file_name(self):
         return self.inputFileNameVar.get()
 
     def get_output_directory(self):
         return self.outputDirectoryVar.get()
-    
+
     def getScale(self):
         return self.scaleVar.get()
 
+    # Main conversion module which tries to convert tikz graphs in graphml
+    # format which is stored in specified output directory
     def convertFile(self):
         print("Converting file")
         print("InputFile : ", self.get_input_file_name())
@@ -63,7 +72,7 @@ class GUI:
         if(not os.path.isfile(self.get_input_file_name())):
             messagebox.showinfo("tikz to graphml", "Entered File is Incorrect")
             return
-        
+
         if(not os.path.isdir(self.get_output_directory())):
             messagebox.showinfo("tikz to graphml", "Entered Directory is Incorrect")
             return
@@ -72,6 +81,8 @@ class GUI:
         messagebox.showinfo("tikz to graphml", "Conversion Successfull")
 
 if __name__ == '__main__':
+    # Right now, we use GUI(default) to take in Tikz files and output
+    # in specified directory
     window = tkinter.Tk()
     window.geometry("1000x500")
 
@@ -83,22 +94,3 @@ if __name__ == '__main__':
 
     gui = GUI(window)
     window.mainloop()
-
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser()
-#     # parser.add_argument("-h", "--help", type=int, help="Print this menu")
-#     parser.add_argument("-v", "--verbosity", type=int, help="increase output verbosity", default=0)
-#     parser.add_argument("-s", "--scale", default=200, type=float, help="Scaling Factor")
-#     parser.add_argument("-i", "--input", type=str, help="Input file path", required=True)
-#     parser.add_argument("-p", "--prefix", type=str, help="Output file Prefix")
-#     parser.add_argument("-d", "--directory", default="./output", type=str, help="Output file directory")
-
-#     args = parser.parse_args()
-
-#     scalingFactor = args.scale
-#     logLevel = args.verbosity
-#     inputFileName = args.input
-#     prefix = args.prefix
-#     directory = args.directory
-
-    
