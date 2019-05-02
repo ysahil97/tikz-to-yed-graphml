@@ -37,7 +37,7 @@ class CustomTikzListener(TikzListener):
             graphml = self.G.get_graph().encode("utf-8")
             with open(self.outputFileName, 'wb') as outFile:
                 outFile.write(graphml)
-            logger.debug("Converted Tikz Graph to GraphML")
+            logger.info("Converted Tikz Graph to GraphML")
             logger.info("GraphML File Location: {}\n\n".format(self.outputFileName))
         except Warning as e:
             logger.warn("Error in converting {} - {}".format(self.inputFileName, e))
@@ -85,17 +85,18 @@ class CustomTikzListener(TikzListener):
             """
             Repeated nodeID checking done here
             """
-            if ctx.getChild(1).getText() in self.nodeIds:
+            nodeId = ctx.getChild(1).getText()
+            if nodeId in self.nodeIds:
                 logger.debug("Got repeated nodeId : {}".format(ctx.getText()))
-                self.numNodeIds[ctx.getChild(1).getText()] += 1
-                newNodeId = ctx.getChild(1).getText() + "_" + str(self.numNodeIds[ctx.getChild(1).getText()])
+                self.numNodeIds[nodeId] += 1
+                newNodeId = nodeId + "_" + str(self.numNodeIds[nodeId])
                 self.currentNode["nodeID"] = newNodeId
-                self.nodeIds[ctx.getChild(1).getText()] = newNodeId
+                self.nodeIds[nodeId] = newNodeId
             else:
                 logger.debug("Got new nodeId : {}".format(ctx.getText()))
-                self.nodeIds[ctx.getChild(1).getText()] = ctx.getChild(1).getText()
-                self.numNodeIds[ctx.getChild(1).getText()] = 0
-                self.currentNode["nodeID"] = ctx.getChild(1).getText()
+                self.nodeIds[nodeId] = nodeId
+                self.numNodeIds[nodeId] = 0
+                self.currentNode["nodeID"] = nodeId
         else:
             logger.debug("No NodeId present : {}".format(ctx.getText()))
             self.currentNode["nodeID"] = None
@@ -131,6 +132,9 @@ class CustomTikzListener(TikzListener):
     def exitEdgeNode(self, ctx: TikzParser.EdgeNodeContext):
         # edgeNode: OPEN_PARANTHESES (VARIABLE|EXPRESSION) CLOSE_PARANTHESES
         if ctx.getChildCount() == 3:
+            if ctx.getChild(1).getText() not in self.nodeIds:
+                raise Exception("Node Id in draw operation does not exist : {}".format(ctx.getText()))
+
             logger.debug("EdgeNode, Original Nodeid: current id -- {}:{}".format(ctx.getChild(1).getText(), self.nodeIds[ctx.getChild(1).getText()]))
             self.currentEdgeList.append(self.nodeIds[ctx.getChild(1).getText()])
         else:

@@ -6,10 +6,10 @@
 		<node id="0">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="-35.2778" y="-35.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="-17.6389" y="-17.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -17,10 +17,10 @@
 		<node id="1">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="-35.2778" y="-235.27779999999998"/>
+					<y:Geometry height="35.2778" width="35.2778" x="-17.6389" y="-117.63889999999999"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -28,10 +28,10 @@
 		<node id="2">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="-35.2778" y="-435.27779999999996"/>
+					<y:Geometry height="35.2778" width="35.2778" x="-17.6389" y="-217.63889999999998"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -39,10 +39,10 @@
 		<node id="3">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="-35.2778" y="-635.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="-17.6389" y="-317.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -50,10 +50,10 @@
 		<node id="4">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="-35.2778" y="-835.2778000000001"/>
+					<y:Geometry height="35.2778" width="35.2778" x="-17.6389" y="-417.63890000000004"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -61,10 +61,10 @@
 		<node id="5">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="164.7222" y="-35.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="82.3611" y="-17.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -72,10 +72,10 @@
 		<node id="6">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="164.7222" y="-235.27779999999998"/>
+					<y:Geometry height="35.2778" width="35.2778" x="82.3611" y="-117.63889999999999"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -83,10 +83,10 @@
 		<node id="7">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="164.7222" y="-435.27779999999996"/>
+					<y:Geometry height="35.2778" width="35.2778" x="82.3611" y="-217.63889999999998"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -94,10 +94,10 @@
 		<node id="8">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="164.7222" y="-635.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="82.3611" y="-317.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -105,10 +105,10 @@
 		<node id="9">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="164.7222" y="-835.2778000000001"/>
+					<y:Geometry height="35.2778" width="35.2778" x="82.3611" y="-417.63890000000004"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -116,10 +116,10 @@
 		<node id="10">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="364.72220000000004" y="-35.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="182.36110000000002" y="-17.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -127,10 +127,10 @@
 		<node id="11">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="364.72220000000004" y="-235.27779999999998"/>
+					<y:Geometry height="35.2778" width="35.2778" x="182.36110000000002" y="-117.63889999999999"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -138,10 +138,10 @@
 		<node id="12">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="364.72220000000004" y="-435.27779999999996"/>
+					<y:Geometry height="35.2778" width="35.2778" x="182.36110000000002" y="-217.63889999999998"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -149,10 +149,10 @@
 		<node id="13">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="364.72220000000004" y="-635.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="182.36110000000002" y="-317.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -160,10 +160,10 @@
 		<node id="14">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="364.72220000000004" y="-835.2778000000001"/>
+					<y:Geometry height="35.2778" width="35.2778" x="182.36110000000002" y="-417.63890000000004"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -171,10 +171,10 @@
 		<node id="15">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="564.7222" y="-35.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="282.3611" y="-17.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -182,10 +182,10 @@
 		<node id="16">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="564.7222" y="-235.27779999999998"/>
+					<y:Geometry height="35.2778" width="35.2778" x="282.3611" y="-117.63889999999999"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -193,10 +193,10 @@
 		<node id="17">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="564.7222" y="-435.27779999999996"/>
+					<y:Geometry height="35.2778" width="35.2778" x="282.3611" y="-217.63889999999998"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -204,10 +204,10 @@
 		<node id="18">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="564.7222" y="-635.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="282.3611" y="-317.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -215,10 +215,10 @@
 		<node id="19">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="564.7222" y="-835.2778000000001"/>
+					<y:Geometry height="35.2778" width="35.2778" x="282.3611" y="-417.63890000000004"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -226,10 +226,10 @@
 		<node id="20">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="764.7222" y="-35.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="382.3611" y="-17.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -237,10 +237,10 @@
 		<node id="21">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="764.7222" y="-235.27779999999998"/>
+					<y:Geometry height="35.2778" width="35.2778" x="382.3611" y="-117.63889999999999"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -248,10 +248,10 @@
 		<node id="22">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="764.7222" y="-435.27779999999996"/>
+					<y:Geometry height="35.2778" width="35.2778" x="382.3611" y="-217.63889999999998"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -259,10 +259,10 @@
 		<node id="23">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="764.7222" y="-635.2778"/>
+					<y:Geometry height="35.2778" width="35.2778" x="382.3611" y="-317.6389"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>
@@ -270,10 +270,10 @@
 		<node id="24">
 			<data key="data_node">
 				<y:ShapeNode>
-					<y:Geometry height="70.5556" width="70.5556" x="764.7222" y="-835.2778000000001"/>
+					<y:Geometry height="35.2778" width="35.2778" x="382.3611" y="-417.63890000000004"/>
 					<y:Fill color="#0000ff4b" transparent="false"/>
 					<y:BorderStyle hasColor="false" type="line" width="1.0"/>
-					<y:NodeLabel fontFamily="Dialog" fontSize="40" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
+					<y:NodeLabel fontFamily="Dialog" fontSize="20" fontStyle="plain" underlinedText="false">Ĥ</y:NodeLabel>
 					<y:Shape type="ellipse"/>
 				</y:ShapeNode>
 			</data>

@@ -15,7 +15,7 @@ class GUI:
     def __init__(self, window):
         # 'StringVar()' is used to get the instance of input field
         self.inputFileNameVar = StringVar()
-        self.outputDirectoryVar = StringVar(value=os.path.join(os.getcwd(), 'output'))
+        self.outputDirectoryVar = StringVar(value=str(os.path.join(os.getcwd(), 'output')))
         self.scaleVar = StringVar(value='100')
         window.title("Tikz to GraphML convertor")
 
@@ -32,7 +32,7 @@ class GUI:
         # Define Output Directory to save all the files to that folder
         # (Default) saves it in same directory as input file
         startRow+=1
-        Label(window ,text = "Output File Directory : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=25, ipady=2)
+        Label(window ,text = "Output File Directory (will create if not exists) : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=25, ipady=2)
         ttk.Button(window, text = "Choose File", command = lambda: self.set_output_directory()).grid(row = startRow,column=3, ipadx=10, ipady=2, padx=10)
         ttk.Entry(window, textvariable = self.outputDirectoryVar, width = 70).grid( row = startRow, column = 1, ipadx=1, ipady=2)
 
@@ -49,8 +49,6 @@ class GUI:
     def set_input_file_name(self):
         self.inputFileNameVar.set(askopenfilename())
         path, filename = os.path.split(self.inputFileNameVar.get())
-        if(os.path.isdir(path)):
-            self.outputDirectoryVar.set(path)
 
     # Set output directory path
     def set_output_directory(self):
@@ -77,15 +75,25 @@ class GUI:
             messagebox.showerror("tikz to graphml", "Entered File is Incorrect")
             return
 
+        if not os.path.exists(self.get_output_directory()):
+            os.makedirs(self.get_output_directory())
+
         if(not os.path.isdir(self.get_output_directory())):
             messagebox.showerror("tikz to graphml", "Entered Directory is Incorrect")
             return
 
-        ParseTikz().run(float(self.getScale()), self.get_input_file_name(), os.path.basename(os.path.splitext(self.get_input_file_name())[0]), self.get_output_directory())
+        prefix = self.get_input_file_name()
+        prefix.replace("\\","/")    # To support os.path.basename in windows systems
+        prefix = os.path.basename(os.path.splitext(prefix)[0])
+
+        ParseTikz().run(float(self.getScale()),
+            self.get_input_file_name(),
+            prefix,
+            self.get_output_directory())
+
         messagebox.showinfo("tikz to graphml", "Conversion Successfull\nFiles stored in {}".format(self.get_output_directory()))
 
 if __name__ == '__main__':
-
     # Right now, we use GUI(default) to take in Tikz files and output
     # in specified directory
     window = tkinter.Tk()
@@ -94,7 +102,7 @@ if __name__ == '__main__':
     rows = 0
     while rows < 50:
         window.rowconfigure(rows, weight=2)
-        window.columnconfigure(rows,weight=2)
+        window.columnconfigure(rows, weight=2)
         rows += 1
 
     gui = GUI(window)

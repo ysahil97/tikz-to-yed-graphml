@@ -265,6 +265,9 @@ class Graph:
         self.nodes_in_groups = []
         self.nodes = {}
         self.edges = {}
+        self.orderOfArrivalNodes = []
+        self.orderOfArrivalEdges = []
+        self.orderOfArrivalGroups = []
 
         self.directed = directed
         self.graph_id = graph_id
@@ -298,15 +301,15 @@ class Graph:
         graph = ET.SubElement(graphml, "graph", edgedefault=self.directed,
                               id=self.graph_id)
 
-        for node_id in self.nodes:
+        for node_id in self.orderOfArrivalNodes:
             node = self.nodes[node_id].convert()
             graph.append(node)
 
-        for group_id in self.groups:
+        for group_id in self.orderOfArrivalGroups:
             node = self.groups[group_id].convert()
             graph.append(node)
 
-        for edge_id in self.edges:
+        for edge_id in self.orderOfArrivalEdges:
             edge = self.edges[edge_id].convert()
             graph.append(edge)
 
@@ -328,8 +331,9 @@ class Graph:
     def add_node(self, node_name, **kwargs):
         if node_name in self.nodes.keys():
             raise RuntimeWarning("Node %s already exists" % node_name)
-
+        
         self.nodes[node_name] = Node(node_name, **kwargs)
+        self.orderOfArrivalNodes.append(node_name)
 
     def add_edge(self, node1, node2, label="", arrowhead="convex", arrowfoot="none",
                  color="#000000", line_type="line",
@@ -348,7 +352,9 @@ class Graph:
 
         edge = Edge(node1, node2, label, arrowhead, arrowfoot, color, line_type, width)
         self.edges[edge.edge_id] = edge
+        self.orderOfArrivalEdges.append(edge.edge_id)
 
     def add_group(self, group_id, **kwargs):
         self.groups[group_id] = Group(group_id, self, **kwargs)
+        self.orderOfArrivalGroups.append(group_id)
         return self.groups[group_id]

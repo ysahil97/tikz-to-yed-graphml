@@ -8,7 +8,7 @@ grammar:
 
 test:
 	rm -f output/*.graphml
-	python3 -m unittest discover test
+	python3 -m unittest discover tests
 
 sample-test:
 	python3 tikz2graphml/__main__.py -i TestCases/valid-graphs/tex/TestCaseForShape.tex -s 200 -d ./TestCases

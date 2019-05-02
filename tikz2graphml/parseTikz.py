@@ -33,7 +33,7 @@ class ParseTikz:
     def run(self, scalingFactor: float, inputFilename: str, prefix: str, directory: str):
 
         if not prefix:
-            prefix = os.path.basename(inputFilename)
+            prefix = os.path.basename(os.path.splitext(prefix)[0])
 
         if not os.path.exists(directory):
             os.makedirs(directory)
