@@ -4,6 +4,9 @@ import tkinter
 from tkinter import ttk, StringVar, Label, Entry, LEFT, W, Text, END
 from tkinter.filedialog import askopenfilename, askdirectory
 import os
+from tkinter import messagebox
+
+
 class GUI:
     def __init__(self, window): 
         # 'StringVar()' is used to get the instance of input field
@@ -36,7 +39,8 @@ class GUI:
     def set_input_file_name(self):
         self.inputFileNameVar.set(askopenfilename())
         path, filename = os.path.split(self.inputFileNameVar.get())
-        self.outputDirectoryVar.set(path)
+        if(os.path.isdir(path)):
+            self.outputDirectoryVar.set(path)
 
     def set_output_directory(self):
         self.outputDirectoryVar.set(askdirectory())
@@ -57,17 +61,15 @@ class GUI:
         print("Scale : ", self.getScale())
 
         if(not os.path.isfile(self.get_input_file_name())):
-            print("Entered File is Incorrect")
-            window.quit()
+            messagebox.showinfo("tikz to graphml", "Entered File is Incorrect")
+            return
         
         if(not os.path.isdir(self.get_output_directory())):
-            print("Entered Directory is Incorrect")
-            window.quit()
+            messagebox.showinfo("tikz to graphml", "Entered Directory is Incorrect")
+            return
 
         ParseTikz().run(float(self.getScale()), 1.0, self.get_input_file_name(), os.path.basename(os.path.splitext(self.get_input_file_name())[0]), self.get_output_directory())
-        print("Done Converting")
-        window.quit()
-
+        messagebox.showinfo("tikz to graphml", "Conversion Successfull")
 
 if __name__ == '__main__':
     window = tkinter.Tk()
