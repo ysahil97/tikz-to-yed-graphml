@@ -1,11 +1,14 @@
+import os
 import argparse
+
 from parseTikz import ParseTikz
 import tkinter
-from tkinter import ttk, StringVar, Label, Entry, LEFT, W, Text, END
+from tkinter import ttk, StringVar, Label, Entry, LEFT, W, Text, END, messagebox
 from tkinter.filedialog import askopenfilename, askdirectory
-import os
-from tkinter import messagebox
+import logging
 
+logging.basicConfig(format='%(levelname)-1s : [%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class GUI:
     def __init__(self, window): 
@@ -55,21 +58,21 @@ class GUI:
         return self.scaleVar.get()
 
     def convertFile(self):
-        print("Converting file")
-        print("InputFile : ", self.get_input_file_name())
-        print("Output Directory : ", self.get_output_directory())
-        print("Scale : ", self.getScale())
+        logger.debug("Converting file")
+        logger.debug("InputFile : {}".format(self.get_input_file_name()))
+        logger.debug("Output Directory : ".format(self.get_output_directory()))
+        logger.debug("Scale : ".format(self.getScale()))
 
         if(not os.path.isfile(self.get_input_file_name())):
-            messagebox.showinfo("tikz to graphml", "Entered File is Incorrect")
+            messagebox.showerror("tikz to graphml", "Entered File is Incorrect")
             return
         
         if(not os.path.isdir(self.get_output_directory())):
-            messagebox.showinfo("tikz to graphml", "Entered Directory is Incorrect")
+            messagebox.showerror("tikz to graphml", "Entered Directory is Incorrect")
             return
 
         ParseTikz().run(float(self.getScale()), 1.0, self.get_input_file_name(), os.path.basename(os.path.splitext(self.get_input_file_name())[0]), self.get_output_directory())
-        messagebox.showinfo("tikz to graphml", "Conversion Successfull")
+        messagebox.showinfo("tikz to graphml", "Conversion Successfull\nFiles stored in {}".format(self.get_output_directory()))
 
 if __name__ == '__main__':
     window = tkinter.Tk()

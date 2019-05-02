@@ -7,7 +7,6 @@ from TikzErrorListener import TikzErrorListener
 from CustomTikzListener import CustomTikzListener
 from extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZAfterUnrolling
 
-logging.basicConfig(format='%(levelname)-1s : [%(filename)s:%(lineno)d] %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
