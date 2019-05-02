@@ -1,4 +1,6 @@
 # Tikz2GraphML: P2 File conversion
+[![CircleCI](https://circleci.com/gh/ysahil97/tikz-to-yed-graphml/tree/master.svg?style=svg)](https://circleci.com/gh/ysahil97/tikz-to-yed-graphml/tree/master)
+
 
 This README is about the description of our graph conversion software, what all constructs it can support and the current status of this software
 
