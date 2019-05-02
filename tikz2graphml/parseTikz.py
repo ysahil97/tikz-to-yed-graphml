@@ -12,7 +12,9 @@ from tikz2graphml.extradeCodeInsideTikzAndUnrollForeach import getCodeInsideTIKZ
 
 logger = logging.getLogger(__name__)
 
-
+"""
+Higher level class to handle conversion of Tikz graph to GraphML format
+"""
 class ParseTikz:
     def printContents(self, value):
         print("===================================\n")
@@ -20,6 +22,14 @@ class ParseTikz:
             print(i+1, ": ", line)
         print("===================================\n")
 
+    """
+    Main conversion function
+    Arguments:-
+    scalingFactor:  scale value provided by the user to make graph look reasonable
+    logLevel: Toggle verbosity
+    inputFilename: path of the input Tikz File
+    directory: path of the output directory to save the generated GraphML file
+    """
     def run(self, scalingFactor: float, logLevel: int, inputFilename: str, prefix: str, directory: str):
 
         if not prefix:

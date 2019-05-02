@@ -1,5 +1,4 @@
 grammar Tikz;
-// import TikzLex;
 
 
 begin
@@ -83,6 +82,8 @@ label
     :  LABEL_VARIABLE
     ;
 
+// List of all the tokens used during the lexer phase
+
 BEGINTIKZPICTURE: '\\begin{tikzpicture}';
 ENDTIKZPICTURE: '\\end{tikzpicture}';
 
@@ -106,7 +107,6 @@ PAUSE : '\\pause' -> skip;
 // EXPRESSION should be above VARIABLE for higher precedence
 LABEL_VARIABLE: '{' ~'\n'*? '}' [ \r\t]* ';';
 EXPRESSION: [0-9/*-+.]+;
-// VARIABLE: ~[ \r\t\n;()]+?;
 VARIABLE: [-a-zA-Z0-9_!$.><|\\+]+;
 COMMENT : '%' ~[\n]* -> skip ;
 WS : [ \r\t\n]+ -> skip ;

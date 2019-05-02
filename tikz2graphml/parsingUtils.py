@@ -11,11 +11,12 @@ def filterOutNotSupportedNodeTags(propertyDict):
         if k not in supportedNodeTags:
             del propertyDict[k]
 
+# Handle Parsing of label strings obtained from Antlr
 def parseLabelValue(labelstr):
 
     if labelstr[0] != '{':
         raise Exception("Expected '{' at the beginning of label. Label starts with incorrect bracket. Got " + labelstr)
-    
+
     new_label_str = labelstr[1:]
     slice_index = -1
     for i in range(len(new_label_str)-1, -1,-1):
@@ -30,6 +31,7 @@ def parseLabelValue(labelstr):
 
     return new_label_str[:slice_index]
 
+# Number handling. Also handles floats
 def handleNumbers(input):
     m = re.search('^\s*([0-9/*-+.]+)\s*(?:(pt|cm))?\s*$', input)
     try:
@@ -40,6 +42,7 @@ def handleNumbers(input):
     except:
         raise Exception("Cannot Evaluate Math Expression {}".format(input))
 
+# Parses a list of property strings and retures a dictionary of those properties
 def handleProperties(ctx: TikzParser.PropertiesContext):
     # properties: individualProperty
     if ctx.getChildCount() == 1:
@@ -57,7 +60,7 @@ def handleProperties(ctx: TikzParser.PropertiesContext):
         # If same property is present, the later one is given precedence
         if k not in listProperties:
             listProperties[k] = v
-        
+
         return listProperties
 
 def handleIndividualProperty(ctx: TikzParser.IndividualPropertyContext):
