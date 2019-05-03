@@ -31,7 +31,7 @@ Python Version 3.7.0
 
 ![alt text][GUI]
 
-[GUI]: https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/Screenshots/GUI.png "GUI-Image"
+[GUI]: https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/Screenshots/SampleOutput.png "GUI-Image"
 
 
 
