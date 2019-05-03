@@ -9,6 +9,17 @@ This README is about the description of our graph conversion software, what all 
 
 Develop an efficient software which can convert every possible Tikz Graph present in Latex code in GraphML format.
 
+## Requirements
+
+This software supportes Python>=3.7.0
+
+## Installation
+
+```
+sudo apt-get install python3-tk python3-pip
+pip3 install tikz2graphml
+```
+
 ## Tikz Constructs Supported
 
 We have handled these Tikz Constructs
@@ -42,13 +53,5 @@ In addition to this, proper scaling of nodes is introduced in the software autom
 * It works cross-platform(both Linux and Windows)
 * The original aim was to make it a command line tool. But in addition to this, we have also added a GUI interface which can take in input file and scaling parameter and output the corresponding GraphML file.
 
-## Installation
-
-```
-sudo apt-get install python3-tk
-pip install tikz2graphml
-```
-
 -------
-
 ###### Part of our CS4443: Software Engineering Project component offered in Spring 2019
