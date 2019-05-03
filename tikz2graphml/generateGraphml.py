@@ -64,8 +64,10 @@ class Graph:
 			if m.group(2) is not None:
 				alpha = float(m.group(2))
 				clr = colors.to_hex(colors.to_rgba(m.group(1), alpha=alpha/256.0), keep_alpha=True)
-			else:
+			elif m.group(1) is not None:
 				clr = colors.to_hex(colors.to_rgba(m.group(1)), keep_alpha=False)
+			else:
+				clr = None
 		return clr
 
 	# Helper function to add a node with its properties into the graph object
@@ -144,7 +146,7 @@ class Graph:
 			"y": nodeY,
 			"arrowhead": "standard" if arrowHead==True else "none",
 			"arrowfoot": "standard" if arrowFoot==True else "none",
-			"color" : color,
+			"color" : self.getColor(color),
 			"width" : width,
 			"label" : label,
 			"line_type" : line_type
