@@ -74,6 +74,9 @@ class CustomTikzListener(TikzListener):
         """
         self.currentNode["X"] = self.latestCoordinateX
         self.currentNode["Y"] = self.latestCoordinateY
+        if "edge_color" not in self.currentNode:
+            self.currentNode["edge_color"] = "black"
+        
         # Only send those attributes which are supported
         parsingUtils.filterOutNotSupportedNodeTags(self.currentNode)
         logger.debug("Got Node: {} in input {}".format(self.currentNode, ctx.getText()))
@@ -115,6 +118,7 @@ class CustomTikzListener(TikzListener):
         sinA = round(math.sin(math.radians(angle)), 10)
         self.latestCoordinateX = r * cosA
         self.latestCoordinateY = r * sinA
+        logger.debug("Polar Coordinates translated {}".format(self.latestCoordinateX, self.latestCoordinateY))
         self.shapeNodesCoordinates.append((self.latestCoordinateX, self.latestCoordinateY))
 
     def exitLabel(self, ctx: TikzParser.LabelContext):
@@ -210,7 +214,10 @@ class CustomTikzListener(TikzListener):
                     X /= 2.0
                     Y /= 2.0
                     height = float(abs(int(self.shapeNodesCoordinates[1][1]) - float(self.shapeNodesCoordinates[0][1])))
+                    height = 1 if height == 0.0 else height
+
                     width = float(abs(int(self.shapeNodesCoordinates[1][0]) - float(self.shapeNodesCoordinates[0][0])))
+                    width = 1 if width == 0.0 else width
 
                 elif node_shape == 'ellipse':
                     assert len(self.shapeNodesCoordinates) == 2, "Error in parsing {}. Draw shape command has incorrect number of coordinates (!=2)".format(ctx.getText())
@@ -218,6 +225,8 @@ class CustomTikzListener(TikzListener):
                     Y = self.shapeNodesCoordinates[0][1]
                     width = float(self.shapeNodesCoordinates[1][0]) * 2
                     height = float(self.shapeNodesCoordinates[1][1]) * 2
+                    height = 1 if height == 0.0 else height
+                    width = 1 if width == 0.0 else width
 
                 elif node_shape == 'circle':
                     assert len(self.shapeNodesCoordinates) == 1, "Error in parsing {}. Draw circle shape command has incorrect number of coordinates(!=1)".format(ctx.getText())
@@ -225,6 +234,7 @@ class CustomTikzListener(TikzListener):
                     width = float(float(self.lastSeenRadius) * 2)
                     X = float(self.shapeNodesCoordinates[0][0])
                     Y = float(self.shapeNodesCoordinates[0][1])
+                    
 
                 else:
                     raise Exception("Error in parsing {}. Currently only support rectangle/circle/ellipse in \draw command".format(ctx.getText()))
