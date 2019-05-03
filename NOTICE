@@ -1,0 +1,8 @@
+The following components are included in this product:
+
+https://github.com/jamesscottbrown/pyyed
+This is a library for generating skeleton for yEd XML.
+We modified this library for our needs. The changes are as follows:
+- Add support for no nodee/edge colors
+- Don't use NodeID as Label Name
+- Add the nodes/edges/groups in the order they are received
