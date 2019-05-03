@@ -33,6 +33,7 @@ This software requires following Python packages
 * Open Command Line from Windows
 * Use this command
 > pip install tikz2graphml
+
 > tikz2graphml
 
 ## GUI
