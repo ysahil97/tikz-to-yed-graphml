@@ -9,7 +9,7 @@ with io.open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="tikz2graphml",
-    version="0.0.1",
+    version="1.0.2-rc",
     description="Convert Latex Tikz code into yed graphml",
     long_description=README,
     long_description_content_type="text/markdown",
