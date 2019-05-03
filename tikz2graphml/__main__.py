@@ -25,20 +25,20 @@ class GUI:
         startRow+=1
 
         # Define Input File Field which is obtained by choosing a file from browsing the file explorer
-        Label(window ,text = "Input File Name : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=25, ipady=2)
+        Label(window ,text = "Input File Name : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=10, ipady=2)
         ttk.Button(window, text = "Choose File", command = lambda: self.set_input_file_name()).grid(row = startRow,column=3, ipadx=10, ipady=2, padx=10)
         ttk.Entry(window, textvariable = self.inputFileNameVar, width = 70).grid( row = startRow, column = 1, ipadx=1, ipady=2)
 
         # Define Output Directory to save all the files to that folder
         # (Default) saves it in same directory as input file
         startRow+=1
-        Label(window ,text = "Output File Directory (will create if not exists) : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=25, ipady=2)
+        Label(window ,text = "Output File Directory : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=10, ipady=2)
         ttk.Button(window, text = "Choose File", command = lambda: self.set_output_directory()).grid(row = startRow,column=3, ipadx=10, ipady=2, padx=10)
         ttk.Entry(window, textvariable = self.outputDirectoryVar, width = 70).grid( row = startRow, column = 1, ipadx=1, ipady=2)
 
         # Add a scale field to convert resulting graphml files into resonable graphs
         startRow+=1
-        Label(window ,text = "Scale : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=25, ipady=2)
+        Label(window ,text = "Scale : ", justify=LEFT).grid(row = startRow,column = 0, sticky=W, ipadx=10, ipady=2)
         ttk.Entry(window, textvariable = self.scaleVar, width = 70).grid(row = startRow, column = 1, ipadx=1, ipady=2)
 
         # Convert Tikz files to GraphML files by a button!

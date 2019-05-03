@@ -1,17 +1,24 @@
 # Tikz2GraphML: P2 File conversion
 [![CircleCI](https://circleci.com/gh/ysahil97/tikz-to-yed-graphml/tree/master.svg?style=svg)](https://circleci.com/gh/ysahil97/tikz-to-yed-graphml/tree/master)
 
-
 This README is about the description of our graph conversion software, what all constructs it can support and the current status of this software
-
 
 ## Aim
 
-Develop an efficient software which can convert every possible Tikz Graph present in Latex code in GraphML format.
+Develop an efficient software which can convert most of Tikz Graph present in Latex code in GraphML format.
 
 ## Requirements
 
-This software supportes Python>=3.7.0
+This software requires following pyhton packages
+
+colour==0.1.5
+numpy==1.16.2
+networkx==2.3
+matplotlib==3.0.3
+pylatexenc==1.4
+antlr4-python3-runtime==4.7.2
+
+Python Version 3.7.0
 
 ## Installation
 
@@ -30,15 +37,47 @@ We have handled these Tikz Constructs
 	* NodeID
 	* Label
 	* Edge Color
+	* Lable
 * Edge
 	* Width
 	* Edge arrows: `->`, `<->`,`<-`,`-!-`
 * Coordinates
 	* Polar: (Angle, r (in cm))
-	* Cartesian: (a,b)
+	* Cartesian: (x,y)
 * Rotation of the Entire Graph
 * Handling Loop constructs(Foreach)
 * Global properties(applied to each tikz construct)
+
+## Examples
+
+Sample TikZ code
+ 
+```TeX
+
+\begin{tikzpicture}
+    \draw (6,6) ellipse (3cm and 6cm);
+    \draw (6,6) ellipse (2.5cm and 5cm);
+    \draw (6,6) ellipse (2cm and 4cm);
+    \draw (6,6) ellipse (1.5cm and 3cm);
+    \draw (6,6) ellipse (1cm and 2cm);
+    \draw (0,12) rectangle (12,0);
+    \node (a) [fill=green, shape=diamond] at (0,6) {};
+    \node (b) [fill=blue] at (12,6) {};
+    \node (c) [fill=red] at (6,0) {};
+    \node (d) [fill=black] at (6,12) {};
+    \draw (6,6) circle (6cm);
+    \draw [<->] (a) -- (b);
+    \draw [->] (d) -- (c);
+    \draw (6,6) ellipse (6cm and 2cm);
+    \draw (6,6) ellipse (6cm and 6cm);
+    \draw (6,6) ellipse (6cm and 5cm);
+    \draw (6,6) ellipse (6cm and 4cm);
+    \draw (6,6) ellipse (6cm and 3cm);
+\end{tikzpicture}
+
+```
+
+
 
 ## Generation of GraphML file
 For the sake of cleanliness, each Tikz Block is analyzed separately to generate different GraphML files pertaining to each Tikz Block.
