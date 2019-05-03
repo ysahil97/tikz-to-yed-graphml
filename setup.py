@@ -9,20 +9,21 @@ with io.open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="tikz2graphml",
-    version="0.0.0",
+    version="0.0.1",
     description="Convert Latex Tikz code into yed graphml",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/ysahil97/tikz-to-yed-graphml",
     author="Harsh Agarwal",
     author_email="harshaga97@gmail.com",
-    # license="Apache License 2.0",
-    # classifiers=[
-    #     "License :: OSI Approved :: MIT License",
-    #     "Programming Language :: Python :: 3",
-    #     "Programming Language :: Python :: 3.7",
-    # ],
-    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),    include_package_data=True,
+    license="Apache License 2.0",
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+    ],
+    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
+    include_package_data=True,
     install_requires=[
         "colour==0.1.5",
         "numpy==1.16.2",
