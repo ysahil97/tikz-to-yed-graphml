@@ -3,7 +3,7 @@
 
 [![CircleCI](https://circleci.com/gh/ysahil97/tikz-to-yed-graphml/tree/master.svg?style=svg)](https://circleci.com/gh/ysahil97/tikz-to-yed-graphml/tree/master)
 
-**tikz2graphml** is TikZ (tex) to Graphml convertor which can be viewed in yEd software. It allows you to select the tex file (with TikZ code) and writes corresponding graphml file in the output directory. For the sake of cleanliness, each Tikz Block is analyzed separately to generate different GraphML files. tikz2graphml works on Linux and Windows. It can be used from commandline as well as GUI. tikz2graphml is very simple to use, powerful and supports many TikZ constructs. It also lets you scale the coordinates in graphml for better visualization of graphml in yEd. 
+**tikz2graphml** is TikZ (tex) to Graphml convertor which can be viewed in yEd software. It allows you to select the tex file (with TikZ code) and writes corresponding graphml file in the output directory. For the sake of cleanliness, each Tikz Block is analyzed separately to generate different GraphML files. tikz2graphml works on Linux and Windows. It can be used from commandline as well as GUI. tikz2graphml is very simple to use, powerful and supports many TikZ constructs. It also lets you scale the coordinates in graphml for better visualization of graphml in yEd.
 
 
 ## Requirements
@@ -27,9 +27,13 @@ This software requires following Python packages
 > tikz2ghraphml
 ```
 ### Windows
-```
-> TODO: Tool Works on windows, Yet to add instructions on how to run it.....
-```
+
+* [Python3 Installation](docs/Python3_windows.md)
+* [Pip Installation](docs/Pip_windows.md)
+* Open Command Line from Windows
+* Use this command
+> pip install tikz2graphml
+> tikz2graphml
 
 ## GUI
 
@@ -101,7 +105,7 @@ Conversion Process
 * Detect TikZ code in File. If multiple TikZ block found, store them in list.
 * For each TikZ block detected above, do following
 	* Detect Foreach Instruction and [Unroll](https://www.geeksforgeeks.org/loop-unrolling/) it.
-	* Parse File using [this grammar](https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/tikz2graphml/grammar/Tikz.g4) with Antlr4 tool 
+	* Parse File using [this grammar](https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/tikz2graphml/grammar/Tikz.g4) with Antlr4 tool
 	* For each rule in Antlr grammar, we add corresponding rules which detects and store the properties of instruction in either of node or edge list [TikZAntlrListener](https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/tikz2graphml/CustomTikzListener.py)
 	* Once parsing is done. We call get_graph which first rotates the graph (if rotate property is there) and then add the nodes and edges to pyyed graph.
 	* We get the XML output from pyyed (using pyyed.graph.get_graph()) and write it in *.graphml file.
