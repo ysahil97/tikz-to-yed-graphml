@@ -24,17 +24,18 @@ This software requires following Python packages
 ```bash
 > sudo apt-get install python3-tk python3-pip
 > (sudo) pip3 install tikz2graphml
-> tikz2ghraphml
+> tikz2graphml
 ```
 ### Windows
 
 * [Python3 Installation](docs/Python3_windows.md)
 * [Pip Installation](docs/Pip_windows.md)
 * Open Command Line from Windows
-* Use this command
-> pip install tikz2graphml
-
-> tikz2graphml
+* Use this command  
+```
+pip install tikz2graphml  
+tikz2graphml
+```
 
 ## GUI
 
