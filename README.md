@@ -32,6 +32,8 @@ This software requires following Python packages
 * [Pip Installation](docs/Pip_windows.md)
 * Open Command Line from Windows
 * Use this command  
+
+>>>>>>> 1e9b9c46f19f739092a27a52f1449cfb7fdc04dc
 ```
 pip install tikz2graphml  
 tikz2graphml
@@ -70,7 +72,7 @@ We have handled these Tikz Constructs
 
 Sample TikZ code
 
-```TeX
+```
 \begin{tikzpicture}
 	\draw (6,6) ellipse (3cm and 6cm);
 	\draw (6,6) ellipse (2.5cm and 5cm);
