@@ -92,7 +92,7 @@ GraphML output in yEd
 
 [Sample Output]: https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/SampleOutput.png "Sample Output"
 
-## Generation of GraphML file
+## Generation of GraphML file (Design)
 
 
 Conversion Process
@@ -100,11 +100,11 @@ Conversion Process
 * Read Input (tex file)
 * Detect TikZ code in File. If multiple TikZ block found, store them in list.
 * For each TikZ block detected above, do following
->* Detect Foreach Instruction and [Unroll](https://www.geeksforgeeks.org/loop-unrolling/) it.
->* Parse File using [this grammar](https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/tikz2graphml/grammar/Tikz.g4) with Antlr4 tool 
->* For each rule in Antlr grammar, we add corresponding rules which detects and store the properties of instruction in either of node or edge list [TikZAntlrListener](https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/tikz2graphml/CustomTikzListener.py)
->* Once parsing is done. We call get_graph which first rotates the graph (if rotate property is there) and then add the nodes and edges to pyyed graph.
->* We get the XML output from pyyed (using pyyed.graph.get_graph()) and write it in *.graphml file.
+	* Detect Foreach Instruction and [Unroll](https://www.geeksforgeeks.org/loop-unrolling/) it.
+	* Parse File using [this grammar](https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/tikz2graphml/grammar/Tikz.g4) with Antlr4 tool 
+	* For each rule in Antlr grammar, we add corresponding rules which detects and store the properties of instruction in either of node or edge list [TikZAntlrListener](https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/tikz2graphml/CustomTikzListener.py)
+	* Once parsing is done. We call get_graph which first rotates the graph (if rotate property is there) and then add the nodes and edges to pyyed graph.
+	* We get the XML output from pyyed (using pyyed.graph.get_graph()) and write it in *.graphml file.
 
 
 ## Current Status of the software
