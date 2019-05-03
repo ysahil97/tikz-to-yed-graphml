@@ -216,7 +216,7 @@
 			<data key="data_edge">
 				<y:PolyLineEdge>
 					<y:Arrows source="none" target="none"/>
-					<y:LineStyle color="black" type="line" width="1"/>
+					<y:LineStyle color="#000000" type="line" width="1"/>
 				</y:PolyLineEdge>
 			</data>
 		</edge>

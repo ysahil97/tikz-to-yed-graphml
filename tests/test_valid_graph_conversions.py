@@ -7,11 +7,6 @@ Driver stub to iterate over all the possible test cases for automatic testing
 """
 x = [
     {
-        "inputFilePath": "./TestCases/valid-graphs/tex/example_test.tex",
-        "expectedOutputPathPrefix": "TestCases/valid-graphs/graphml/example_test_",
-        "numTikzTestCases": 1
-    },
-    {
         "inputFilePath": "./TestCases/valid-graphs/tex/edge-editing-v2.tex",
         "expectedOutputPathPrefix": "./TestCases/valid-graphs/graphml/edge-editing-v2_",
         "numTikzTestCases": 8
