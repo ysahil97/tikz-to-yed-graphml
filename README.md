@@ -29,9 +29,9 @@ Python Version 3.7.0
 ```
 ## GUI
 
-![alt text][GUI]
+![GUI Screenshot][GUI]
 
-[GUI]: https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/Screenshots/GUI.png "GUI-Image"
+[GUI]: https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/GUI.png "GUI-Image"
 
 
 
@@ -84,9 +84,9 @@ Sample TikZ code
 ```
 GraphML output in yEd
 
-![alt text][Sample Output]
+![Sample Output][Sample Output]
 
-[Sample Output]: https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/Screenshots/SampleOutput.png "Sample Output"
+[Sample Output]: https://github.com/ysahil97/tikz-to-yed-graphml/blob/master/SampleOutput.png "Sample Output"
 
 ## Generation of GraphML file
 
