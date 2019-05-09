@@ -9,7 +9,7 @@
 ## Requirements
 > Python Version 3.7.0
 
-This software requires following Python packages
+This software requires following Python packages. If you install `tikz2graphml` using pip3, you don't need to install these requirements manually.
 * colour==0.1.5
 * numpy==1.16.2
 * networkx==2.3
@@ -21,6 +21,20 @@ This software requires following Python packages
 ## Installation
 
 ### Ubuntu
+
+It is recommended to create a python virtual environment to prevent breaking dependencies.
+#### Creating a Python Virtual Environment
+
+```bash
+> sudo apt-get install python3-pip
+> (sudo) pip3 install virtualenv 
+> virtualenv -p python3 venv
+> source venv/bin/activate           # Activate virtual environment
+```
+To deactivate virtual environment, type `deactivate` in shell.
+
+#### Installing tikz2graphml
+
 ```bash
 > sudo apt-get install python3-tk python3-pip
 > (sudo) pip3 install tikz2graphml
@@ -60,7 +74,7 @@ We have handled these Tikz Constructs
 * Lable
 * Edge
 * Width
-* Edge arrows: `->`, `<->`,`<-`,`-!-`
+* Edge arrows: `->`, `<->`,`<-`,`-!-`. `-`
 * Coordinates
 * Polar: (Angle, r (in cm))
 * Cartesian: (x,y)
