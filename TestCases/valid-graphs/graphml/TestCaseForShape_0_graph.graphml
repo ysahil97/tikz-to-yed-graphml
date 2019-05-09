@@ -183,7 +183,7 @@
 			<data key="data_edge">
 				<y:PolyLineEdge>
 					<y:Arrows source="standard" target="standard"/>
-					<y:LineStyle color="#a52a2a" type="line" width="1"/>
+					<y:LineStyle color="#a52a2a" type="line" width="3.52778"/>
 				</y:PolyLineEdge>
 			</data>
 		</edge>
@@ -191,7 +191,7 @@
 			<data key="data_edge">
 				<y:PolyLineEdge>
 					<y:Arrows source="none" target="none"/>
-					<y:LineStyle color="#a52a2a" type="line" width="1"/>
+					<y:LineStyle color="#a52a2a" type="line" width="3.52778"/>
 				</y:PolyLineEdge>
 			</data>
 		</edge>
@@ -199,7 +199,7 @@
 			<data key="data_edge">
 				<y:PolyLineEdge>
 					<y:Arrows source="none" target="standard"/>
-					<y:LineStyle color="#a52a2a" type="line" width="1"/>
+					<y:LineStyle color="#a52a2a" type="line" width="3.52778"/>
 				</y:PolyLineEdge>
 			</data>
 		</edge>
@@ -207,7 +207,7 @@
 			<data key="data_edge">
 				<y:PolyLineEdge>
 					<y:Arrows source="none" target="standard"/>
-					<y:LineStyle color="#a52a2a" type="line" width="1"/>
+					<y:LineStyle color="#a52a2a" type="line" width="3.52778"/>
 				</y:PolyLineEdge>
 			</data>
 		</edge>
