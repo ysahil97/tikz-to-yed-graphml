@@ -4,7 +4,7 @@ from colour import Color
 logger = logging.getLogger()
 
 ValidNodeShapes = ["rectangle", "circle", "diamond", "ellipse"]
-ValidEdgeDirections = ["->", "<-", "-!-", "--", "<->"]  #- means no edge. So no need to check for its validity as that is default
+ValidEdgeDirections = ["->", "<-", "-!-", "--", "<->", "-"]  #- means no edge. So no need to check for its validity as that is default
 
 """
 A list of functions which try to check the validity of each attribute
@@ -73,7 +73,7 @@ def identifyKeyValueProperty(key: str, value: str):
     elif key == "direction":
         return ("direction", value)
 
-    elif key == "thickness":
+    elif key == "thickness" or key == "width":
         return ("width", value)
 
     elif key == "edgeStyle":
