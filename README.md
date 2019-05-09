@@ -31,9 +31,9 @@ This software requires following Python packages
 * [Python3 Installation](docs/Python3_windows.md)
 * [Pip Installation](docs/Pip_windows.md)
 * Open Command Line from Windows
-* Use this command  
+* Use this command
 
->>>>>>> 1e9b9c46f19f739092a27a52f1449cfb7fdc04dc
+
 ```
 pip install tikz2graphml  
 tikz2graphml
@@ -74,24 +74,24 @@ Sample TikZ code
 
 ```
 \begin{tikzpicture}
-	\draw (6,6) ellipse (3cm and 6cm);
-	\draw (6,6) ellipse (2.5cm and 5cm);
-	\draw (6,6) ellipse (2cm and 4cm);
-	\draw (6,6) ellipse (1.5cm and 3cm);
-	\draw (6,6) ellipse (1cm and 2cm);
-	\draw (0,12) rectangle (12,0);
-	\node (a) [fill=green, shape=diamond] at (0,6) {};
-	\node (b) [fill=blue] at (12,6) {};
-	\node (c) [fill=red] at (6,0) {};
-	\node (d) [fill=black] at (6,12) {};
-	\draw (6,6) circle (6cm);
-	\draw [<->] (a) -- (b);
-	\draw [->] (d) -- (c);
-	\draw (6,6) ellipse (6cm and 2cm);
-	\draw (6,6) ellipse (6cm and 6cm);
-	\draw (6,6) ellipse (6cm and 5cm);
-	\draw (6,6) ellipse (6cm and 4cm);
-	\draw (6,6) ellipse (6cm and 3cm);
+    \draw (6,6) ellipse (3cm and 6cm);
+    \draw (6,6) ellipse (2.5cm and 5cm);
+    \draw (6,6) ellipse (2cm and 4cm);
+    \draw (6,6) ellipse (1.5cm and 3cm);
+    \draw (6,6) ellipse (1cm and 2cm);
+    \draw (0,12) rectangle (12,0);
+    \node (a) [fill=green, shape=diamond] at (0,6) {};
+    \node (b) [fill=blue] at (12,6) {};
+    \node (c) [fill=red] at (6,0) {};
+    \node (d) [fill=black] at (6,12) {};
+    \draw (6,6) circle (6cm);
+    \draw [<->] (a) -- (b);
+    \draw [->] (d) -- (c);
+    \draw (6,6) ellipse (6cm and 2cm);
+    \draw (6,6) ellipse (6cm and 6cm);
+    \draw (6,6) ellipse (6cm and 5cm);
+    \draw (6,6) ellipse (6cm and 4cm);
+    \draw (6,6) ellipse (6cm and 3cm);
 \end{tikzpicture}
 ```
 GraphML output in yEd
