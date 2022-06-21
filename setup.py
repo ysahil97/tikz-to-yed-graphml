@@ -26,7 +26,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "colour==0.1.5",
-        "numpy==1.16.2",
+        "numpy==1.22.0",
         "networkx==2.3",
         "matplotlib==3.0.3",
         "pylatexenc==1.4",
